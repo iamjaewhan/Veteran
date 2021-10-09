@@ -3,3 +3,17 @@
 
 notion : https://cliff-sousaphone-73f.notion.site/21-2-8-a6c6efeb4620425a93299e0689667ec5
 
+---
+##팀원
+
+김민채()
+
+구현호()
+
+정혜원()
+
+전재완()
+
+추현호()
+
+---
