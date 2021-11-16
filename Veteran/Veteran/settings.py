@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 from pathlib import Path
 import os,json
 from django.core.exceptions import ImproperlyConfigured
+from .veteran_settings import VETERAN_SECRET, VETERAN_DATABASES
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -21,6 +22,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY=VETERAN_SECRET['SECRET_KEY']
+"""
 secret_file=os.path.join(BASE_DIR,'secrets.json')
 
 with open(secret_file) as f:
@@ -35,6 +38,7 @@ def get_secret(setting, secrets=secrets):
         raise ImproperlyConfigured(error_msg)
 
 SECRET_KEY=get_secret("SECRET_KEY")
+"""
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -88,14 +92,15 @@ WSGI_APPLICATION = 'Veteran.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
-
+DATABASES=VETERAN_DATABASES
+"""
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+    'default' : {
+        'ENGINE' : 'django.db.backends.sqlite3',
+        'NAME' : BASE_DIR/'sqlite3',
     }
 }
-
+"""
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
