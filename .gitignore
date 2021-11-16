@@ -131,5 +131,7 @@ dmypy.json
 .pyre/
 
 
-##secret jey
-secrets.json
+
+
+#databases & secret key
+Veteran/Veteran/veteran_settings.py
