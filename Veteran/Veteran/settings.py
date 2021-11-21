@@ -15,6 +15,8 @@ import os,json
 from django.core.exceptions import ImproperlyConfigured
 from .veteran_settings import VETERAN_SECRET, VETERAN_DATABASES
 
+AUTH_USER_MODEL='Account.User'
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -55,7 +57,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'Auth',
+    'Account',
     'Game',
 ]
 
