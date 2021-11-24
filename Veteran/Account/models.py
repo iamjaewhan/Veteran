@@ -6,6 +6,7 @@ from django.contrib.auth.models import AbstractUser
 
 
 class User(AbstractUser):
+    user_id=models
     nickname = models.CharField(
         verbose_name='닉네임', 
         max_length=15, 
