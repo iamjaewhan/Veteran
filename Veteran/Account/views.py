@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
 
@@ -7,6 +7,8 @@ from .models import User
 
 
 # Create your views here.
+
+
 def login(request):
     if request.method=="POST":
         form=AuthenticationForm(request=request,data=request.POST)
@@ -34,9 +36,11 @@ def logout(request):
 ##수정필요
 def signup(request):
     if request.method == "POST":
-        if request.POST['pw'] == request.POST['cpw']:
-            user = User.objects.create_user(username=request.POST['email'], password=request.POST['pw'], nickname=request.POST['nickname'], phone=request.POST['Phone'])
+        form=UserCreationForm(request.POST)
+        if form.is_valid():
+            user=form.save()
             auth.login(request,user)
             return redirect('Game:gamelist')
-    return render(request,'Account/join_page.html')
-            
+        return redirect('Accoung:signup')
+    form=UserCreationForm()
+    return render(request,'Account/join_page.html',{'form':form})
