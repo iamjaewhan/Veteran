@@ -7,8 +7,7 @@ from .models import User
 
 
 # Create your views here.
-
-
+#수정필요
 def login(request):
     if request.method=="POST":
         form=AuthenticationForm(request=request,data=request.POST)
