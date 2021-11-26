@@ -32,6 +32,10 @@ class Review(models.Model):
     comment_type=models.CharField(choices=CommentType, null=False,max_length=30)
     RATING_CHOICES=zip(range(1,6),range(1,6))
     rating=models.IntegerField(choices=RATING_CHOICES)
+    
+    class Meta:
+        unique_together=(('reviewer','reviewee','game'),)
+    
 
 class Host(models.Model):
     host=models.ForeignKey(User,unique=True, on_delete=models.CASCADE)
