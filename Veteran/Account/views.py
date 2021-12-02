@@ -2,6 +2,7 @@ from django.shortcuts import render,redirect
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
 
 from .models import User
 
@@ -47,16 +48,27 @@ def signup(request):
 def mypage(request):
     return render(request, 'Account/myinfo.html')
 
-def hostapply(request):
-    return render(request, 'Account/Host Application.html')
+@csrf_exempt
+def reqHostAthority(request):
+    if request.method=="POST":
+        host = HostApplication()
+        host.host = request.user
+        host.group_name = request.POST["team_name"]
+        host.court_location = request.POST["field"]
+        host.intro = request.POST["intro"]
+        host.save()
+        return redirect('Game:gamelist')
+    return render(request,'Account/Host Application.html')
+
 
 def apply(request):
-    host = HostApplication()
-    host.host = request.Get["username"]
-    host.group_name = request.Get["team_name"]
-    host.court_location = request.Get["field"]
-    host.intro = request.Get["intro"]
-    host.save()
+    if request.method=="POST":
+        host = HostApplication()
+        host.host = request.Get["username"]
+        host.group_name = request.Get["team_name"]
+        host.court_location = request.Get["field"]
+        host.intro = request.Get["intro"]
+        host.save()
     return redirect('Account/myinfo.html')
 
 
@@ -67,7 +79,7 @@ def hostapprove(request):
 
 
 from django.contrib.auth.mixins import PermissionRequiredMixin
-
+"""
 class CreateWorkView(PermissionRequiredMixin, CreateView):
     raise_exception = True
     permission_required = 'main.add_work'
@@ -79,4 +91,4 @@ class CreateWorkView(PermissionRequiredMixin, CreateView):
 
     def get_success_url(self):
         return reverse('index')
-    
+"""

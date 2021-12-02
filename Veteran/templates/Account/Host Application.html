@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+    {% load static %}
     <meta charset="UTF-8">
-    <link href="Host Application.css" rel="stylesheet">
+    <link href="{% static 'css/Host Application.css' %}" rel="stylesheet">
     <title>Host Application</title>
 
     <style>
@@ -31,11 +32,11 @@
         <div class = "header">
             <div class="left">
                 <img 
-                src = "veteran logo.png"
+                src = "{% static 'img/veteran_logo.png' %}"
                 style= "float:left; margin-left: 50px;margin-top: 50px;"
                 />
                     <img 
-                src = "back_img.jpg"
+                src = "{% static 'img/back_img.jpg' %}"
                 style= "float: left; margin-top: 25%; width:230px; margin-right: 10px; height: 380px;"
                 />
                     <h1>동아리, 동호회, 팀에<br>소속되어 계신가요?</h1>
@@ -52,7 +53,8 @@
                 <h1>베테랑</h1>
                 <h2>호스트 신청</h2>
                 <section class="host-form">
-                    <form action="" id="form1" onsubmit="return CheckForm();">
+                    <form action="{% url 'Account:reqHostAthority' %}" id="form1" onsubmit="return CheckForm();" method="POST">
+                        {% csrf_token %}
                         <span class="hostname-area">
                             <label for="team_name">팀(동아리, 동호회) 명</label>
                             <input type="text" name="team_name" id="team_name" autocomplete="off" required>
