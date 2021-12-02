@@ -14,7 +14,7 @@ class User(AbstractUser):
         error_messages={'unique': '이미 사용중인 닉네임입니다.'},
     )
     phone = models.CharField(verbose_name='전화 번호', max_length=13,null=False, unique=True,default = '')
-
+    is_host=models.BooleanField(null=False, default=False)
     review_relations=models.ManyToManyField(
         'self',
         symmetrical=False,
