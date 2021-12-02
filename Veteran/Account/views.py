@@ -25,7 +25,7 @@ def login(request):
             )
             if user is not None:
                 auth.login(request,user)
-                return redirect('Account:login')
+                return redirect('Game:gamelist',user)
         return redirect('Game:gamelist')
     else:
         form=AuthenticationForm()
@@ -46,7 +46,7 @@ def signup(request):
     return render(request,'Account/join_page.html')
     
 def mypage(request):
-    return render(request, 'Account/myinfo.html')
+    return render(request, 'Account/myinfo.html',{'user':request.user})
 
 @csrf_exempt
 def reqHostAthority(request):

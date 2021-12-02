@@ -8,5 +8,8 @@
 </head>
 <body>
     <a href="{% url "Account:mypage" %}">내 정보</a>
+    {% if user.is_superuser %}
+    <p>test</p>
+    {% endif %}
 </body>
 </html>
