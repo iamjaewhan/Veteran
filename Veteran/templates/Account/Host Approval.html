@@ -259,12 +259,10 @@
                     신청 목록
                 </div>
             </div>
-
-
             <div class="applicants"> 
-                {% for each_applicant in list %}
+                {% for each_applicant in request_list %}
                 <div class="applicant">
-                    <div>{{each_applicant.name}} | {{each_applicant.region}}</div>
+                    <div>{{each_applicant.group_name}} | {{each_applicant.court_location}}</div>
                     <div><button type="" class="btn">상세정보</button></div>
                 </div>
                 {% endfor %}

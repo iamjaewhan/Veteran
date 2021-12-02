@@ -60,7 +60,8 @@ def reqHostAthority(request):
         return redirect('Game:gamelist')
     return render(request,'Account/Host Application.html')
 
-
+"""
+reqHostAthority로 merge
 def apply(request):
     if request.method=="POST":
         host = HostApplication()
@@ -70,12 +71,13 @@ def apply(request):
         host.intro = request.Get["intro"]
         host.save()
     return redirect('Account/myinfo.html')
-
+"""
 
    
-def hostapprove(request):
-    contents = HostApplication.objects.all()
-    return render(request, 'Account/Host approval.html', {'host_list': contents})
+def lookupReq(request):
+    request_list = HostApplication.objects.all()
+    return render(request, 'Account/Host approval.html', {'request_list': request_list})
+
 
 
 from django.contrib.auth.mixins import PermissionRequiredMixin
