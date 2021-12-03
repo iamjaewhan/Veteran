@@ -2,7 +2,7 @@
 <html lang="ko">
     <head>
         <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100&display=swap" rel="stylesheet">
-        <link rel="stylesheet" type="text/css" href="myInfo.css">
+        <link rel="stylesheet" type="text/css" href="/static/css/myInfo.css">
         <style>
         div {
             width: 100%;
@@ -37,11 +37,12 @@
     </head>
     <body>
     {% load static %}
+    <p>{{ user.nickname }},{{ user.username }}</p>
         <div class="wrap">
             <div class = "header">
                 <div class="left">
                 <img 
-                src = "{% static 'img/veteran logo.png' %}"
+                src = "{% static 'img/veteran_logo.png' %}"
                 style= "margin-left: 50px; margin-top: 50px;"
                 />
 
@@ -57,12 +58,19 @@
                   <ul class ="nav">
                       <li><a href="#">🗓 경기일람 및 리뷰</a></li>
                       <li><a href="#">📊 내 평가 보기</a></li>
-                      <li><a href="{%url 'Account:hostapply'%}">📃 호스트 신청</a></li>
+                      {% if user.is_host %}
+                      <li><a href="#">호스트 관련 어쩌구</a></li>
+                      {% else %}
+                        <li><a href="{% url 'Account:reqHostAthority' %}">📃 호스트 신청</a></li>
+                      {% endif %}
                   </ul>
                   <hr style="border: solid 3px #686868; margin-left: 50px; margin-right: 50px;">
                   <ul class ="nav2">
-                      <li><a href="#">🚪 로그아웃</a></li>
+                      <li><a href="Account:logout">🚪 로그아웃</a></li>
                       <li><a href="#">🔐 회원해지</a></li>
+                      {% if user.is_superuser %}
+                        <li><a href="{% url 'Account:lookupReq' %}">호스트 신청 승인</a></li>
+                      {% endif %}
                   </ul>
                 </div>
             </div>

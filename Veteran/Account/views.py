@@ -4,6 +4,7 @@ from django.contrib import auth
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 
+import json
 from .models import User
 
 from .models import HostApplication
@@ -25,8 +26,8 @@ def login(request):
             )
             if user is not None:
                 auth.login(request,user)
-                return redirect('Account:login')
-        return redirect('Game:gamelist')
+                return redirect('Account:mypage')
+        return redirect('Account:mypage')
     else:
         form=AuthenticationForm()
         return render(request,'Account/welcome_login.html')
@@ -42,7 +43,7 @@ def signup(request):
         if request.POST['pw'] == request.POST['cpw']:
             user = User.objects.create_user(username=request.POST['email'], password=request.POST['pw'], nickname=request.POST['nickname'], phone=request.POST['phone'])
             auth.login(request,user)
-            return redirect('Game:gamelist')
+            return redirect('Account:mypage')
     return render(request,'Account/join_page.html')
     
 def mypage(request):
@@ -57,10 +58,16 @@ def reqHostAthority(request):
         host.court_location = request.POST["field"]
         host.intro = request.POST["intro"]
         host.save()
-        return redirect('Game:gamelist')
+        return redirect('Account:mypage')
     return render(request,'Account/Host Application.html')
 
+"""
+def approveReq(request):
+    if request.method=='POST':
+ """       
 
+"""
+reqHostAthority로 merge
 def apply(request):
     if request.method=="POST":
         host = HostApplication()
@@ -70,12 +77,13 @@ def apply(request):
         host.intro = request.Get["intro"]
         host.save()
     return redirect('Account/myinfo.html')
-
+"""
 
    
-def hostapprove(request):
-    contents = HostApplication.objects.all()
-    return render(request, 'Account/Host approval.html', {'host_list': contents})
+def lookupReq(request):
+    request_list=HostApplication.objects.all()
+    return render(request, 'Account/Host approval.html',{"request_list":request_list})
+
 
 
 from django.contrib.auth.mixins import PermissionRequiredMixin

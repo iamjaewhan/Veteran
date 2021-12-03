@@ -8,6 +8,6 @@ urlpatterns=[
     path('signup/', views.signup, name='signup'),
     path('mypage/',views.mypage, name = 'mypage' ),
     path('reqHostAthority/', views.reqHostAthority, name = 'reqHostAthority'),
-    path('hostapply/apply', views.apply, name = 'apply'),
-    path('hostapprove/', views.hostapprove, name ='hostapprove'),
+    #path('hostapply/apply', views.apply, name = 'apply'),
+    path('lookupReq/', views.lookupReq, name ='lookupReq'),
 ]

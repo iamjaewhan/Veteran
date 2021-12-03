@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Host Approval</title>
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <style>
         body {
             font-family: 'Noto Sans KR';
@@ -259,31 +260,23 @@
                     신청 목록
                 </div>
             </div>
-
-
             <div class="applicants"> 
-                {% for each_applicant in list %}
-                <div class="applicant">
-                    <div>{{each_applicant.name}} | {{each_applicant.region}}</div>
-                    <div><button type="" class="btn">상세정보</button></div>
-                </div>
-                {% endfor %}
+            
             </div>
 
         </div>
         <div class="info">
 
             <div class="content">
-
+                <div class="section">신청 유저</div>
+                <div id="req_host"></div>
                 <div class="section">팀(동아리, 동호회) 명</div>
-                <div></div>
+                <div id="req_group_name"></div>
                 <div class="section">위치</div>
-                <div></div>
-                <div class="section">주 사용 경기장</div>
-                <div></div>
+                <div id="req_court_location"></div>
                 <div class="section">한줄 소개</div>
-                <div></div>
-                <div class="btns"><button class="lbtn">호스트 자격 승인</button><button class="rbtn">호스트 자격 거부</button></div>
+                <div id="req_intro"></div>
+                <div class="btns"><button class="lbtn" onclick="approveReq();">호스트 자격 승인</button><button class="rbtn" onclick="rejectReq();">호스트 자격 거부</button></div>
                 
             </div>
 
@@ -291,5 +284,60 @@
 
         </div>
     </div>
+    <script>
+        const request_list=[];
+        {% for req in request_list %}
+                request_list.push({
+                    host: "{{ req.host }}",
+                    group_name : "{{ req.group_name }}",
+                    court_location : "{{ req.court_location }}",
+                    intro : "{{ req.intro }}"
+                });
+        {% endfor %}
+
+        for (var i=0; i<request_list.length; i++){
+            var newdiv=document.createElement('div');
+            newdiv.id=i+1;
+            var c1div=document.createElement('div');
+            c1div.innerHTML=request_list[i]["host"]+" | "+request_list[i]["group_name"];
+            var c2div=document.createElement('div');
+            var cbutton=document.createElement('button');
+            cbutton.setAttribute('class','btn');
+            cbutton.setAttribute('id',i);
+            cbutton.setAttribute('onclick','showDetailInfo(this.id);');
+            cbutton.innerHTML="상세 조회";
+            c2div.appendChild(cbutton);
+            newdiv.appendChild(c1div);
+            newdiv.appendChild(c2div);
+            
+            $(".applicants").append(newdiv)
+        };
+
+    
+
+
+        function showDetailInfo(clicked_id){
+            var detail_host=document.getElementById("req_host");
+            var detail_group_name=document.getElementById('req_group_name');
+            var detail_court_loction=document.getElementById('req_court_location');
+            var detail_intro=document.getElementById('req_intro');
+            detail_req=request_list[clicked_id];
+            detail_host.innerHTML=detail_req["host"];
+            detail_group_name.innerHTML=detail_req["group_name"];
+            detail_court_loction.innerHTML=detail_req["court_location"];
+            detail_intro.innerHTML=detail_req["intro"];
+        };
+        
+
+        function approveReq(){
+            
+        };
+
+        function rejectReq(){
+
+        };
+
+
+    </script>
 </body>
 </html>

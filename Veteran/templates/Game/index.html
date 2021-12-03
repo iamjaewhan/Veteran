@@ -7,6 +7,9 @@
     <title>Document</title>
 </head>
 <body>
-    로그인 or 계정 생성 완료
+    <a href="{% url "Account:mypage" %}">내 정보</a>
+    {% if user.is_superuser %}
+    <p>test</p>
+    {% endif %}
 </body>
 </html>
