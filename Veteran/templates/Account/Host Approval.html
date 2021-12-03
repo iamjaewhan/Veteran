@@ -4,24 +4,66 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100&display=swap" rel="stylesheet">
+    
     <title>Host Approval</title>
+
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <style>
-        body {
-            font-family: 'Noto Sans KR';
-            margin: 0;
+        .imgcon2{
+            float: left;
+            height: 50px;
+            padding: 10px 40px;
+        }
+
+        navbar{
+            float: right;
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+            list-style-type: none;
+            position: fixed;
+            color: white;
+        }
+
+        nav-item{
+            padding: 15px;
+            cursor: pointer;
+        }
+
+        li{
+            float:right;
+            padding: 20px 40px;
         }
 
         @media(min-width:961px){
+            body {
+                font-family: 'Noto Sans KR' !important;
+                margin: 0;
+                background-color: rgb(47, 48, 58);
+                display: grid;
+                grid-template-rows: 1fr 20fr;
+                height: 100vh;
+            }
+
+            .header{
+                display: grid;
+                grid-template-columns: 3fr 7fr;
+            }
+
+            .gray {
+                background-color: rgb(235, 235, 235);
+            }
+
             .wrapper {
                 display: grid;
                 grid-template-columns: 3fr 7fr;
-                height: 100vh;
-                width: 100vw;
-                position: absolute;
-                z-index: 0;
+
             }
-    
+            
             .list {
                 display: grid;
                 grid-template-rows: 0.9fr 9.1fr;
@@ -47,7 +89,7 @@
                 width: 95%;
                 padding-left: 5px;
                 height: 50px;
-                margin-top: 4px;
+                margin-top: 10px;
                 background-color: rgb(75 77 92);
                 border-radius: 25px;
             }
@@ -113,29 +155,31 @@
                 color: rgb(247, 111, 34);
             }
     
-            .imgcon2 {
-                position: absolute;
-                z-index: 3;
-                height: 50px
-            }
-    
-            img {
-                padding: 10px;
-                height: 100%;
-            }
-    
             #wrapper {display: table;}
             #cell {display: table-cell; vertical-align: middle; text-align: center; font-size: x-large;}
         }
 
         @media(max-width:960px){
+            body {
+                font-family: 'Noto Sans KR' !important;
+                margin: 0;
+                background-color: rgb(47, 48, 58);
+                display: grid;
+                grid-template-rows: auto;
+            }
+            .header{
+                display: grid;
+                grid-template-columns: 3fr 7fr;
+            }
+            
+            .gray {
+                background-color: rgb(47, 48, 58);
+            }
             .wrapper {
                 display: grid;
                 grid-template-rows: 2fr 8fr;
                 height: 100vh;
-                width: 100vw;
-                position: absolute;
-                z-index: 0;
+
             }
     
             .list {
@@ -163,7 +207,7 @@
                 width: 95%;
                 padding-left: 5px;
                 height: 50px;
-                margin-top: 4px;
+                margin-top: 10px;
                 background-color: rgb(75 77 92);
                 border-radius: 25px;
             }
@@ -243,8 +287,6 @@
             #wrapper {display: table;}
             #cell {display: table-cell; vertical-align: middle; text-align: center; font-size: x-large;}
         }
-
-
         
     </style>
 
@@ -252,7 +294,19 @@
 </head>
 <body>
     {% load static %}
-    <div class="imgcon2"><img src="{% static 'img/veteran_logo.png' %}" alt=""></div>
+    <div class="header">
+        <div>
+            <div class="imgcon2"><img src="{% static 'img/veteran_logo.png' %}" alt=""></div>
+        </div>
+        <div class="gray">
+            
+            <ul class="navbar">
+                <li class="nav-item"><a href="#">👤 내 정보</a></li>
+                <li class="nav-item"><a href="#">🏠 홈</a></li>
+            </ul>
+        </div>
+
+    </div>
     <div class="wrapper">
         <div class="list">
             <div id="wrapper">
@@ -309,6 +363,8 @@
             c2div.appendChild(cbutton);
             newdiv.appendChild(c1div);
             newdiv.appendChild(c2div);
+
+            newdiv.setAttribute('class', 'applicant');
             
             $(".applicants").append(newdiv)
         };
