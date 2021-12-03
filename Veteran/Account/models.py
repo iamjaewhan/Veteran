@@ -52,4 +52,6 @@ class HostApplication(models.Model):
     court_location=models.CharField(verbose_name='장소',max_length=100, null=False)
     intro=models.CharField(verbose_name='한줄 소개', max_length=200, null=False)
     
+        
+    
     

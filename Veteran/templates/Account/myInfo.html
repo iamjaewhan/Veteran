@@ -2,7 +2,7 @@
 <html lang="ko">
     <head>
         <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100&display=swap" rel="stylesheet">
-        <link rel="stylesheet" type="text/css" href="myInfo.css">
+        <link rel="stylesheet" type="text/css" href="/static/css/myInfo.css">
         <style>
         div {
             width: 100%;
@@ -69,7 +69,7 @@
                       <li><a href="Account:logout">🚪 로그아웃</a></li>
                       <li><a href="#">🔐 회원해지</a></li>
                       {% if user.is_superuser %}
-                        <li><a href="Account:lookupReq">호스트 신청 승인</a></li>
+                        <li><a href="{% url 'Account:lookupReq' %}">호스트 신청 승인</a></li>
                       {% endif %}
                   </ul>
                 </div>

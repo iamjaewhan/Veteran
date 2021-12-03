@@ -4,6 +4,7 @@ from django.contrib import auth
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 
+import json
 from .models import User
 
 from .models import HostApplication
@@ -25,7 +26,7 @@ def login(request):
             )
             if user is not None:
                 auth.login(request,user)
-                return redirect('Account:mypage',user)
+                return redirect('Account:mypage')
         return redirect('Account:mypage')
     else:
         form=AuthenticationForm()
@@ -61,6 +62,11 @@ def reqHostAthority(request):
     return render(request,'Account/Host Application.html')
 
 """
+def approveReq(request):
+    if request.method=='POST':
+ """       
+
+"""
 reqHostAthority로 merge
 def apply(request):
     if request.method=="POST":
@@ -75,8 +81,8 @@ def apply(request):
 
    
 def lookupReq(request):
-    request_list = HostApplication.objects.all()
-    return render(request, 'Account/Host approval.html', {'request_list': request_list})
+    request_list=HostApplication.objects.all()
+    return render(request, 'Account/Host approval.html',{"request_list":request_list})
 
 
 
