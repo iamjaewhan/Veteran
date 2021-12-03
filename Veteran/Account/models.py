@@ -6,6 +6,7 @@ from django.contrib.auth.models import AbstractUser
 
 
 class User(AbstractUser):
+    username=models.EmailField(unique=True,null=False,default=False,max_length=100)
     nickname = models.CharField(
         verbose_name='닉네임', 
         max_length=15, 
@@ -15,6 +16,7 @@ class User(AbstractUser):
     )
     phone = models.CharField(verbose_name='전화 번호', max_length=13,null=False, unique=True,default = '')
     is_host=models.BooleanField(null=False, default=False)
+    is_superuser=models.BooleanField(null=False,default=0)
     review_relations=models.ManyToManyField(
         'self',
         symmetrical=False,
@@ -22,7 +24,7 @@ class User(AbstractUser):
         related_name="r")
     
     def __str__(self):
-        return self.email
+        return self.username
     
 class Review(models.Model):
     reviewer=models.ForeignKey(User,on_delete=models.CASCADE,related_name='reviewing')

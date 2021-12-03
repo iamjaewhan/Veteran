@@ -25,8 +25,8 @@ def login(request):
             )
             if user is not None:
                 auth.login(request,user)
-                return redirect('Game:gamelist',user)
-        return redirect('Game:gamelist')
+                return redirect('Account:mypage',user)
+        return redirect('Account:mypage')
     else:
         form=AuthenticationForm()
         return render(request,'Account/welcome_login.html')
@@ -42,11 +42,11 @@ def signup(request):
         if request.POST['pw'] == request.POST['cpw']:
             user = User.objects.create_user(username=request.POST['email'], password=request.POST['pw'], nickname=request.POST['nickname'], phone=request.POST['phone'])
             auth.login(request,user)
-            return redirect('Game:gamelist')
+            return redirect('Account:mypage')
     return render(request,'Account/join_page.html')
     
 def mypage(request):
-    return render(request, 'Account/myinfo.html',{'user':request.user})
+    return render(request, 'Account/myinfo.html')
 
 @csrf_exempt
 def reqHostAthority(request):
@@ -57,7 +57,7 @@ def reqHostAthority(request):
         host.court_location = request.POST["field"]
         host.intro = request.POST["intro"]
         host.save()
-        return redirect('Game:gamelist')
+        return redirect('Account:mypage')
     return render(request,'Account/Host Application.html')
 
 """
