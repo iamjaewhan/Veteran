@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.core import serializers
 
 
 # Create your models here.
@@ -51,6 +52,20 @@ class HostApplication(models.Model):
     group_name=models.CharField(verbose_name='모임 이름',max_length=20, null=False,default='veterans')
     court_location=models.CharField(verbose_name='장소',max_length=100, null=False)
     intro=models.CharField(verbose_name='한줄 소개', max_length=200, null=False)
+    
+    
+    def toDict(application):
+        if application==None:
+            return None
+        
+        dictionary = {}
+        dictionary["host"] = application.host
+        dictionary["group_name"] = application.group_name
+        dictionary["court_location"] = application.court_location
+        dictionary["intro"] = application.intro
+        
+        return dictionary
+    
     
         
     
