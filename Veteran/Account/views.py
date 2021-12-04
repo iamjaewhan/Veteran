@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth.forms import AuthenticationForm,  UserCreationForm
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
@@ -86,17 +86,4 @@ def lookupReq(request):
 
 
 
-from django.contrib.auth.mixins import PermissionRequiredMixin
-"""
-class CreateWorkView(PermissionRequiredMixin, CreateView):
-    raise_exception = True
-    permission_required = 'main.add_work'
-    # 여러 권한
-    # permission_required = ('polls.can_open', 'polls.can_edit')
-    model = Work
-    form_class = WorkForm
-    template_name = 'main/work_form.html'
-
-    def get_success_url(self):
-        return reverse('index')
-"""
+    
