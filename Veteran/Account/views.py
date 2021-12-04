@@ -55,7 +55,7 @@ def reqHostAthority(request):
         host = HostApplication()
         host.host = request.user
         host.group_name = request.POST["team_name"]
-        host.court_location = request.POST["field"]
+        host.court_location = request.POST["fullAddress"]
         host.intro = request.POST["intro"]
         host.save()
         return redirect('Account:mypage')
