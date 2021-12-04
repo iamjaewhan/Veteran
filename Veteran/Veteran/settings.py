@@ -9,9 +9,6 @@ https://docs.djangoproject.com/en/3.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
-import pymysql
-pymysql.install_as_MySQLdb()
-
 from pathlib import Path
 import os,json
 from django.core.exceptions import ImproperlyConfigured
