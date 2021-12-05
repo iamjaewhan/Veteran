@@ -265,19 +265,22 @@
             </div>
 
         </div>
-        <div class="info">
-
+        <div class="info" >
+            <form mothod=="POST" action="{% url 'Account:approveReq' %}">
             <div class="content">
                 <div class="section">신청 유저</div>
-                <div id="req_host"></div>
+                <input id="req_host" ></input>
                 <div class="section">팀(동아리, 동호회) 명</div>
-                <div id="req_group_name"></div>
+                <input id="req_group_name" type='text'></input>
                 <div class="section">위치</div>
-                <div id="req_court_location"></div>
+                <input id="req_court_location" type='text'></input>
                 <div class="section">한줄 소개</div>
-                <div id="req_intro"></div>
-                <div class="btns"><button class="lbtn" onclick="approveReq();">호스트 자격 승인</button><button class="rbtn" onclick="rejectReq();">호스트 자격 거부</button></div>
-                
+                <input id="req_intro" type='text'></input>
+                <div class="btns">
+                    <button type="submit" class="lbtn">호스트 자격 승인</button>
+                    <button class="rbtn" onclick="return rejectReq(this.form);">호스트 자격 거부</button>
+                </div>
+            </form>
             </div>
 
         </div>
@@ -316,24 +319,39 @@
 
 
         function showDetailInfo(clicked_id){
+            detail_req=request_list[clicked_id];
             var detail_host=document.getElementById("req_host");
             var detail_group_name=document.getElementById('req_group_name');
-            var detail_court_loction=document.getElementById('req_court_location');
+            var detail_court_location=document.getElementById('req_court_location');
             var detail_intro=document.getElementById('req_intro');
-            detail_req=request_list[clicked_id];
-            detail_host.innerHTML=detail_req["host"];
-            detail_group_name.innerHTML=detail_req["group_name"];
-            detail_court_loction.innerHTML=detail_req["court_location"];
-            detail_intro.innerHTML=detail_req["intro"];
+
+            detail_host.setAttribute('value',request_list["host"]);
+            detail_host.value=detail_req['host'];
+            
+
+            detail_group_name.setAttribute('value',request_list['group_name']);
+            detail_group_name.value=detail_req['group_name'];
+            
+
+            detail_court_location.setAttribute('value',request_list['court_location']);
+            detail_court_location.value=detail_req['court_location'];
+            
+
+            detail_intro.setAttribute('value',request_list['intro']);
+            detail_intro.value=detail_req['intro'];
+
+            detail_host.readOnly=true;
+            detail_group_name.readOnly=true;
+            detail_court_location.readOnly=true;
+            detail_intro.readOnly=true;
+            
         };
         
 
-        function approveReq(){
-            
-        };
-
-        function rejectReq(){
-
+        function rejectReq(form){
+            form.action='{% url 'Account:deleteReq' %}';
+            form.submit();
+            return true;
         };
 
 

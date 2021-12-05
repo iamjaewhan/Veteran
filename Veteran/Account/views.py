@@ -85,6 +85,26 @@ def lookupReq(request):
     request_list=HostApplication.objects.all()
     return render(request, 'Account/Host approval.html',{"request_list":request_list})
 
+def approveReq(request):
+    print("##################################################")
+    print("get")
+ 
+    return redirect('Account:lookupReq')
+
+def deleteReq(request):
+    if request['req_host']:
+        print("##################################################")
+        print("get")
+        """
+        req_host=HostApplication.objects.get(host=request['req_host'])
+        if req_host:
+            req_host.delete()
+        else:
+            return redirect('Account:lookupReq')
+        """
+            
+    return redirect('Account:lookupReq')
+
 
 
 from django.contrib.auth.mixins import PermissionRequiredMixin

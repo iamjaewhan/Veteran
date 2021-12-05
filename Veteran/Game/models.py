@@ -20,6 +20,8 @@ class Game(models.Model):
             return False
         else:
             return True
+        
+        
     
 class Game_Participants(models.Model):
     game=models.ForeignKey(Game, on_delete=models.PROTECT)
