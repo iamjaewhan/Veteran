@@ -86,9 +86,8 @@ def lookupReq(request):
     return render(request, 'Account/Host approval.html',{"request_list":request_list})
 
 def approveReq(request):
-    print("##################################################")
-    print("get")
- 
+    if request.method=='POST':
+        print(request.POST['req_host'])
     return redirect('Account:lookupReq')
 
 def deleteReq(request):
