@@ -266,21 +266,22 @@
 
         </div>
         <div class="info">
-            
+            <form method="post">
+            {% csrf_token %}
             <div class="content">
                 <div class="section">신청유저</div>
-                <div id="req_host"></div>
+                <input id="req_host"readonly></input>
                 <div class="section">팀(동아리, 동호회) 명</div>
-                <div id="req_group_name"></div>
+                <input id="req_group_name"readonly></input>
                 <div class="section">위치</div>
-                <div id="req_court_location"></div>
+                <input id="req_court_location"readonly></input>
                 <div class="section">한줄 소개</div>
-                <div id="req_intro"></div>
-                <form method="post">
+                <input id="req_intro"></input>
+                
                 <div class="btns"><button class="lbtn" onclick="approveReq();">호스트 자격 승인</button>
                 </form>
-                <a href= {% url 'Account:hostreq-delete' host.pk %} ><button class="rbtn" onclick="rejectReq();">호스트 자격 거부</button></a></div>
-                
+                {% comment %} <a href= {% url 'Account:hostreq-delete' host.id %} ><button class="rbtn" onclick="rejectReq();">호스트 자격 거부</button></a></div>
+                 {% endcomment %}
             </div>
 
         </div>

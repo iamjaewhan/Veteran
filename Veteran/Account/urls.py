@@ -10,5 +10,5 @@ urlpatterns=[
     path('reqHostAthority/', views.reqHostAthority, name = 'reqHostAthority'),
     path('approveReq/', views.approveReq, name = 'approveReq'),
     path('lookupReq/', views.lookupReq, name ='lookupReq'),
-    path('lookupReq/<int:pk>/delete', views.hostreq_delete, name='hostreq-delete'),
+    path('lookupReq/<int:post_id>/delete', views.hostreq_delete, name='hostreq-delete'),
 ]
