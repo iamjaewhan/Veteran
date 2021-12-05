@@ -1,0 +1,12 @@
+<div id="main" class="wrapper style1">
+	<div align = "center" class="container">
+		<p style="font-family:'Nanum Gothic'; font-size:20px; font-weight: 500;">{{host.host}}</p>
+		<p style="font-family:'Nanum Gothic'; font-size:15px;">승인거부하시겠습니까?</p>
+		<section id="content">
+			<form method="POST">
+			{% csrf_token %}
+			<input id="button" type = "submit" value="승인거부하기">
+			</form>
+		</section>
+	</div>
+	</div>

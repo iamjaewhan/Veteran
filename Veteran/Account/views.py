@@ -6,6 +6,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 import json
 from .models import User
+from .forms import HostForm
 
 from .models import HostApplication
 
@@ -49,8 +50,9 @@ def signup(request):
 def mypage(request):
     return render(request, 'Account/myinfo.html')
 
+#호스트 권한 신청
 @csrf_exempt
-def reqHostAthority(request):
+def reqHostAthority(request): 
     if request.method=="POST":
         host = HostApplication()
         host.host = request.user
@@ -61,10 +63,25 @@ def reqHostAthority(request):
         return redirect('Account:mypage')
     return render(request,'Account/Host Application.html')
 
-"""
-def approveReq(request):
-    if request.method=='POST':
- """       
+# 호스트 승인
+def approveReq(request,host_id):
+    if request.method == 'POST':
+        host_form = HostForm(request.POST)
+        host = HostApplication.objects.get(id=host_id)
+        # 유효성 검사를 통과하면 데이터베이스에 저장
+        if host_form.is_valid():
+            # HostForm > Host 모델 저장
+            new_host = host_form.save()
+            # 신청 목록에서는 삭제
+            host.delete()
+            return redirect('Account:lookupReq', host_id = new_host.id )
+
+    else:
+        host_form = HostForm()
+    return render(request, 'Account/Host approval.html', {'form' : host_form})
+
+        
+      
 
 """
 reqHostAthority로 merge
@@ -79,10 +96,19 @@ def apply(request):
     return redirect('Account/myinfo.html')
 """
 
-   
+# 호스트 권한 신청 목록 조회
 def lookupReq(request):
     request_list=HostApplication.objects.all()
     return render(request, 'Account/Host approval.html',{"request_list":request_list})
+
+# 호스트 권한 거절
+def hostreq_delete(request, host_id):
+    host = HostApplication.objects.get(id=host_id)
+    if request.method =='POST':
+        host.delete()
+        return redirect('Account:lookupReq')
+    else:
+        return render(request, 'Account/host_confirm_delete.html', {'host': host})
 
 
 
