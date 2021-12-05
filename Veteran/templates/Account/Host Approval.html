@@ -266,15 +266,15 @@
 
         </div>
         <div class="info">
-            {% for request in request_list %}
+            
             <div class="content">
-                <div class="section">신청유저{{request.host}}</div>
+                <div class="section">신청유저</div>
                 <div id="req_host"></div>
-                <div class="section">팀(동아리, 동호회) 명{{request.group_name}}</div>
+                <div class="section">팀(동아리, 동호회) 명</div>
                 <div id="req_group_name"></div>
-                <div class="section">위치{{request.court_location}}</div>
+                <div class="section">위치</div>
                 <div id="req_court_location"></div>
-                <div class="section">한줄 소개{{request.intro}}</div>
+                <div class="section">한줄 소개</div>
                 <div id="req_intro"></div>
                 <form method="post">
                 <div class="btns"><button class="lbtn" onclick="approveReq();">호스트 자격 승인</button>
