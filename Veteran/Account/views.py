@@ -12,7 +12,7 @@ from .models import HostApplication
 
 
 # Create your views here.
-#수정필요
+#수정필요-validation이 안됨
 def login(request):
     if request.method=="POST":
         form=AuthenticationForm(request=request,data=request.POST)
@@ -31,6 +31,7 @@ def login(request):
     else:
         form=AuthenticationForm()
         return render(request,'Account/welcome_login.html')
+    
     
 def logout(request):
     auth.logout(request)
