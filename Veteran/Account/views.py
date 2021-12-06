@@ -13,19 +13,18 @@ from .models import User, Host, HostApplication
 #수정필요-validation이 안됨
 def login(request):
     if request.method=="POST":
-        form=AuthenticationForm(request=request,data=request.POST)
-        if form.is_valid():
-            username=form.cleaned_data.get('username')
-            password=form.cleaned_data.get('password')           
-            user=auth.authenticate(
-                username=username,
-                request=request,
-                password=password
-            )
-            if user is not None:
-                auth.login(request,user)
-                return redirect('Account:mypage')
-        return redirect('Account:mypage')
+        username=request.POST['username']
+        password=request.POST['password']           
+        user=auth.authenticate(
+            request,
+            username=username,
+            password=password
+        )
+        if user is not None:
+            auth.login(request,user)
+            return redirect('Account:mypage')
+        else:
+            return render(request, 'Account/welcome_login.html',{'error':"일치하는 사용자가 없습니다"})
     else:
         return render(request,'Account/welcome_login.html')
     
