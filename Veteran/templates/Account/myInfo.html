@@ -90,7 +90,7 @@
                   </ul>
                   <hr style="border: solid 3px #686868; margin-left: 50px; margin-right: 50px;">
                   <ul class ="nav2">
-                      <li><a href="Account:logout">🚪 로그아웃</a></li>
+                      <li><a href="{% url 'Account:logout' %}">🚪 로그아웃</a></li>
                       <li><a href="#">🔐 회원해지</a></li>
                       {% if user.is_superuser %}
                         <li><a href="{% url 'Account:lookupReq' %}">호스트 신청 승인</a></li>
