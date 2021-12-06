@@ -20,6 +20,11 @@ class Game(models.Model):
         else:
             return True
         
+    def updateState(self):
+        if self.isProgressed():
+            self.completed=True
+        return True
+        
     def toDict(self):
         dictionary = {}
         dictionary["host"] = self.host
@@ -36,3 +41,5 @@ class Game_Participants(models.Model):
     
     class Meta:
         unique_together = (('game', 'user'),)
+        
+    

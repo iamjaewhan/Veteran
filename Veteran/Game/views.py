@@ -10,3 +10,8 @@ def gamelist(request):
         if not (game.isProgressed()):
             game_list.append(game.toDict())
     return render(request,'Game/index.html',{'game_list':game_list})
+
+
+def participate(request):
+    return
+
