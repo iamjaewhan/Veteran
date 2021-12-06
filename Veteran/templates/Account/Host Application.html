@@ -229,19 +229,9 @@
                             <input type="text" id="sample6_address" placeholder="주소"><br>
                             <input type="text" id="sample6_detailAddress" placeholder="상세주소">
                             <input type="text" id="sample6_extraAddress" placeholder="참고항목"><br>
-                            <input type="text" id="fullAddress">
+                            <input type="text" id="fullAddress" name="fullAddress">
                         </span>
                         {% csrf_token %}
-                        <br>
-                        <span class="main-field">
-                            <label for="field">주 사용 경기장</label>
-                            <select name="field" id="" required>
-                                <option value="">경기장을 선택해주세요!</option>
-                                <option value="a1">a농구장</option>
-                                <option value="a2">b농구장</option>
-                                <option value="a3">c농구장</option>
-                            </select>
-                        </span>
                         <br>
                         <span class="host-intro">
                             <label for="intro">한줄 소개</label>

@@ -10,5 +10,6 @@ urlpatterns=[
     path('reqHostAthority/', views.reqHostAthority, name = 'reqHostAthority'),
     path('approveReq/', views.approveReq, name = 'approveReq'),
     path('lookupReq/', views.lookupReq, name ='lookupReq'),
-    path('lookupReq/delete/', views.hostreq_delete, name='hostreq-delete'),
+    path('approveReq',views.approveReq,name='approveReq'),
+    path('deleteReq',views.deleteReq,name='deleteReq'),
 ]

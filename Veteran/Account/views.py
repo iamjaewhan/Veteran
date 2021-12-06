@@ -14,7 +14,7 @@ from django.http import HttpResponse
 
 
 # Create your views here.
-#수정필요
+#수정필요-validation이 안됨
 def login(request):
     if request.method=="POST":
         form=AuthenticationForm(request=request,data=request.POST)
@@ -33,6 +33,7 @@ def login(request):
     else:
         form=AuthenticationForm()
         return render(request,'Account/welcome_login.html')
+    
     
 def logout(request):
     auth.logout(request)
@@ -58,7 +59,7 @@ def reqHostAthority(request):
         host = HostApplication()
         host.host = request.user
         host.group_name = request.POST["team_name"]
-        host.court_location = request.POST["field"]
+        host.court_location = request.POST["fullAddress"]
         host.intro = request.POST["intro"]
         host.save()
         return redirect('Account:mypage')
@@ -100,14 +101,38 @@ def lookupReq(request):
     request_list=HostApplication.objects.all()
     return render(request, 'Account/Host approval.html',{"request_list":request_list})
 
-# 호스트 권한 거절
-def hostreq_delete(request, host):
-    host = HostApplication.objects.get(host)
-    if request.method =='POST':
-        host.delete()
-        return redirect('Account:lookupReq')
-    else:
-        return render(request, 'Account/host_confirm_delete.html', {'host': host})
+def approveReq(request):
+    if request.method=='POST':
+        print(request.POST['req_host'])
+    return redirect('Account:lookupReq')
+
+def deleteReq(request):
+    if request['req_host']:
+        print("##################################################")
+        print("get")
+        """
+        req_host=HostApplication.objects.get(host=request['req_host'])
+        if req_host:
+            req_host.delete()
+        else:
+            return redirect('Account:lookupReq')
+        """
+            
+    return redirect('Account:lookupReq')
 
 
-    
+
+from django.contrib.auth.mixins import PermissionRequiredMixin
+"""
+class CreateWorkView(PermissionRequiredMixin, CreateView):
+    raise_exception = True
+    permission_required = 'main.add_work'
+    # 여러 권한
+    # permission_required = ('polls.can_open', 'polls.can_edit')
+    model = Work
+    form_class = WorkForm
+    template_name = 'main/work_form.html'
+
+    def get_success_url(self):
+        return reverse('index')
+"""
