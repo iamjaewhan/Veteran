@@ -10,7 +10,6 @@ from .models import User, Host, HostApplication
 
 
 # Create your views here.
-#수정필요-validation이 안됨
 def login(request):
     if request.method=="POST":
         username=request.POST['username']
@@ -41,6 +40,8 @@ def signup(request):
             user = User.objects.create_user(username=request.POST['email'], password=request.POST['pw'], nickname=request.POST['nickname'], phone=request.POST['phone'])
             auth.login(request,user)
             return redirect('Account:mypage')
+        else:
+            return render(request,'Account/join_page.html',{'error':'회원 가입 정보를 확인해주세요'})
     return render(request,'Account/join_page.html')
     
 def mypage(request):
