@@ -12,26 +12,22 @@ from .models import User, Host, HostApplication
 # Create your views here.
 #수정필요-validation이 안됨
 def login(request):
-    if request.user:
-        return redirect('Game:gamelist')
+    if request.method=="POST":
+        form=AuthenticationForm(request=request,data=request.POST)
+        if form.is_valid():
+            username=form.cleaned_data.get('username')
+            password=form.cleaned_data.get('password')           
+            user=auth.authenticate(
+                username=username,
+                request=request,
+                password=password
+            )
+            if user is not None:
+                auth.login(request,user)
+                return redirect('Account:mypage')
+        return redirect('Account:mypage')
     else:
-        if request.method=="POST":
-            form=AuthenticationForm(request=request,data=request.POST)
-            if form.is_valid():
-                username=form.cleaned_data.get('username')
-                password=form.cleaned_data.get('password')           
-                user=auth.authenticate(
-                    request=request,
-                    username=username,
-                    password=password
-                )
-                if user is not None:
-                    auth.login(request,user)
-                    return redirect('Account:mypage')
-            return redirect('Account:mypage')
-        else:
-            form=AuthenticationForm()
-            return render(request,'Account/welcome_login.html')
+        return render(request,'Account/welcome_login.html')
     
     
 def logout(request):
@@ -93,6 +89,3 @@ def deleteReq(request):
         req_host.delete()
     return redirect('Account:lookupReq')
 
-
-
-from django.contrib.auth.mixins import PermissionRequiredMixin
