@@ -8,8 +8,9 @@ import json
 from .models import User
 from .forms import HostForm
 
-from .models import HostApplication
+from .models import HostApplication, Host
 
+from django.http import HttpResponse
 
 
 # Create your views here.
@@ -36,7 +37,7 @@ def login(request):
 def logout(request):
     auth.logout(request)
     return redirect('Account:login')
-    
+
 
 ##수정필요
 def signup(request):
@@ -64,24 +65,22 @@ def reqHostAthority(request):
     return render(request,'Account/Host Application.html')
 
 # 호스트 승인
-def approveReq(request,host_id):
+def approveReq(request,host):
     if request.method == 'POST':
-        host_form = HostForm(request.POST)
-        host = HostApplication.objects.get(id=host_id)
-        # 유효성 검사를 통과하면 데이터베이스에 저장
-        if host_form.is_valid():
-            # HostForm > Host 모델 저장
-            new_host = host_form.save()
-            # 신청 목록에서는 삭제
-            host.delete()
-            return redirect('Account:lookupReq', host_id = new_host.id )
-
-    else:
-        host_form = HostForm()
-    return render(request, 'Account/Host approval.html', {'form' : host_form})
-
+        host = Host()
+        host.host = request.POST['host']
+        host.group_name = request.POST['teamname']
+        host.court_location = request.POST['location']
+        host.intro = request.POST['intro']
+        host.save()
         
-      
+        # 신청 목록에서는 삭제
+        hostreq = HostApplication.objects.get(host)
+        hostreq.delete()
+        return HttpResponse(host)
+        # return redirect('Account:lookupReq', host = host.host)
+
+    return render(request, 'Account/Host approval.html')
 
 """
 reqHostAthority로 merge
@@ -102,14 +101,13 @@ def lookupReq(request):
     return render(request, 'Account/Host approval.html',{"request_list":request_list})
 
 # 호스트 권한 거절
-def hostreq_delete(request, host_id):
-    host = HostApplication.objects.get(id=host_id)
+def hostreq_delete(request, host):
+    host = HostApplication.objects.get(host)
     if request.method =='POST':
         host.delete()
         return redirect('Account:lookupReq')
     else:
         return render(request, 'Account/host_confirm_delete.html', {'host': host})
-
 
 
     

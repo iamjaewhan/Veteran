@@ -266,22 +266,24 @@
 
         </div>
         <div class="info">
-            <form method="post">
-            {% csrf_token %}
+            
             <div class="content">
                 <div class="section">신청유저</div>
-                <input id="req_host"readonly></input>
+                <div id="req_host" name = "host"></div>
                 <div class="section">팀(동아리, 동호회) 명</div>
-                <input id="req_group_name"readonly></input>
+                <div id="req_group_name" name = "teamname"></div>
                 <div class="section">위치</div>
-                <input id="req_court_location"readonly></input>
+                <div id="req_court_location" name="location"></div>
                 <div class="section">한줄 소개</div>
-                <input id="req_intro"></input>
-                
-                <div class="btns"><button class="lbtn" onclick="approveReq();">호스트 자격 승인</button>
+                <div id="req_intro" name = "intro"></div>
+                <form method="post" action="{% url 'Account:lookupReq' %}">
+                {% csrf_token %}
+                <div class="btns"><button class="lbtn" >호스트 자격 승인</button>
                 </form>
-                {% comment %} <a href= {% url 'Account:hostreq-delete' host.id %} ><button class="rbtn" onclick="rejectReq();">호스트 자격 거부</button></a></div>
-                 {% endcomment %}
+               
+                <button class="rbtn" onclick='return submit2(this.form);' >호스트 자격 거부</button></div>
+                
+                
             </div>
 
         </div>
@@ -289,6 +291,9 @@
         </div>
     </div>
     <script>
+        
+        
+          
         const request_list=[];
         {% for req in request_list %}
                 request_list.push({
@@ -339,6 +344,12 @@
         function rejectReq(){
 
         };
+        function submit2(frm) { 
+            frm.action="{% url 'Account:hostreq-delete' %}"; 
+            frm.submit(); 
+            return true; 
+        } 
+          
 
 
     </script>
