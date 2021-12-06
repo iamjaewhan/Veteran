@@ -72,32 +72,25 @@ def lookupReq(request):
 
 def approveReq(request):
     if request.method=='POST':
-        req_host=HostApplication.objects.filter(group_name=request.POST['group_name'])
+        req_id=User.objects.get(username=request.POST['host'])
+        req_host=HostApplication.objects.get(host=req_id)
         if req_host:
-            """
             new_host=Host()
-            new_host.host=req_host.host,
-            new_host.group_name=req_host.group_name,
-            new_host.court_location=req_host.court_location,
+            new_host.host=req_id
+            new_host.group_name=req_host.group_name
+            new_host.court_location=req_host.court_location
             new_host.intro=req_host.intro
             new_host.save()
             req_host.delete()
-            """
             return redirect('Account:lookupReq')
+        return redirect('Account:lookupReq')
     return redirect('Account:lookupReq')
 
 def deleteReq(request):
-    if request['req_host']:
-        print("##################################################")
-        print("get")
-        """
-        req_host=HostApplication.objects.get(host=request['req_host'])
-        if req_host:
-            req_host.delete()
-        else:
-            return redirect('Account:lookupReq')
-        """
-            
+    if request.method=='POST':
+        req_id=User.objects.get(username=request.POST['host'])
+        req_host=HostApplication.objects.get(host=req_id)
+        req_host.delete()
     return redirect('Account:lookupReq')
 
 
