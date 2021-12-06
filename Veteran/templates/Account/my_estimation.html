@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100&display=swap" rel="stylesheet">
+
+    <title>My Estimation</title>
+
+    <style>
+        body{
+            font-family: 'Noto Sans KR', sans-serif;
+            list-style: none;
+            text-decoration: none;
+            border-collapse: collapse;
+            margin:0;
+            padding:0;
+            background-color: #2F303A;
+        }
+        .wrap {
+            width: 100%;
+            height: 100vh;
+            float: left;
+            box-sizing: border-box;
+            background: #2F303A;
+        }
+
+        .header h1{
+            margin-top: 50px;
+            text-align:center;
+            color: white;
+        }
+
+        .estimations{
+            text-align: center;
+            margin-left: 25%;
+        }
+        .estimation1 {
+            width:70%;
+            height: 200px;
+            box-sizing: border-box;
+            background: rgba(235, 235, 235, 0.1);
+            margin-top: 80px;
+            position: relative;
+            border-radius: 15px;
+            color: white;
+        }
+
+        .estimation2{
+            width:70%;
+            height: 200px;
+            box-sizing: border-box;
+            background: rgba(235, 235, 235, 0.1);
+            margin-top: 80px;
+            position: relative;
+            border-radius: 15px;
+            color: white;
+        }
+
+        .back{
+            text-align: center;
+            margin-top: 50px;
+        }
+        .back a{
+            text-align: center;
+            color: white;
+            font-size: 150%;
+        }
+        a {text-decoration:none}
+
+        .rating{
+            color: #F76F22;
+            font-size: 400%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <div class="header">
+            <img 
+                src = "veteran logo.png"
+                style= "float:left; margin-left: 50px;margin-top: 50px;"
+            />
+            <br>
+            <h1> ~~님에 대한 평가는 다음과 같습니다!</h1>
+        </div>
+        <div class="estimations">
+            <div class="estimation1">
+                <h2>매너 점수 : </h2>
+                <div class="manner">
+                    <div class="rating">
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                    </div>
+                </div>
+                <h3>총 n개의 평가</h3>
+            </div>
+        </div>
+        <div class="back">
+            <a href="#">뒤로가기</a>
+        </div>
+        <br>
+    </div>
+</body>
