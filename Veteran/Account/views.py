@@ -5,32 +5,33 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 
 import json
-from .models import User
-
-from .models import HostApplication
+from .models import User, Host, HostApplication
 
 
 
 # Create your views here.
 #수정필요-validation이 안됨
 def login(request):
-    if request.method=="POST":
-        form=AuthenticationForm(request=request,data=request.POST)
-        if form.is_valid():
-            username=form.cleaned_data.get('username')
-            password=form.cleaned_data.get('password')           
-            user=auth.authenticate(
-                request=request,
-                username=username,
-                password=password
-            )
-            if user is not None:
-                auth.login(request,user)
-                return redirect('Account:mypage')
-        return redirect('Account:mypage')
+    if request.user:
+        return redirect('Game:gamelist')
     else:
-        form=AuthenticationForm()
-        return render(request,'Account/welcome_login.html')
+        if request.method=="POST":
+            form=AuthenticationForm(request=request,data=request.POST)
+            if form.is_valid():
+                username=form.cleaned_data.get('username')
+                password=form.cleaned_data.get('password')           
+                user=auth.authenticate(
+                    request=request,
+                    username=username,
+                    password=password
+                )
+                if user is not None:
+                    auth.login(request,user)
+                    return redirect('Account:mypage')
+            return redirect('Account:mypage')
+        else:
+            form=AuthenticationForm()
+            return render(request,'Account/welcome_login.html')
     
     
 def logout(request):
@@ -62,23 +63,7 @@ def reqHostAthority(request):
         return redirect('Account:mypage')
     return render(request,'Account/Host Application.html')
 
-"""
-def approveReq(request):
-    if request.method=='POST':
- """       
 
-"""
-reqHostAthority로 merge
-def apply(request):
-    if request.method=="POST":
-        host = HostApplication()
-        host.host = request.Get["username"]
-        host.group_name = request.Get["team_name"]
-        host.court_location = request.Get["field"]
-        host.intro = request.Get["intro"]
-        host.save()
-    return redirect('Account/myinfo.html')
-"""
 
    
 def lookupReq(request):
@@ -87,7 +72,18 @@ def lookupReq(request):
 
 def approveReq(request):
     if request.method=='POST':
-        print(request.POST['req_host'])
+        req_host=HostApplication.objects.filter(group_name=request.POST['group_name'])
+        if req_host:
+            """
+            new_host=Host()
+            new_host.host=req_host.host,
+            new_host.group_name=req_host.group_name,
+            new_host.court_location=req_host.court_location,
+            new_host.intro=req_host.intro
+            new_host.save()
+            req_host.delete()
+            """
+            return redirect('Account:lookupReq')
     return redirect('Account:lookupReq')
 
 def deleteReq(request):
@@ -107,16 +103,3 @@ def deleteReq(request):
 
 
 from django.contrib.auth.mixins import PermissionRequiredMixin
-"""
-class CreateWorkView(PermissionRequiredMixin, CreateView):
-    raise_exception = True
-    permission_required = 'main.add_work'
-    # 여러 권한
-    # permission_required = ('polls.can_open', 'polls.can_edit')
-    model = Work
-    form_class = WorkForm
-    template_name = 'main/work_form.html'
-
-    def get_success_url(self):
-        return reverse('index')
-"""
