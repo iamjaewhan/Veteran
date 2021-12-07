@@ -150,7 +150,29 @@
 
                 </div>
                 {% endfor %}
+                <!--이전페이지-->
+                {% if game_list.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ game_list.previous_page_number }}">이전</a>
+                </li>
 
+                {% else %}
+                <li class="page-item disabled">
+                    <a class="page-link" tabindex="-1" aria-disabled="true" href="#">이전</a>
+                </li>
+                {% endif %}
+
+                <!--다음페이지-->
+                {% if game_list.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ game_list.next_page_number }}">다음</a>
+                </li>
+
+                {% else %}
+                <li class="page-item disabled">
+                    <a class="page-link" tabindex="-1" aria-disabled="true" href="#">다음</a>
+                </li>
+                {% endif %}
             </div>
         </div>
 
