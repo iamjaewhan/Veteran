@@ -5,8 +5,10 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 
 import json
-from .models import User, Host, HostApplication
 
+# from Veteran.Veteran.Account import models
+from Game.models import Game
+from .models import User, Host, HostApplication
 
 
 # Create your views here.
@@ -47,6 +49,9 @@ def signup(request):
 def mypage(request):
     return render(request, 'Account/myinfo.html')
 
+def review(request):
+    return render(request, 'Account/games_review.html')
+
 @csrf_exempt
 def reqHostAthority(request):
     if request.method=="POST":
@@ -59,9 +64,10 @@ def reqHostAthority(request):
         return redirect('Account:mypage')
     return render(request,'Account/Host Application.html')
 
+def lookupGames(request):
+    participated_games=Game.objects.all()
+    return render(request, 'Account/games_review.html', {"participated_games":participated_games})
 
-
-   
 def lookupReq(request):
     request_list=HostApplication.objects.all()
     return render(request, 'Account/Host approval.html',{"request_list":request_list})
