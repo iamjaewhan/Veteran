@@ -10,7 +10,7 @@ urlpatterns=[
     path('mypage/',views.mypage, name = 'mypage' ),
     path('reqHostAthority/', views.reqHostAthority, name = 'reqHostAthority'),
     path('lookupReq/', views.lookupReq, name ='lookupReq'),
-    path('approveReq',views.approveReq,name='approveReq'),
-    path('deleteReq',views.deleteReq,name='deleteReq'),
-    path('review/', views.review,name='review'),
+    path('approveReq/',views.approveReq,name='approveReq'),
+    path('deleteReq/',views.deleteReq,name='deleteReq'),
+    path('lookupInfo/', views.lookupInfo,name='lookupInfo'),
 ]
