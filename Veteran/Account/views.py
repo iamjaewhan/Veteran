@@ -10,22 +10,20 @@ from .models import User, Host, HostApplication
 
 
 # Create your views here.
-#수정필요-validation이 안됨
 def login(request):
     if request.method=="POST":
-        form=AuthenticationForm(request=request,data=request.POST)
-        if form.is_valid():
-            username=form.cleaned_data.get('username')
-            password=form.cleaned_data.get('password')           
-            user=auth.authenticate(
-                username=username,
-                request=request,
-                password=password
-            )
-            if user is not None:
-                auth.login(request,user)
-                return redirect('Account:mypage')
-        return redirect('Account:mypage')
+        username=request.POST['username']
+        password=request.POST['password']           
+        user=auth.authenticate(
+            request,
+            username=username,
+            password=password
+        )
+        if user is not None:
+            auth.login(request,user)
+            return redirect('Game:gamelist')
+        else:
+            return render(request, 'Account/welcome_login.html',{'error':"일치하는 사용자가 없습니다"})
     else:
         return render(request,'Account/welcome_login.html')
     
@@ -42,6 +40,8 @@ def signup(request):
             user = User.objects.create_user(username=request.POST['email'], password=request.POST['pw'], nickname=request.POST['nickname'], phone=request.POST['phone'])
             auth.login(request,user)
             return redirect('Account:mypage')
+        else:
+            return render(request,'Account/join_page.html',{'error':'회원 가입 정보를 확인해주세요'})
     return render(request,'Account/join_page.html')
     
 def mypage(request):

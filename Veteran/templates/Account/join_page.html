@@ -89,9 +89,13 @@
                         <span class="btn-area2">
                             <button type="submit">Create Account</button>
                         </span><br>
-
-
+                        
                         </form>
+                        {% if error %}
+                        <div class="error_block" >
+                            <div style="color: red; display:flex; flex-direction:row; justify-content:center;">{{ error }}</div>
+                        </div>
+                        {% endif %}
                 </section>
 </body>
 

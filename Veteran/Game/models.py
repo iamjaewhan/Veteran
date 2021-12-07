@@ -11,17 +11,24 @@ class Game(models.Model):
     start_datetime=models.DateTimeField(default=timezone.localtime(), null=False)
     end_datetime=models.DateTimeField(default=timezone.localtime(), null=False)
     numOfRecruitment=models.IntegerField(default=18,null=False)
+    numOfParticipation=models.IntegerField(default=0,null=False)
     completed=models.BooleanField(default=False)
     
-    #game.start_datetime datetime형이 맞는지 확인 필요
+    
     def isProgressed(self):
         if self.start_datetime>timezone.localtime():
             return False
         else:
             return True
         
+    def updateState(self):
+        if self.isProgressed():
+            self.completed=True
+        return True
+        
     def toDict(self):
         dictionary = {}
+        dictionary['id'] = self.id
         dictionary["host"] = self.host
         dictionary["start_datetime"] = self.start_datetime
         dictionary["end_datetime"] = self.end_datetime
@@ -36,3 +43,5 @@ class Game_Participants(models.Model):
     
     class Meta:
         unique_together = (('game', 'user'),)
+        
+    
