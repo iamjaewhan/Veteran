@@ -20,7 +20,7 @@ def gamelist(request):
 
 def participate(request,id):
     game=Game.objects.get(id=id)
-    print("################################################")
-    print(game)
+    
+    
     return redirect('Game:gamelist')
 
