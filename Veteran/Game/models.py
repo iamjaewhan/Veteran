@@ -33,6 +33,7 @@ class Game(models.Model):
         dictionary["start_datetime"] = self.start_datetime
         dictionary["end_datetime"] = self.end_datetime
         dictionary["numOfRecruitment"] = self.numOfRecruitment
+        dictionary["numOfParticipation"] = self.numOfParticipation
         return dictionary
         
         
