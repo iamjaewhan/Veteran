@@ -124,7 +124,7 @@
         <div class="imgcon2"><img src="{% static 'img/veteran_logo.png' %}" alt=""></div>
         <ul class="navbar">
             <p style="color:white;">{{ user.username }}</p>
-            <li class="nav-item"><a href="#">👤 내 정보</a></li>
+            <li class="nav-item"><a href="{% url 'Account:mypage' %}">👤 내 정보</a></li>
         </ul>
     </div>
     <div class="wrapper">
@@ -133,7 +133,7 @@
         </div>
         <div class="items" style='display:flex; flex-direction:row; flex-wrap:wrap; justify-content:space-around;'>
             <!--지도 표시 부분-->
-            <div class="map" id='map' style="min-width:700px; min-height:900px; max-height:1500px; background-color:white;"></div>
+            <div class="map" id='map' style="min-width:850px; height: 850px; background-color:white;"></div>
 
             <!--경기 리스트 부분-->
             <div class="details" style="display:flex; flex-direction:column; justify-content:space-around;">

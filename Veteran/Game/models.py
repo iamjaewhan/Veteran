@@ -11,7 +11,9 @@ class Game(models.Model):
     start_datetime=models.DateTimeField(default=timezone.localtime(), null=False)
     end_datetime=models.DateTimeField(default=timezone.localtime(), null=False)
     numOfRecruitment=models.IntegerField(default=18,null=False)
+    numOfParticipation=models.IntegerField(default=0,null=False)
     completed=models.BooleanField(default=False)
+    
     
     def isProgressed(self):
         if self.start_datetime>timezone.localtime():
