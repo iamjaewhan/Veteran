@@ -20,6 +20,7 @@ def gamelist(request):
 
 def participate(request,id):
     game=Game.objects.get(id=id)
+
     new_join=Game_Participants()
     new_join.game=game
     new_join.user=requset.user
