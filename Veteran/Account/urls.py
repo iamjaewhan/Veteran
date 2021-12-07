@@ -12,4 +12,5 @@ urlpatterns=[
     path('lookupReq/', views.lookupReq, name ='lookupReq'),
     path('approveReq',views.approveReq,name='approveReq'),
     path('deleteReq',views.deleteReq,name='deleteReq'),
+    path('review/', views.review,name='review'),
 ]
