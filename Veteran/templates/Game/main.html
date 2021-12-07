@@ -162,13 +162,63 @@
         var container = document.getElementById('map');
         var option = {
             center : new kakao.maps.LatLng(37.59727,127.05884),
-            leven:3
+            level:3
         };
-        var map = new kakao.maps.Map(container,option);
+
+        const map = new kakao.maps.Map(container,option);
+        const markers=[];
 
         // 주소-좌표 변환 객체 생성
         var geocoder = new kakao.maps.services.Geocoder();
 
+        //현재 사용자 위치 좌표 반환 메소드
+        function getCurrentLocation(){
+            if (navigator.geolocation){
+                navigator.geolocation.getCurrentPosition(function(position){
+                    var lat=position.coords.latitude,
+                    lon=position.coords.longitude;
+                    var locPosition=new kakao.maps.LatLng(lat,lon)
+                });
+            }else {
+                var locPosition=new kakao.maps.LatLng(33.450701,126.590667);
+            }
+            return locPosition;
+        }
+
+        //사용자 위치 지도에 표시    
+        if (navigator.geolocation){
+            navigator.geolocation.getCurrentPosition(function(position){
+                var lat=position.coords.latitude,
+                lon=position.coords.longitude;
+                
+                var locPosition=new kakao.maps.LatLng(lat,lon),
+                message='<div style="padding:3px;">here!</div>';
+
+
+                map.setCenter(locPosition);
+                
+
+
+                displayMarker(locPosition,message);
+            });
+            } 
+            else {
+                var locPosition=new kakao.maps.LatLng(33.450701,126.590667),
+                message="error!"
+                displayMarker(locPosition,message);
+            }
+
+        function displayMarker(locPosition,message){
+            var marker=new kakao.maps.Marker({
+                map:map,
+                position:locPosition
+            });
+
+            var iwContent = message,
+            iwRemovable = true;
+
+            map.setCenter(locPosition);
+        }
 
 
     </script>
