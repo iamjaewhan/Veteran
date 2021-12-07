@@ -49,8 +49,6 @@ def signup(request):
 def mypage(request):
     return render(request, 'Account/myinfo.html')
 
-def review(request):
-    return render(request, 'Account/games_review.html')
 
 @csrf_exempt
 def reqHostAthority(request):
@@ -64,7 +62,7 @@ def reqHostAthority(request):
         return redirect('Account:mypage')
     return render(request,'Account/Host Application.html')
 
-def lookupGames(request):
+def lookupInfo(request):
     participated_games=Game.objects.all()
     return render(request, 'Account/games_review.html', {"participated_games":participated_games})
 
