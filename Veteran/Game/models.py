@@ -13,7 +13,6 @@ class Game(models.Model):
     numOfRecruitment=models.IntegerField(default=18,null=False)
     completed=models.BooleanField(default=False)
     
-    #game.start_datetime datetime형이 맞는지 확인 필요
     def isProgressed(self):
         if self.start_datetime>timezone.localtime():
             return False
@@ -27,6 +26,7 @@ class Game(models.Model):
         
     def toDict(self):
         dictionary = {}
+        dictionary['id'] = self.id
         dictionary["host"] = self.host
         dictionary["start_datetime"] = self.start_datetime
         dictionary["end_datetime"] = self.end_datetime

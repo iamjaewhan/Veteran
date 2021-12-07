@@ -21,7 +21,7 @@ def login(request):
         )
         if user is not None:
             auth.login(request,user)
-            return redirect('Account:mypage')
+            return redirect('Game:gamelist')
         else:
             return render(request, 'Account/welcome_login.html',{'error':"일치하는 사용자가 없습니다"})
     else:
