@@ -270,13 +270,13 @@
             {% csrf_token %}
             <div class="content">
                 <div class="section">신청 유저</div>
-                <input id="req_host" ></input>
+                <input id="req_host" name='host'></input>
                 <div class="section">팀(동아리, 동호회) 명</div>
-                <input id="req_group_name" type='text'></input>
+                <input id="req_group_name" name='group_name'></input>
                 <div class="section">위치</div>
-                <input id="req_court_location" type='text'></input>
+                <input id="req_court_location" name='court_location'></input>
                 <div class="section">한줄 소개</div>
-                <input id="req_intro" type='text'></input>
+                <input id="req_intro" name='intro'></input>
                 <div class="btns">
                     <button type="submit" class="lbtn">호스트 자격 승인</button>
                     <button class="rbtn" onclick="return rejectReq(this.form);">호스트 자격 거부</button>

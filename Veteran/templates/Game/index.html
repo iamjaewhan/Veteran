@@ -11,5 +11,9 @@
     {% if user.is_superuser %}
     <p>test</p>
     {% endif %}
+
+    {% for game in game_list %}
+    <p>{{game.host}} | {{game.start_datetime}}</p>
+    {% endfor %}
 </body>
 </html>

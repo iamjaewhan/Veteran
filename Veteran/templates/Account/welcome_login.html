@@ -261,6 +261,11 @@
             <div class="form-floating">
                 <div> 아직 회원이 아니신가요? <a href="{% url 'Account:signup' %}"> 회원가입</a></div>
             </div>
+            {% if error %}
+            <div class="error_block" style="display:flex; flex-direction:row; justify-content:center;">
+                <div style="color: red;">{{ error }}</div>
+            </div>
+            {% endif %}
         </form>
     </main>
 </div>

@@ -5,33 +5,27 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 
 import json
-from .models import User
-from .forms import HostForm
+from .models import User, Host, HostApplication
 
-from .models import HostApplication, Host
 
 from django.http import HttpResponse
 
-
 # Create your views here.
-#수정필요-validation이 안됨
 def login(request):
     if request.method=="POST":
-        form=AuthenticationForm(request=request,data=request.POST)
-        if form.is_valid():
-            username=form.cleaned_data.get('username')
-            password=form.cleaned_data.get('password')           
-            user=auth.authenticate(
-                request=request,
-                username=username,
-                password=password
-            )
-            if user is not None:
-                auth.login(request,user)
-                return redirect('Account:mypage')
-        return redirect('Account:mypage')
+        username=request.POST['username']
+        password=request.POST['password']           
+        user=auth.authenticate(
+            request,
+            username=username,
+            password=password
+        )
+        if user is not None:
+            auth.login(request,user)
+            return redirect('Account:mypage')
+        else:
+            return render(request, 'Account/welcome_login.html',{'error':"일치하는 사용자가 없습니다"})
     else:
-        form=AuthenticationForm()
         return render(request,'Account/welcome_login.html')
     
     
@@ -47,6 +41,8 @@ def signup(request):
             user = User.objects.create_user(username=request.POST['email'], password=request.POST['pw'], nickname=request.POST['nickname'], phone=request.POST['phone'])
             auth.login(request,user)
             return redirect('Account:mypage')
+        else:
+            return render(request,'Account/join_page.html',{'error':'회원 가입 정보를 확인해주세요'})
     return render(request,'Account/join_page.html')
     
 def mypage(request):
@@ -65,36 +61,7 @@ def reqHostAthority(request):
         return redirect('Account:mypage')
     return render(request,'Account/Host Application.html')
 
-# 호스트 승인
-def approveReq(request,host):
-    if request.method == 'POST':
-        host = Host()
-        host.host = request.POST['host']
-        host.group_name = request.POST['teamname']
-        host.court_location = request.POST['location']
-        host.intro = request.POST['intro']
-        host.save()
-        
-        # 신청 목록에서는 삭제
-        hostreq = HostApplication.objects.get(host)
-        hostreq.delete()
-        return HttpResponse(host)
-        # return redirect('Account:lookupReq', host = host.host)
 
-    return render(request, 'Account/Host approval.html')
-
-"""
-reqHostAthority로 merge
-def apply(request):
-    if request.method=="POST":
-        host = HostApplication()
-        host.host = request.Get["username"]
-        host.group_name = request.Get["team_name"]
-        host.court_location = request.Get["field"]
-        host.intro = request.Get["intro"]
-        host.save()
-    return redirect('Account/myinfo.html')
-"""
 
 # 호스트 권한 신청 목록 조회
 def lookupReq(request):
@@ -103,36 +70,24 @@ def lookupReq(request):
 
 def approveReq(request):
     if request.method=='POST':
-        print(request.POST['req_host'])
+        req_id=User.objects.get(username=request.POST['host'])
+        req_host=HostApplication.objects.get(host=req_id)
+        if req_host:
+            new_host=Host()
+            new_host.host=req_id
+            new_host.group_name=req_host.group_name
+            new_host.court_location=req_host.court_location
+            new_host.intro=req_host.intro
+            new_host.save()
+            req_host.delete()
+            return redirect('Account:lookupReq')
+        return redirect('Account:lookupReq')
     return redirect('Account:lookupReq')
 
 def deleteReq(request):
-    if request['req_host']:
-        print("##################################################")
-        print("get")
-        """
-        req_host=HostApplication.objects.get(host=request['req_host'])
-        if req_host:
-            req_host.delete()
-        else:
-            return redirect('Account:lookupReq')
-        """
-            
+    if request.method=='POST':
+        req_id=User.objects.get(username=request.POST['host'])
+        req_host=HostApplication.objects.get(host=req_id)
+        req_host.delete()
     return redirect('Account:lookupReq')
 
-
-
-from django.contrib.auth.mixins import PermissionRequiredMixin
-"""
-class CreateWorkView(PermissionRequiredMixin, CreateView):
-    raise_exception = True
-    permission_required = 'main.add_work'
-    # 여러 권한
-    # permission_required = ('polls.can_open', 'polls.can_edit')
-    model = Work
-    form_class = WorkForm
-    template_name = 'main/work_form.html'
-
-    def get_success_url(self):
-        return reverse('index')
-"""
