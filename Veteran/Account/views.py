@@ -5,10 +5,11 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 
 import json
+
+# from Veteran.Veteran.Account import models
+from Game.models import Game
 from .models import User, Host, HostApplication
 
-
-from django.http import HttpResponse
 
 # Create your views here.
 def login(request):
@@ -22,7 +23,7 @@ def login(request):
         )
         if user is not None:
             auth.login(request,user)
-            return redirect('Account:mypage')
+            return redirect('Game:gamelist')
         else:
             return render(request, 'Account/welcome_login.html',{'error':"일치하는 사용자가 없습니다"})
     else:
@@ -48,7 +49,7 @@ def signup(request):
 def mypage(request):
     return render(request, 'Account/myinfo.html')
 
-#호스트 권한 신청
+
 @csrf_exempt
 def reqHostAthority(request): 
     if request.method=="POST":
@@ -61,9 +62,10 @@ def reqHostAthority(request):
         return redirect('Account:mypage')
     return render(request,'Account/Host Application.html')
 
+def lookupInfo(request):
+    participated_games=Game.objects.all()
+    return render(request, 'Account/games_review.html', {"participated_games":participated_games})
 
-
-# 호스트 권한 신청 목록 조회
 def lookupReq(request):
     request_list=HostApplication.objects.all()
     return render(request, 'Account/Host approval.html',{"request_list":request_list})

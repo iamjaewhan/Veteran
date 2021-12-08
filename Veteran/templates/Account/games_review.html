@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100&display=swap" rel="stylesheet">
+    
+    <title>경기조회</title>
+
+    
+    <style>
+
+        a { text-decoration:none !important }
+        a { text-decoration: none; color: white; }
+        a:visited { text-decoration: none; }
+        a:hover { text-decoration: none; }
+        a:focus { text-decoration: none; }
+        a:hover, a:active { text-decoration: none; }
+
+        .imgcon2{
+            float: left;
+            height: 50px;
+            padding: 10px 40px;
+        }
+
+        navbar{
+            float: right;
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+            list-style-type: none;
+            position: fixed;
+            color: white;
+        }
+
+        nav-item{
+            padding: 15px;
+            cursor: pointer;
+        }
+
+        li{
+            float:right;
+            padding: 20px 40px;
+        }
+
+        @media(max-width:1099px){
+            body {
+                font-family: 'Noto Sans KR' !important;
+                margin: 0;
+                background-color: rgb(47, 48, 58);
+                display: grid;
+                grid-template-rows: auto;
+            }
+    
+            .wrapper {
+                display: grid;
+                grid-template-rows: 1fr 1fr;
+                height: 100vh;
+            }
+    
+            .left {
+                display: grid;
+                grid-template-rows: 1fr 1fr;
+                place-items: center;
+            }
+    
+            .right {
+                display: grid;
+                place-items: center;
+            }
+    
+            .list {
+                display: grid;
+                grid-template-rows: 1fr 4fr;
+                width: 80%;
+                height: 90%;
+            }
+    
+            .listy {
+                display: grid;
+                grid-template-rows: 1fr 6fr;
+                width: 80%;
+                height: 80%;
+                max-width: 610px;
+                background-color: rgb(235,235,235); 
+                border-radius: 15px; 
+                padding: 10px;
+            }
+    
+            .games{
+                display: flex;
+                flex-direction: column;
+                flex-wrap: wrap;
+                align-items: center;
+                overflow-y: scroll;
+                overflow: hidden;
+            }
+    
+            .game {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+                width: 80%;
+                max-width: 450px;
+                padding-left: 5px;
+                height: 50px;
+                margin-top: 8px;
+                background-color: rgb(75 77 92);
+                border-radius: 15px;
+                border-color: transparent;
+                transition: 300ms;
+                color: white;
+            }
+    
+            .player {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+                width: 80%;
+                padding-left: 5px;
+                height: 50px;
+                margin-top: 8px;
+                background-color: transparent;
+                border-radius: 15px;
+                border-color: transparent;
+                transition: 300ms;
+                color: white;
+                font-size: large;
+            }
+    
+            .rating {
+                display: grid;
+                grid-template-columns: 4fr 6fr;
+                place-items: center;
+                height: 80%;
+                width: 80%;
+                max-width: 610px;
+                background-color: rgb(77, 77, 85);
+                border-radius: 15px;
+                padding: 10px;
+            }
+    
+            .leftyy {
+                display: flex;
+                flex-direction: column;
+                flex-wrap: wrap;
+                align-items: center;
+                overflow-y: scroll;
+                overflow: hidden;
+                background-color: rgb(101, 101, 107);
+            }
+    
+            .game:hover {
+                background-color: rgb(97, 99, 109);
+            }
+    
+            .player:hover {
+                color: orangered;
+            }
+    
+            .up {
+                display: flex;
+                flex-direction: column-reverse;
+                align-items: center;
+                place-items: center;
+                color: white;
+                padding: 5px;
+                border-bottom: 1px;
+            }
+                
+    
+            .right {
+                display: grid;
+                grid-template-rows: 1fr 1fr;
+            }
+    
+            #line {
+                display: grid;
+                place-items: center;
+            }
+    
+        }
+
+        @media(min-width:1100px){
+            body {
+                font-family: 'Noto Sans KR' !important;
+                margin: 0;
+                background-color: rgb(47, 48, 58);
+                display: grid;
+                grid-template-rows: auto;
+            }
+    
+            .wrapper {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                height: 100vh;
+            }
+    
+            .left {
+                display: grid;
+                grid-template-rows: 1fr 1fr;
+                place-items: center;
+            }
+    
+            .right {
+                display: grid;
+                place-items: center;
+            }
+    
+            .list {
+                display: grid;
+                grid-template-rows: 1fr 4fr;
+                width: 80%;
+                height: 90%;
+            }
+    
+            .listy {
+                display: grid;
+                grid-template-rows: 1fr 6fr;
+                width: 80%;
+                height: 80%;
+                max-width: 610px;
+                background-color: rgb(235,235,235); 
+                border-radius: 15px; 
+                padding: 10px;
+            }
+    
+            .games{
+                display: flex;
+                flex-direction: column;
+                flex-wrap: wrap;
+                align-items: center;
+                overflow-y: scroll;
+                overflow: hidden;
+            }
+    
+            .game {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+                width: 80%;
+                max-width: 450px;
+                padding-left: 5px;
+                height: 50px;
+                margin-top: 8px;
+                background-color: rgb(75 77 92);
+                border-radius: 15px;
+                border-color: transparent;
+                transition: 300ms;
+                color: white;
+            }
+    
+            .player {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+                width: 80%;
+                padding-left: 5px;
+                height: 50px;
+                margin-top: 8px;
+                background-color: transparent;
+                border-radius: 15px;
+                border-color: transparent;
+                transition: 300ms;
+                color: white;
+                font-size: large;
+            }
+    
+            .rating {
+                display: grid;
+                grid-template-columns: 4fr 6fr;
+                place-items: center;
+                height: 80%;
+                width: 80%;
+                max-width: 610px;
+                background-color: rgb(77, 77, 85);
+                border-radius: 15px;
+                padding: 10px;
+            }
+    
+            .leftyy {
+                display: flex;
+                flex-direction: column;
+                flex-wrap: wrap;
+                align-items: center;
+                overflow-y: scroll;
+                overflow: hidden;
+                background-color: rgb(101, 101, 107);
+            }
+    
+            .game:hover {
+                background-color: rgb(97, 99, 109);
+            }
+    
+            .player:hover {
+                color: orangered;
+            }
+    
+            .up {
+                display: flex;
+                flex-direction: column-reverse;
+                align-items: center;
+                place-items: center;
+                color: white;
+                padding: 5px;
+                border-bottom: 1px;
+            }
+                
+    
+            .right {
+                display: grid;
+                place-items: center;
+            }
+    
+            #line {
+                display: grid;
+                place-items: center;
+            }
+        }
+
+        a:link {color:rgb(255, 255, 255); text-decoration: none;}
+
+        a:visited {color:rgb(255, 255, 255); text-decoration: none;}
+
+        a:hover {color:rgb(43, 156, 255); text-decoration: underline;}
+
+    </style>
+</head>
+<body>
+    {% load static %}
+    <div class="header">
+        <div class="imgcon2"><img src="{% static 'img/veteran_logo.png' %}" alt=""></div>
+        <ul class="navbar">
+            <li class="nav-item"><a href="#">👤 내 정보</a></li>
+            <li class="nav-item"><a href="#">🏠 홈</a></li>
+        </ul>
+    </div>
+    <div class="wrapper">
+        <div class="left">
+            <div class="list">
+                <div class="up">
+                    <div>평가하고 싶은 경기를 선택해주세요</div>
+                    <div style="font-size: x-large;">참여한 경기</div>
+                </div>
+
+                <div class="games"> 
+                    {% for game in participated_games %}
+                    <div class="game">{{ game.host }}</div>
+                    {%endfor%}
+
+                </div>
+            </div>
+            <div class="rating">
+                <div class="games"style="background-color: rgb(101, 101, 107); padding:5px; border-radius:15px; height:90%; width:90%;">
+                    
+                    <button class="player">
+                        <div></div>
+                    </button>
+                </div>
+                <div class="righty"></div>
+            </div>
+        </div>
+        <div class="right">
+            <div class="listy">
+                <div id="line">
+                    <div class="up" style="width: 80%; border-bottom: 1px solid; border-color:rgb(47, 48, 58); padding-bottom:8px">
+                        <div style="font-size: x-large;color:black">확정된 경기</div>
+                    </div>
+                </div>
+
+                
+                <div class="games"> 
+                    {% for each_game in participated_games %}
+                    <div class="game" style="width: 93%;">
+                        <div>{{each_game.date}} <br> {{each_game.stadium}}</div>
+                        <div>{{game.players}}</div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</div>
+<script>
+    
+
+
+</script>
+</body>
+</html>
+</html>
