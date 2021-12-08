@@ -1,6 +1,8 @@
 from django.shortcuts import render,redirect
 from django.core.paginator import Paginator
+import json
 
+from Account.models import Host
 from .models import Game, Game_Participants
 
 
@@ -11,12 +13,15 @@ def gamelist(request):
     for game in games:
         if not (game.isProgressed()):
             game_list.append(game.toDict())
+    
+    for game in game_list:
+        host=Host.objects.get(id=game['host'].id)
+        game['court_location']=host.court_location
             
     page=request.GET.get('page','1')        
     paginator=Paginator(game_list, 10)
     page_obj=paginator.get_page(page)
-    
-    return render(request,'Game/main.html',{'game_list':page_obj})
+    return render(request,'Game/main.html',{'game_list':page_obj.object_list})
 
 
 def participate(request,id):

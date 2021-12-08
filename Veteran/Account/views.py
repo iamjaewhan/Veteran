@@ -8,7 +8,7 @@ import json
 
 # from Veteran.Veteran.Account import models
 from Game.models import Game
-from .models import User, Host, HostApplication
+from .models import User, Host, HostApplication,Review
 
 
 # Create your views here.
@@ -92,4 +92,5 @@ def deleteReq(request):
         req_host=HostApplication.objects.get(host=req_id)
         req_host.delete()
     return redirect('Account:lookupReq')
+
 
