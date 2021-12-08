@@ -114,6 +114,10 @@
             color: white;
         }
 
+        .page {
+            color : white;
+        }
+
     </style>
 
 
@@ -147,10 +151,23 @@
                         {{ game.start_datetime }}  
                         <a href="{% url 'Game:participate' game.id %}">참가신청<a>
                     </div>
-
                 </div>
                 {% endfor %}
+                <div class="page">
+                    <!--이전페이지-->
+                    {% if game_list.has_previous %}
+                        <a class="page-link" id="page_link" href="?page={{ game_list.previous_page_number }}">이전</a>
+                    {% else %}
+                        <a class="page-link" id="page_link" tabindex="-1" aria-disabled="true" href="#">이전</a>
+                    {% endif %}
 
+                    <!--다음페이지-->
+                    {% if game_list.has_next %}
+                        <a class="page-link" id="page_link" href="?page={{ game_list.next_page_number }}">다음</a>
+                    {% else %}
+                        <a class="page-link" id="page_link" tabindex="-1" aria-disabled="true" href="#">다음</a>
+                    {% endif %}
+                </div>
             </div>
         </div>
 
@@ -165,11 +182,32 @@
             level:3
         };
 
+        var games = {{ game_list|safe }};
+        
+
         const map = new kakao.maps.Map(container,option);
-        const markers=[];
+        const court_markers=[];
 
         // 주소-좌표 변환 객체 생성
         var geocoder = new kakao.maps.services.Geocoder();
+
+        //경기 장소 마커로 추가
+        /*
+        for (var i=0;i<game_list.length;i++){
+            geocoder.addressSearch(game_list['court_location'] ,function(result,status){
+                if (status===kakao.maps.services.Status.OK){
+                    var coords=new kakao.maps.LatLng(result[0].y,result[0].x);
+    
+                    var marker=new kakao.maps.Marker({
+                        map:map,
+                        position:coords
+                    });
+    
+                    markers.push(marker);
+                }
+            });
+        };
+        */
 
         //현재 사용자 위치 좌표 반환 메소드
         function getCurrentLocation(){
@@ -208,6 +246,7 @@
                 displayMarker(locPosition,message);
             }
 
+        //마커 표시
         function displayMarker(locPosition,message){
             var marker=new kakao.maps.Marker({
                 map:map,
@@ -220,6 +259,34 @@
             map.setCenter(locPosition);
         }
 
+
+
+       
+
+        function getLatLng(address){
+            geocoder.addressSearch(address,function(result,status){
+                if (status == kakao.maps.services.Status.OK){
+                    var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+
+                    var marker = new kakao.maps.Marker({
+                        map : map,
+                        position : coords
+                    });
+                    
+                    court_markers.push(marker);
+                }
+            });
+        }
+
+        for (var i = 0; i < games.length ; i++){
+            getLatLng(games[i]['court_location'])
+        }
+
+
+        //경기 장소 마커 표시
+        for (var i = 0 ; i < court_markers.length ; i++){
+            court_markers[i].setMap(map);
+        };
 
     </script>
 
