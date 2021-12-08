@@ -3,12 +3,14 @@ from django.contrib.auth.forms import AuthenticationForm,  UserCreationForm
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
-
+from django.views.generic.detail import DetailView
+from django.views.generic import ListView
 import json
 
 # from Veteran.Veteran.Account import models
 from Game.models import Game
-from .models import User, Host, HostApplication
+from .models import User, Host, HostApplication, Review
+# from Veteran.Account import models
 
 
 # Create your views here.
@@ -92,4 +94,31 @@ def deleteReq(request):
         req_host=HostApplication.objects.get(host=req_id)
         req_host.delete()
     return redirect('Account:lookupReq')
+
+class lookupMyReview(DetailView):
+    model = User
+    template_name = "Account/my_estimation.html"
+    pk_url_kwarg = "user_id"
+    context_object_name = "user"
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user_id = self.kwargs.get("user_id")
+        context["reviews"] = Review.objects.filter(reviewee_id = user_id)
+        return context
+    
+# def lookupMyReview(ListView):
+#     model = Review
+#     template_name = "Account/my_estimation.html"
+#     context_object_name = "user_reviews"
+#     def get_queryset(self):
+#         user_id = self.kwargs.get("user_id")
+#         return Review.objects.filter(reviewee_id=user_id)
+        
+
+    # review_id = User.objects.get(username=request.POST['host'])
+    # reviews=Review.objects.filter(reviewee__username = )
+    # review_list = list(reviews)
+    # return render(request, 'Account/my_estimation.html',{"review_list":review_list})
+
+
 

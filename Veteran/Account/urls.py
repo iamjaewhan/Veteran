@@ -1,6 +1,7 @@
 from django.urls import path
 from . import views
 
+
 app_name='Account'
 
 urlpatterns=[
@@ -13,4 +14,6 @@ urlpatterns=[
     path('approveReq/',views.approveReq,name='approveReq'),
     path('deleteReq/',views.deleteReq,name='deleteReq'),
     path('lookupInfo/', views.lookupInfo,name='lookupInfo'),
+    path('lookupMyReview/<int:user_id>', views.lookupMyReview.as_view(),name='lookupMyReview'),
+
 ]

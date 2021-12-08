@@ -81,7 +81,7 @@
                 <hr style="border: solid 3px #686868; margin-left: 50px; margin-right: 50px;">
                   <ul class ="nav">
                       <li><a href="{% url 'Account:lookupInfo' %}">🗓 경기일람 및 리뷰</a></li>
-                      <li><a href="#">📊 내 평가 보기</a></li>
+                      <li><a href="{% url 'Account:lookupMyReview' user.id %}">📊 내 평가 보기</a></li>
                       {% if user.is_host %}
                       <li><a href="#">📃 호스트 신청</a></li>
                       {% else %}
