@@ -182,7 +182,19 @@
             level:3
         };
 
-        var games = {{ game_list|safe }};
+        var games = [];
+
+        {% for game in game_list %}
+            games.push({
+                id : "{{ game.id }}",
+                host : "{{ game.host }}",
+                start_datetime : "{{ game.start_datetime }}",
+                end_datetime : "{{ game.end_datetime }}",
+                numOfRecruitment : "{{ game.numOfRecruitment }}",
+                numOfParticipation : "{{ game.numOfParticipation }}",
+                court_location : "{{ game.court_location }}"
+            });
+        {% endfor %}
         
 
         const map = new kakao.maps.Map(container,option);
@@ -246,6 +258,7 @@
                 displayMarker(locPosition,message);
             }
 
+
         //마커 표시
         function displayMarker(locPosition,message){
             var marker=new kakao.maps.Marker({
@@ -262,7 +275,7 @@
 
 
        
-
+        //전달받은 주소 문자열을 좌표값으로 반환 후 marker생성하여 court_marker에 추가
         function getLatLng(address){
             geocoder.addressSearch(address,function(result,status){
                 if (status == kakao.maps.services.Status.OK){
