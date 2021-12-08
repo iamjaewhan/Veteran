@@ -17,6 +17,7 @@ def gamelist(request):
     for game in game_list:
         host=Host.objects.get(id=game['host'].id)
         game['court_location']=host.court_location
+        game['host'] = host.group_name
             
     page=request.GET.get('page','1')        
     paginator=Paginator(game_list, 10)

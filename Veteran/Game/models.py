@@ -30,8 +30,8 @@ class Game(models.Model):
         dictionary = {}
         dictionary['id'] = self.id
         dictionary["host"] = self.host
-        dictionary["start_datetime"] = self.start_datetime
-        dictionary["end_datetime"] = self.end_datetime
+        dictionary["start_datetime"] = self.start_datetime.strftime("%Y-%m-%d %H:%M:%S")
+        dictionary["end_datetime"] = self.end_datetime.strftime("%Y-%m-%d %H:%M:%S")
         dictionary["numOfRecruitment"] = self.numOfRecruitment
         dictionary["numOfParticipation"] = self.numOfParticipation
         return dictionary
