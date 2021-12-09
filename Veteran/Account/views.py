@@ -97,9 +97,16 @@ def deleteReq(request):
 def lookupInfo(request):
     user = request.user
     participated_games=Game_Participants.objects.filter(user = user)
+    participated_games_list = list(participated_games)
     participants = participated_games.values('user') 
+
+    dict={}
     participants_list = list(participants)
-    context = {"dic" : {"participated_games":participated_games, "participants_list" : participants_list}}
+
+    for participated_game in participated_games_list:
+        dict[participated_game] = participants_list
+
+    context = {"dict": dict.items()}
 
     return render(request, 'Account/games_review.html', context)
 
