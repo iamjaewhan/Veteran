@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="ko">
+    <head>
+        <meta charset="utf-8">
+        <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100&display=swap" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="/static/css/myInfo.css">
+        <title>game_maker</title>
+        <style>
+            body {
+                font-family: 'Noto Sans KR' !important;
+                margin: 0;
+                background-color: rgb(47, 48, 58);
+                display: grid;
+                grid-template-rows: 50% 50%;
+                height: 100vh;
+            }
+
+            h1 {
+                position: relative;
+                text-align: center;
+                top: 300px;
+            }
+
+            box {
+                border:1px solid white;
+            }
+
+            p{
+                height: 70px;
+                margin-top: 50px;
+                margin-bottom: 30px;
+            }
+
+            #value1{
+            }
+
+            .box>div {
+                display : flex;
+                justify-content : space-around;
+            }
+
+        </style>
+    </head>
+    <body style="display:flex; flex-direction:column">
+        <div>
+            navbar자리
+        </div>
+        <div style="dispaly:flex; ">
+            <div style="background-color : beige; width:800px;">
+                <form name="game_maker"action="{% url 'Game:hostGame' %}" method="POST">
+                    <div class ="box" style="display:flex; flex-direction:column;">
+                        <div>
+                            <p>새 경기</p>
+                        </div>
+                        <div>
+                            <p>호스트</p>
+                            <p>{{ host.group_name }}</p>
+                        </div>
+                        <div>
+                            <p>농구장 주소</p>
+                            <p>{{ host.court_location }}</p>
+                        </div>
+                        <div>
+                            <p>인원수</p>
+                            <input type='range' name='numOfRecruitment' min='1' max='18' step='1' oninput="document.getElementById('value1').innerHTML=this.value;"></input>
+                            <div id="value1"></div>
+                        </div>
+                        <div>
+                            <input type="datetime-local" id="start_datetime" name="start_datetime" oninput="document.getElementById('start_datetime').value = new Date().toISOString(this.value).slice(0,16);"></input>
+                            <input type="datetime-local" id="end_datetime" name="end_datetime" min=""></input>
+                        </div>
+                        <div>
+                        <button type="submit" class="btn">경기 등록</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <script>
+            document.getElementById('start_datetime').value = new Date().toISOString().slice(0,16);
+
+        </script>
+    </body>
+</html>

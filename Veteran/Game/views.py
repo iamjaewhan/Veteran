@@ -1,6 +1,8 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.core.paginator import Paginator
 from django.urls import reverse
+from django.http import HttpResponseRedirect, HttpResponse
+
 import json
 
 from Account.models import Host
@@ -26,7 +28,7 @@ def gamelist(request):
 
 
 def participate(request,id):
-    game=Game.objects.get(id=id)
+    game=get_object_or_404(Game, pk=id)
     new_join=Game_Participants()
     new_join.game=game
     new_join.user=request.user
@@ -36,10 +38,14 @@ def participate(request,id):
     return redirect('Game:gamelist')
 
 
-
 def hostGame(request):
+    host=get_object_or_404(Host,host=request.user)
+    return render(request,"Game/set_game.html",{'host':host})
+
+
+def registerGame(request):
     if request.method == 'POST':
-        host = Host.objects.get(id=request.user)
+        host = get_or_404(Host, pk=request.user.id)
         if host:
             game = Game()
             game.host = host
