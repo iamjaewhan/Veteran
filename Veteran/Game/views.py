@@ -1,5 +1,6 @@
 from django.shortcuts import render,redirect
 from django.core.paginator import Paginator
+from django.urls import reverse
 import json
 
 from Account.models import Host
@@ -34,3 +35,20 @@ def participate(request,id):
     new_join.save()
     return redirect('Game:gamelist')
 
+
+
+def hostGame(request):
+    if request.method == 'POST':
+        host = Host.objects.get(id=request.user)
+        if host:
+            game = Game()
+            game.host = host
+            game.start_datetime = request.POST['start_datetime']
+            game.end_datetime = request.POST['end_datetime']
+            game.numOfRecruitment = request.POST['numOfRecruitment']
+            game.save()
+            return redirect('Game:gamelist')
+        else:
+            return redirect('Game:gamelist')
+    else:
+        return redirect('Game:gamelist')

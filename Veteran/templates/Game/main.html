@@ -142,6 +142,11 @@
             <!--경기 리스트 부분-->
             <div class="details" style="display:flex; flex-direction:column; justify-content:space-around;">
                 <div id='calendar'></div>
+                {% if message %}
+                    <div class="error_block" style="display:flex; flex-direction:row; justify-content:center;">
+                        <div style="color: red;">{{ message }}</div>
+                    </div>
+                {% endif %}
                 {% for game in game_list %}
                 <div class="games" style="background-color: transparent; padding:5px;">
                     <div>
