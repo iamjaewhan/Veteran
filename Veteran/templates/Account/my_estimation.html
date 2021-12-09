@@ -88,25 +88,39 @@
                 style= "float:left; margin-left: 50px;margin-top: 50px;"
             />
             <br>
-            <h1> ~~님에 대한 평가는 다음과 같습니다!</h1>
+            <h1> {{user.nickname}}님에 대한 평가는 다음과 같습니다!</h1>
         </div>
         <div class="estimations">
             <div class="estimation1">
-                <h2>매너 점수 : </h2>
+                
+                <h2>매너 점수 : {{average_rating}}</h2>
+            
                 <div class="manner">
                     <div class="rating">
-                        <span class="star">★</span>
-                        <span class="star">★</span>
-                        <span class="star">★</span>
-                        <span class="star">★</span>
-                        <span class="star">★</span>
+                        <span class="star">
+                            {% if 0 review.average_rating == 2%}
+                            ★
+                            {% elif review.average_rating  == 3 %}
+                            ★★
+                            {% elif review.average_rating == 4 %}
+                            ★★★
+                            {% elif review.average_rating == 5 %}
+                            ★★★★
+                            {% else %}
+                            ★★★★★
+                            {% endif %} 
+                
+                    
+                        </span>
+                        
                     </div>
                 </div>
-                <h3>총 n개의 평가</h3>
+                <h3>총 {{item.reviews_count}}개의 평가</h3>
+           
             </div>
         </div>
         <div class="back">
-            <a href="#">뒤로가기</a>
+            <a href="{% url 'Account:mypage' %}">뒤로가기</a>
         </div>
         <br>
     </div>

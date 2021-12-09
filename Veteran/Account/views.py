@@ -3,12 +3,15 @@ from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
+from django.views.generic.detail import DetailView
 
 import json
 
 # from Veteran.Veteran.Account import models
-from Game.models import Game
+from Game.models import Game, Game_Participants
 from .models import User, Host, HostApplication,Review
+from django.db.models import Count, Avg
+from django.shortcuts import get_object_or_404
 
 
 # Create your views here.
@@ -62,9 +65,6 @@ def reqHostAthority(request):
         return redirect('Account:mypage')
     return render(request,'Account/Host Application.html')
 
-def lookupInfo(request):
-    participated_games=Game.objects.all()
-    return render(request, 'Account/games_review.html', {"participated_games":participated_games})
 
 def lookupReq(request):
     request_list=HostApplication.objects.all()
@@ -92,5 +92,24 @@ def deleteReq(request):
         req_host=HostApplication.objects.get(host=req_id)
         req_host.delete()
     return redirect('Account:lookupReq')
+
+
+def lookupInfo(request):
+    user = request.user
+    participated_games=Game_Participants.objects.filter(user = user)
+    participants = participated_games.values('user') 
+    participants_list = list(participants)
+    context = {"dic" : {"participated_games":participated_games, "participants_list" : participants_list}}
+
+    return render(request, 'Account/games_review.html', context)
+
+
+
+def lookupMyReview(request):
+    user = request.user
+    review = Review.objects.filter(reviewee = user).annotate(reviews_count = Count('id')).annotate(average_rating = Avg('rating'))
+    return render(request, 'Account/my_estimation.html', {"review" : review})
+    
+
 
 
