@@ -7,27 +7,30 @@ from django.views.decorators.csrf import csrf_exempt
 import json
 
 # from Veteran.Veteran.Account import models
-from Game.models import Game
-from .models import User, Host, HostApplication
+from Game.models import Game, Game_Participants
+from .models import User, Host, HostApplication,Review
 
 
 # Create your views here.
 def login(request):
-    if request.method=="POST":
-        username=request.POST['username']
-        password=request.POST['password']           
-        user=auth.authenticate(
-            request,
-            username=username,
-            password=password
-        )
-        if user is not None:
-            auth.login(request,user)
-            return redirect('Game:gamelist')
-        else:
-            return render(request, 'Account/welcome_login.html',{'error':"일치하는 사용자가 없습니다"})
+    if request.user.is_authenticated:
+        return redirect('Game:gamelist')
     else:
-        return render(request,'Account/welcome_login.html')
+        if request.method=="POST":
+            username=request.POST['username']
+            password=request.POST['password']           
+            user=auth.authenticate(
+                request,
+                username=username,
+                password=password
+            )
+            if user is not None:
+                auth.login(request,user)
+                return redirect('Game:gamelist')
+            else:
+                return render(request, 'Account/welcome_login.html',{'error':"일치하는 사용자가 없습니다"})
+        else:
+            return render(request,'Account/welcome_login.html')
     
     
 def logout(request):
@@ -62,13 +65,26 @@ def reqHostAthority(request):
         return redirect('Account:mypage')
     return render(request,'Account/Host Application.html')
 
-def lookupInfo(request):
-    participated_games=Game.objects.all()
-    return render(request, 'Account/games_review.html', {"participated_games":participated_games})
+
+def lookupRecord(request):
+    game_participants = {}
+    scheduled_games = []
+    participated_games = Game_Participants.objects.filter(user = request.user ).only("game")
+    
+    for game in participated_games:
+        if game.game.isProgressed():
+            game_participants[game.game] =Game_Participants.objects.filter(game = game.game).values('user')
+        else:
+            scheduled_games.append(game.game.toDict())
+    
+    return render(request, 'Account/games_review.html',{"game_participants" : game_participants, "scheduled_games" : scheduled_games})
+
 
 def lookupReq(request):
     request_list=HostApplication.objects.all()
     return render(request, 'Account/Host approval.html',{"request_list":request_list})
+
+
 
 def approveReq(request):
     if request.method=='POST':
@@ -92,4 +108,16 @@ def deleteReq(request):
         req_host=HostApplication.objects.get(host=req_id)
         req_host.delete()
     return redirect('Account:lookupReq')
+
+
+def lookupMyReview(request):
+    reviews=Review.objects.filter(reviewee = request.user).order_by('-id')
+    rating=None
+    for review in reviews:
+        rating+=review.rating
+    if rating == None:
+         return render(request, 'Account/my_estimation.html', {"reviews" : reviews })
+    else:
+        rating=rating/len(reviews)
+        return render(request, 'Account/my_estimation.html', {"reviews" : reviews[:3] , "rating":rating})
 

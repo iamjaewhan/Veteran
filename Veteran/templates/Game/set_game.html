@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="utf-8">
+        <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100&display=swap" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="/static/css/myInfo.css">
+        <title>game_maker</title>
+        <style>
+            body {
+                font-family: 'Noto Sans KR' !important;
+                margin: 0;
+                background-color: rgb(47, 48, 58);
+                display: grid;
+                grid-template-rows: 50% 50%;
+                height: 100vh;
+            }
+
+            h1 {
+                text-align: center;
+                top: 300px;
+            }
+
+            box {
+                border:1px solid white;
+            }
+
+            p{
+                height: 70px;
+                margin-top: 50px;
+                margin-bottom: 30px;
+            }
+
+            #value1{
+            }
+
+            .box>div {
+                display : flex;
+                justify-content : space-around;
+            }
+
+            form>div {
+                padding : 20px;
+            }
+
+        </style>
+    </head>
+    <body style="display:flex; flex-direction:column">
+        <div>
+            navbar자리
+        </div>
+        <div style="dispaly:flex; ">
+            <div style="background-color : beige; width:800px; height : 800px;">
+                <form name="game_maker"action="{% url 'Game:registerGame' %}" method="POST">
+                    {% csrf_token %}
+                    <div class ="box" style="display:flex; flex-direction:column;">
+                        <div>
+                            <h1>새 경기</h1>
+                        </div>
+                        <div>
+                            <h1>호스트</h1>
+                            <h1>{{ host.group_name }}</h1>
+                        </div>
+                        <div>
+                            <h1>농구장 주소</h1>
+                            <h1>{{ host.court_location }}</h1>
+                        </div>
+                        <div style="display : flex; justify-content : space-around;">
+                            <h1>인원수</h1>
+                            <input type='range' name='numOfRecruitment' min='1' max='18' step='1' oninput="document.getElementById('value1').innerHTML=this.value;"></input>
+                            <div id="value1"></div>
+                        </div>
+                        <div>
+                            <input type="datetime-local" id="start_datetime" name="start_datetime" oninput="setEndtime()"></input>
+                            <input type="datetime-local" id="end_datetime" name="end_datetime" ></input>
+                        </div>
+                        <div>
+                        <button type="submit" class="btn">경기 등록</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <script>
+            document.getElementById('start_datetime').value = new Date().toISOString().slice(0,16);
+            document.getElementById('end_datetime').value = new Date().toISOString().slice(0,16);
+            document.getElementById('start_datetime').setAttribute('min',new Date().toISOString().slice(0,16));
+
+            function setEndtime(){
+                document.getElementById('end_datetime').setAttribute('min',document.getElementById('start_datetime').value);
+            };
+        </script>
+    </body>
+</html>

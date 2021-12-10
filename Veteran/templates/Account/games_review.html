@@ -351,11 +351,13 @@
                     <div style="font-size: x-large;">참여한 경기</div>
                 </div>
 
-                <div class="games"> 
-                    {% for game in participated_games %}
-                    <div class="game">{{ game.host }}</div>
+                <div class="games">
+                    {% for game in game_participants %}
+                    <div class="game">
+                        {{ each_game.host.group_name }}
+                        {{ each_game.start_datetime }}
+                    </div>
                     {%endfor%}
-
                 </div>
             </div>
             <div class="rating">
@@ -372,16 +374,17 @@
             <div class="listy">
                 <div id="line">
                     <div class="up" style="width: 80%; border-bottom: 1px solid; border-color:rgb(47, 48, 58); padding-bottom:8px">
-                        <div style="font-size: x-large;color:black">확정된 경기</div>
+                        <div style="font-size: x-large;color:black">진행 예정 경기</div>
                     </div>
                 </div>
 
                 
                 <div class="games"> 
-                    {% for each_game in participated_games %}
+                    {% for each_game in scheduled_games %}
                     <div class="game" style="width: 93%;">
-                        <div>{{each_game.date}} <br> {{each_game.stadium}}</div>
-                        <div>{{game.players}}</div>
+                        <div>{{ each_game.host.group_name }}</div>
+                        <div>시작 : {{ each_game.start_datetime }} <br>종료 : {{ each_game.end_datetime }}</div>
+                        <div>{{ each_game.numOfParticipation }} / {{ each_game.numOfRecruitment }}</div>
                     </div>
                     {% endfor %}
                 </div>
