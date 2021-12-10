@@ -353,7 +353,10 @@
 
                 <div class="games">
                     {% for game in game_participants %}
-                    <div class="game">{{ game.host }}</div>
+                    <div class="game">
+                        {{ each_game.host.group_name }}
+                        {{ each_game.start_datetime }}
+                    </div>
                     {%endfor%}
                 </div>
             </div>

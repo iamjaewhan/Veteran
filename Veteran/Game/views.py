@@ -39,13 +39,13 @@ def participate(request,id):
 
 
 def hostGame(request):
-    host=get_object_or_404(Host,host=request.user)
+    host=get_object_or_404(Host, host=request.user)
     return render(request,"Game/set_game.html",{'host':host})
 
 
 def registerGame(request):
     if request.method == 'POST':
-        host = get_or_404(Host, pk=request.user.id)
+        host = get_object_or_404(Host, pk=request.user.id)
         if host:
             game = Game()
             game.host = host
