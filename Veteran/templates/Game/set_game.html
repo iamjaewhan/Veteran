@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ko">
     <head>
         <meta charset="utf-8">
@@ -16,7 +16,6 @@
             }
 
             h1 {
-                position: relative;
                 text-align: center;
                 top: 300px;
             }
@@ -39,6 +38,10 @@
                 justify-content : space-around;
             }
 
+            form>div {
+                padding : 20px;
+            }
+
         </style>
     </head>
     <body style="display:flex; flex-direction:column">
@@ -46,28 +49,29 @@
             navbar자리
         </div>
         <div style="dispaly:flex; ">
-            <div style="background-color : beige; width:800px;">
-                <form name="game_maker"action="{% url 'Game:hostGame' %}" method="POST">
+            <div style="background-color : beige; width:800px; height : 800px;">
+                <form name="game_maker"action="{% url 'Game:registerGame' %}" method="POST">
+                    {% csrf_token %}
                     <div class ="box" style="display:flex; flex-direction:column;">
                         <div>
-                            <p>새 경기</p>
+                            <h1>새 경기</h1>
                         </div>
                         <div>
-                            <p>호스트</p>
-                            <p>{{ host.group_name }}</p>
+                            <h1>호스트</h1>
+                            <h1>{{ host.group_name }}</h1>
                         </div>
                         <div>
-                            <p>농구장 주소</p>
-                            <p>{{ host.court_location }}</p>
+                            <h1>농구장 주소</h1>
+                            <h1>{{ host.court_location }}</h1>
                         </div>
-                        <div>
-                            <p>인원수</p>
+                        <div style="display : flex; justify-content : space-around;">
+                            <h1>인원수</h1>
                             <input type='range' name='numOfRecruitment' min='1' max='18' step='1' oninput="document.getElementById('value1').innerHTML=this.value;"></input>
                             <div id="value1"></div>
                         </div>
                         <div>
-                            <input type="datetime-local" id="start_datetime" name="start_datetime" oninput="document.getElementById('start_datetime').value = new Date().toISOString(this.value).slice(0,16);"></input>
-                            <input type="datetime-local" id="end_datetime" name="end_datetime" min=""></input>
+                            <input type="datetime-local" id="start_datetime" name="start_datetime" oninput="setEndtime()"></input>
+                            <input type="datetime-local" id="end_datetime" name="end_datetime" ></input>
                         </div>
                         <div>
                         <button type="submit" class="btn">경기 등록</button>
@@ -78,7 +82,12 @@
         </div>
         <script>
             document.getElementById('start_datetime').value = new Date().toISOString().slice(0,16);
+            document.getElementById('end_datetime').value = new Date().toISOString().slice(0,16);
+            document.getElementById('start_datetime').setAttribute('min',new Date().toISOString().slice(0,16));
 
+            function setEndtime(){
+                document.getElementById('end_datetime').setAttribute('min',document.getElementById('start_datetime').value);
+            };
         </script>
     </body>
 </html>

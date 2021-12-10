@@ -13,21 +13,24 @@ from .models import User, Host, HostApplication,Review
 
 # Create your views here.
 def login(request):
-    if request.method=="POST":
-        username=request.POST['username']
-        password=request.POST['password']           
-        user=auth.authenticate(
-            request,
-            username=username,
-            password=password
-        )
-        if user is not None:
-            auth.login(request,user)
-            return redirect('Game:gamelist')
-        else:
-            return render(request, 'Account/welcome_login.html',{'error':"일치하는 사용자가 없습니다"})
+    if request.user.is_authenticated:
+        return redirect('Game:gamelist')
     else:
-        return render(request,'Account/welcome_login.html')
+        if request.method=="POST":
+            username=request.POST['username']
+            password=request.POST['password']           
+            user=auth.authenticate(
+                request,
+                username=username,
+                password=password
+            )
+            if user is not None:
+                auth.login(request,user)
+                return redirect('Game:gamelist')
+            else:
+                return render(request, 'Account/welcome_login.html',{'error':"일치하는 사용자가 없습니다"})
+        else:
+            return render(request,'Account/welcome_login.html')
     
     
 def logout(request):

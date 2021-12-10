@@ -92,9 +92,11 @@
             <h1> {{ user.nickname }}님에 대한 평가는 다음과 같습니다!</h1>
         </div>
         <div class="estimations">
-            <div class="estimation1">
+            <div class="estimation1" style="display : flex; justify-content : space-around;">
                 {% if rating %}
+                    <div>
                     <h2>점수 : {{ rating }}</h2>
+                    </div>
                     <div class="review_list">
                         <h2>최근 평가</h2>
                         <div class="review_detail">
@@ -109,7 +111,7 @@
                         </div>
                     </div>
                 {% else %}
-                    <h2>평가가 없습니다.</h2>
+                    <h2>회원님에 대한 평가가 없습니다</h2>
                 {% endif %}
             </div>
         </div>
