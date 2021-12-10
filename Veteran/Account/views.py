@@ -9,9 +9,10 @@ import json
 
 # from Veteran.Veteran.Account import models
 from Game.models import Game, Game_Participants
+
 from .models import User, Host, HostApplication,Review
 from django.db.models import Count, Avg
-from django.shortcuts import get_object_or_404
+f
 
 
 # Create your views here.
@@ -109,7 +110,8 @@ def lookupInfo(request):
     context = {"dict": dict.items()}
 
     return render(request, 'Account/games_review.html', context)
-
+# {{%for participated_game, participants in dict %}}
+# {{participated_game}}:{{participants}}
 
 
 def lookupMyReview(request):
