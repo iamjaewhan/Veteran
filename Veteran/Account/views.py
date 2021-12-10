@@ -98,13 +98,13 @@ def lookupInfo(request):
     user = request.user
     participated_games=Game_Participants.objects.filter(user = user)
     participated_games_list = list(participated_games)
-    participants = participated_games.values('user') 
+    participants = Game_Participants.objects.filter(user=user).values('user') 
 
     dict={}
     participants_list = list(participants)
 
     for participated_game in participated_games_list:
-        dict[participated_game] = participants_list
+            dict[participated_game] = participants_list
 
     context = {"dict": dict.items()}
 
