@@ -129,6 +129,7 @@
         <ul class="navbar">
             <p style="color:white;">{{ user.username }}</p>
             <li class="nav-item"><a href="{% url 'Account:mypage' %}">👤 내 정보</a></li>
+            <li class="nav-item"><a href="{% url 'Game:hostGame' %}">경기 등록</a></li>
         </ul>
     </div>
     <div class="wrapper">
@@ -142,6 +143,11 @@
             <!--경기 리스트 부분-->
             <div class="details" style="display:flex; flex-direction:column; justify-content:space-around;">
                 <div id='calendar'></div>
+                {% if message %}
+                    <div class="error_block" style="display:flex; flex-direction:row; justify-content:center;">
+                        <div style="color: red;">{{ message }}</div>
+                    </div>
+                {% endif %}
                 {% for game in game_list %}
                 <div class="games" style="background-color: transparent; padding:5px;">
                     <div>

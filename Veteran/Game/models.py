@@ -35,6 +35,16 @@ class Game(models.Model):
         dictionary["numOfRecruitment"] = self.numOfRecruitment
         dictionary["numOfParticipation"] = self.numOfParticipation
         return dictionary
+    
+    def toTuple(self):
+        return (
+            self.id,
+            self.host,
+            self.start_datetime,
+            self.end_datetime,
+            self.numOfRecruitment,
+            self.numOrParticipation
+        )
         
         
     
