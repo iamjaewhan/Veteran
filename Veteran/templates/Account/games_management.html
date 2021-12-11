@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100&display=swap" rel="stylesheet">
+    <script scr="jquery-3.4.1.js"></script>
+    <title>games_management</title>
+
+    <style>
+
+        a { text-decoration:none !important }
+        a { text-decoration: none; color: white; }
+        a:visited { text-decoration: none; }
+        a:hover { text-decoration: none; }
+        a:focus { text-decoration: none; }
+        a:hover, a:active { text-decoration: none; }
+
+        ul {
+            list-style: none;
+        }
+
+        @media(min-width:800px){
+            body {
+                font-family: 'Noto Sans KR' !important;
+                margin: 0;
+                background-color: rgb(47, 48, 58);
+                display: grid;
+                grid-template-rows: auto;
+            }
+
+            .imgcon2{
+                float: left;
+                height: 50px;
+                padding: 10px 40px;
+            }
+    
+            navbar{
+                float: right;
+                display: flex;
+                flex-direction: row;
+                width: 100%;
+                list-style-type: none;
+                position: fixed;
+                color: white;
+                text-decoration-line: none;
+            }
+    
+            nav-item{
+                padding: 15px;
+                cursor: pointer;
+            }
+    
+            li{
+                float:right;
+                padding: 20px 40px;
+            }
+
+        
+            body{
+                font-family: 'Noto Sans KR', sans-serif;
+                list-style: none;
+                text-decoration: none;
+                border-collapse: collapse;
+                margin:0;
+                padding:0;
+            }
+            .left {
+                width: 100%;
+                height: 100vh;
+                float: left;
+                box-sizing: border-box;
+                background: #2F303A;
+            }
+            .box1{
+                width:35%;
+                height: 60%;
+                box-sizing: border-box;
+                background: rgba(235, 235, 235, 0.1);
+                margin-top: 80px;
+                margin-left: 150px;
+                position: relative;
+                border-radius: 15px;
+                color: white;
+                float: left;
+            }
+            .hosting{
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+                width: 90%;
+                height: 60px;
+                margin-top: 4px;
+                background-color: rgb(75 77 92);
+                border-radius: 15px;
+            }
+            .hostings {
+                display: flex;
+                flex-direction: column;
+                flex-wrap: wrap;
+                align-items: center;
+            }
+            
+            .list_areas{
+                display: flex;
+                flex-wrap: wrap;
+                align-items: center;
+            }
+            .list_area{
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+                width: 90%;
+                height: 60px;
+                margin-top: 4px;
+                background-color: #c4c4c4;
+                border-radius: 15px;
+            }
+            .list_box{
+                width:25%;
+                height: 70%;
+                box-sizing: border-box;
+                background-color: #c4c4c4;
+                float: left;
+                position: relative;
+                border-radius: 15px;
+                color: white;
+                margin-top: 80px;
+            }
+            .player_box{
+                width:25%;
+                height: 70%;
+                box-sizing: border-box;
+                background-color: rgba(196, 196, 196, 0.3);
+                float: left;
+                position: relative;
+                border-radius: 15px;
+                color: white;
+                margin-top: 80px;
+            }
+            .participant{
+                color: black;
+            }
+
+            .list_box{
+                margin-left: 20px;
+            }
+            .player_box{
+                margin-left: 20px;
+            }
+            .left h1{
+                margin-top: 20px;
+                text-align:center;
+                color: white;
+            }
+            .left h2{
+                text-align: center;
+                padding: 10px;
+            }
+
+            .box2{
+                margin-top: 10px;
+            }
+
+            .date{
+                margin-left: 10px;
+                color: white;
+            }
+            .place{
+                color: white;
+            }
+            .head_num{
+                color: white;
+
+            }
+
+            input[id="경기정보 변경"]{
+                display:none;
+            }
+            input[id="경기정보 변경"]:checked +label{
+                display:block;
+            }
+            input[id="경기정보 변경"]+label{
+                display:inline-block;
+                border-radius: 20px;
+                padding: 5px;
+                background:  #F76F22;
+                color: white;
+                margin-right: 10px;
+            }
+
+            /* 경기정원 박스 */
+            .sidebar{
+                width: 35%;
+                height: 60%;
+                background: #c4c4c4;
+                position: fixed;
+                top: 248px;
+                right: -100%;
+                border-radius: 15px;
+                display: grid;
+                grid-template-rows: 1fr 1fr 1fr 1fr 4fr;
+                place-items: center;
+                
+
+            }
+            input[id="경기정보 변경"]:checked + label + div{
+                right: 10%;
+            }
+
+            .complete_btn{
+                width: 100%;
+                display: grid;
+                place-items: center;
+                grid-template-rows: 1fr 1fr;
+                
+            }
+            input[id="변경완료"]{
+                display:none;
+            }
+            input[id="변경완료"]+label{
+                display:inline-block;
+                border-radius: 20px;
+                padding: 5px;
+                margin-top: 10px;
+                background:  #0267fe;
+                color: white;
+
+            }
+
+            .sidebar h3{
+                text-align: center;
+                color: black;
+                margin-top: 20px;
+            }
+
+            .check_pnum input[type="number"]{
+                display:inline-block;
+                background:none;
+                border:2px solid rgb(75 77 92);  
+                padding:0px 10px;
+                text-align:center;
+                height:35px;
+                line-height:33px;
+                font-weight:500;
+                font-size: large;
+                color: rgb(75 77 92);
+                cursor:pointer;
+                border-radius: 15px;
+            }
+
+            input[id="참여자 정보"]{
+                display:none;
+            }
+            input[id="참여자 정보"]:checked +label{
+                display:block;
+            }
+            input[id="참여자 정보"]+label{
+                display:inline-block;
+                color: black;
+                margin-left: 20px;
+            }
+            /* 선수 정보 박스 */
+
+            .sidebar2{
+                width: 35%;
+                height: 30%;
+                background: rgba(196,196,196,0.4);
+                position: fixed;
+                top: 248px;
+                right: -90%;
+                z-index: 0;
+                border-radius: 15px;
+                background-color: #a1a1a1;
+            }
+            input[id="참여자 정보"]:checked + label + span+div{
+                right: 10%;
+            }
+
+            .sidebar2 h4{
+                text-align: center;
+                color: black;
+                margin-top: 20px;
+            }
+            .manner_point2{
+                margin-top: 20px;
+                text-align: center;
+            }
+            .plyaer_eva{
+                text-align: center;
+                color: black;
+                margin-top: 20px;
+            }
+        }
+
+        @media(max-width:799px){
+            body {
+                font-family: 'Noto Sans KR' !important;
+                margin: 0;
+                background-color: rgb(47, 48, 58);
+                display: grid;
+                grid-template-rows: auto;
+            }
+
+            .imgcon2{
+                float: left;
+                height: 50px;
+                padding: 10px 40px;
+            }
+    
+            navbar{
+                float: right;
+                display: flex;
+                flex-direction: row;
+                width: 100%;
+                list-style-type: none;
+                position: fixed;
+                color: white;
+            }
+    
+            nav-item{
+                padding: 15px;
+                cursor: pointer;
+            }
+    
+            li{
+                float:right;
+                padding: 20px 40px;
+            }
+
+            body{
+                font-family: 'Noto Sans KR', sans-serif;
+                list-style: none;
+                text-decoration: none;
+                border-collapse: collapse;
+                margin:0;
+                padding:0;
+            }
+            .left {
+                width: 100%;
+                height: 100vh;
+                float: left;
+                box-sizing: border-box;            }
+            .box1{
+                width:35%;
+                height: 50%;
+                box-sizing: border-box;
+                background: rgba(235, 235, 235, 0.1);
+                margin-top: 80px;
+                position: relative;
+                border-radius: 15px;
+                color: white;
+                float: left;
+            }
+            h2{
+                font-size:20px;
+            }
+            .hosting{
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+                width: 90%;
+                height: 60px;
+                margin-top: 4px;
+                background-color: rgb(75 77 92);
+                border-radius: 15px;
+                font-size:20px;
+            }
+            .hostings {
+                display: flex;
+                flex-direction: column;
+                flex-wrap: wrap;
+                align-items: center;
+            }
+
+            .change_btn{
+                font-size:10px;
+            }
+            
+            .list_areas{
+                display: flex;
+                flex-wrap: wrap;
+                align-items: center;
+            }
+            .list_area{
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+                width: 90%;
+                height: 60px;
+                margin-top: 4px;
+                background-color: #c4c4c4;
+                border-radius: 15px;
+            }
+            .list_box{
+                width:25%;
+                height: 70%;
+                box-sizing: border-box;
+                background-color: #c4c4c4;
+                float: left;
+                position: relative;
+                border-radius: 15px;
+                color: white;
+                margin-top: 80px;
+            }
+            .player_box{
+                width:25%;
+                height: 70%;
+                box-sizing: border-box;
+                background-color: rgba(196, 196, 196, 0.3);
+                float: left;
+                position: relative;
+                border-radius: 15px;
+                color: white;
+                margin-top: 80px;
+            }
+            .participant{
+                color: black;
+            }
+
+            .list_box{
+                margin-left: 20px;
+            }
+            .player_box{
+                margin-left: 20px;
+            }
+            .left h1{
+                margin-top: 20px;
+                text-align:center;
+                color: white;
+            }
+            .left h2{
+                text-align: center;
+                padding: 10px;
+            }
+
+            .box2{
+                margin-top: 10px;
+            }
+
+            .date{
+                margin-left: 10px;
+                color: white;
+                font-size:10px;
+            }
+            .place{
+                font-size:10px;
+                color: white;
+            }
+            .head_num{
+                color: white;
+                font-size:10px;
+            }
+
+            input[id="경기정보 변경"]{
+                display:none;
+            }
+            input[id="경기정보 변경"]:checked +label{
+                display:block;
+            }
+            input[id="경기정보 변경"]+label{
+                display:inline-block;
+                border-radius: 20px;
+                padding: 5px;
+                background:  #F76F22;
+                color: white;
+                margin-right: 10px;
+            }
+
+            /* 경기정원 박스 */
+            .sidebar{
+                width: 25%;
+                height: 70%;
+                background: #c4c4c4;
+                position: fixed;
+                top: 200px;
+                right: -150%;
+                z-index: 1;
+                border-radius: 15px;
+                /* transition: all .35s; */
+            }
+            input[id="경기정보 변경"]:checked + label + div{
+                right: 31.5%;
+            }
+
+            .complete_btn{
+                margin-left: 22%;
+                margin-top: 40px;
+                font-size:10px;
+            }
+            input[id="변경완료"]{
+                display:none;
+            }
+            input[id="변경완료"]+label{
+                display:inline-block;
+                border-radius: 15px;
+                padding: 5px;
+                background:  #0267fe;
+                color: white;
+                margin-top: 15px;
+            }
+
+            .sidebar h3{
+                text-align: center;
+                color: black;
+                margin-top: 20px;
+            }
+
+            .check_pnum input[type="radio"]{
+                display:none;
+            }
+
+            .check_pnum input[type="radio"] + span{
+                display:inline-block;
+                background:none;
+                border:2px solid rgb(75 77 92);  
+                padding:0px 10px;
+                text-align:center;
+                height:35px;
+                line-height:33px;
+                font-weight:500;
+                color: rgb(75 77 92);
+                cursor:pointer;
+                border-radius: 15px;
+            }
+
+            .check_pnum input[type="radio"]:checked + span{
+                border:2px solid rgb(75 77 92);
+                background:rgb(75 77 92);
+                color:#fff;
+            }
+
+            .participant{
+                font-size:20px;
+            }
+
+            input[id="참여자 정보"]{
+                display:none;
+            }
+            input[id="참여자 정보"]:checked +label{
+                display:block;
+            }
+            input[id="참여자 정보"]+label{
+                display:inline-block;
+                color: black;
+                margin-left: 20px;
+            }
+
+            h3{
+                font-size:10px;
+            }
+
+
+
+            /* 선수 정보 박스 */
+
+            .sidebar2{
+                width: 20%;
+                height: 40%;
+                background: rgba(196,196,196,0.4);
+                position: fixed;
+                top: 173px;
+                right: -150%;
+                z-index: 0;
+                border-radius: 15px;
+            }
+            input[id="참여자 정보"]:checked + label + span+div{
+                right: 10%;
+            }
+
+            .sidebar2 h4{
+                text-align: center;
+                color: black;
+                margin-top: 20px;
+            }
+            .manner_point2{
+                margin-top: 20px;
+                text-align: center;
+            }
+            .plyaer_eva{
+                text-align: center;
+                color: black;
+                margin-top: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <div class="imgcon2"><img src="image/veteran logo.png" alt=""></div>
+        <ul class="navbar">
+            <li class="nav-item"><a href="#" style="text-decoration:none">👤 내 정보</a></li>
+            <li class="nav-item"><a href="#" style="text-decoration:none">🏠 홈</a></li>
+        </ul>
+    </div>
+    <div class="wrap">
+        <div class="left">
+            <h1>호스팅 관리</h1>
+            <div class="box1">
+                <h2>호스팅 완료</h2>
+                <div class="hostings">
+                    <div class="hosting">
+                        <div class="date">10월 30일 12:00</div>
+                        <div class="place">이문동 체육관</div>
+                        <span class="head_num">10/14</span>
+                        <div class="change_btn">
+                            <input type="checkbox" id="경기정보 변경">
+                            <label for="경기정보 변경">경기 정보 변경</label>
+                            
+                            <div class="sidebar">
+                                <h3>경기 정원</h3>
+                                <form class="complete_btn">
+                                    <div>
+                                        <label class="check_pnum">
+                                            <!-- min과 max로 범위 한정 -->
+                                            <input type='number' name='p_num' id="p_num" min="10" max="18"/>
+                                            
+                                        </label>
+                                        <br>
+                                    </div>
+                                    
+                                    <input type="submit" id="변경완료">
+                                    <label for="변경완료">변경완료</label>
+                                </form>
+                                <h3>참여자 목록</h3>
+                                <div class="participant">
+                                    {% for each_participant in list %}
+                                    <input type="checkbox" id="참여자 정보">
+                                    <label for="참여자 정보">{{each_participant.name}}</label>
+                                    <span class="manner_point1">{{each_participant.grade}}</span>
+                                    <div class="sidebar2">
+                                        <h4>{{each_participant.name}}</h4>
+                                        <div class="manner_point2">{{each_participant.grade}}</div>
+                                        <!-- 선수평가 -->
+                                        <div class="plyaer_eva">{{each_participant.evaluation}}</div>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>

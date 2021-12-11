@@ -2,9 +2,12 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>Document</title>
-    <link href="/static/css/join_page.css" rel="stylesheet">
+    <title>Join Page</title>
+    <!-- <link href="Join Page.css" rel="stylesheet"> -->
     <script scr="jquery-3.4.1.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100&display=swap" rel="stylesheet">
     <style>
         div {
             width: 100%;
@@ -23,20 +26,115 @@
             background: #EBEBEB;
             
         }
+
+
+        *{
+            font-family: 'Noto Sans KR', sans-serif;
+            list-style: none;
+            text-decoration: none;
+            border-collapse: collapse;
+            margin:0;
+            padding:0;
+        }
+
+
+        .left h1{
+            font-size: 32px; color: #E2E2E2;
+            text-align: left;
+            margin-left: 45%;
+            margin-top: 25%;
+        }
+        .left h2{
+            font-size: 40px; color: #F76F22;
+            text-align: left;
+            margin-left: 45%;
+        }
+        .left ul{
+            font-size: 18px; color: #E2E2E2;
+            text-align: left;
+            margin-left: 45%;
+            margin-top: 10px;
+        }
+        .right{position: center;}
+        .right h1{
+            font-size: 32px; color: #2F303A;
+            text-align: left;
+            margin-left: 30px;
+            margin-top: 25%;
+        }
+        .right h2{
+            font-size: 40px; color: #F76F22;
+            text-align: left;
+            margin-left: 30px;
+            margin-bottom: 30px;
+        }
+
+        .join-form{position:relative; z-index: 2;}
+
+        .join-area{
+            width: 400px; position:relative;
+            margin-top: 20px;
+            margin-left: 30px;
+        }
+
+        .join-area input{
+            width: 40%;
+            padding: 20px 10px 10px;
+            background-color: transparent;
+            border: none;
+            border-bottom: 1px solid #999;
+            font-size: 18px; color: #F76F22;
+            outline: none;
+            margin-bottom: 30px;
+            margin-left: 10px;
+        }
+
+        .join-area label{
+            position: absolute; left: 10px;
+            font-size: 18px; color: #999;
+            margin-bottom: 5px;
+        }
+
+        .btn-area1{margin-top: 30px;}
+        .btn-area1 button{
+            margin-left: 30px;
+            width:20%; height: 30px;
+            background:#E2E2E2;
+            color: #F76F22;
+            font-size: 18px;
+            border: none;
+            border-radius: 25px;
+        }
+
+        .btn-area2{margin-top: 30px;}
+        .btn-area2 button{
+            width:50%; height: 50px;
+            background:#F76F22;
+            color: #fff;
+            font-size: 20px;
+            border: none;
+            border-radius: 25px;
+            margin-left: 25%;
+            margin-bottom: 30px;
+        }
+
+        .agree{
+            margin-top: 30px;
+            margin-left: 25%;
+        }
         </style>
 </head>
 
 <body>
-    {% load static %}
     <div class="wrap">
         <div class = "header">
             <div class="left">
                 <img 
-                src = "{% static 'img/veteran_logo.png' %}"
+                src = "veteran logo.png"
                 style= "float:left; margin-left: 50px;margin-top: 50px;"
                 />
                     <img 
-                src = "{% static 'img/back_img.jpg' %}"
+                src = "back_img.jpg"
                 style= "float: left; margin-top: 25%; width:230px; margin-right: 10px; height: 380px;"
                 />
                     <h1>아직 회원이 아니신가요?</h1>
@@ -54,9 +152,7 @@
                 <h1>베테랑</h1>
                 <h2>회원가입</h2>
                 <section class="join-form">
-                    <form action="{% url 'Account:signup' %}" method="POST">
-                    {% csrf_token %}
-                        
+                    <form action="">
                         <span class="join-area">
                             <label for="email">Email</label>
                             <input type="text" name="email" id="email"
@@ -78,24 +174,25 @@
                             autocomplete="off" required>
                         </span>
                         <span class="join-area">
-                            <label for="phone">Phone(recommended)</label>
-                            <input type="text" name="phone" id="phone"
+                            <label for="Phone">Phone(recommended)</label>
+                            <input type="text" name="Phone" id="Phone"
                             autocomplete="off" required>
                         </span>
                         <br>
-                        <span class="agree">
-                            베테랑 서비스 이용약관 및 개인정보 수집에 동의합니다. <input type="checkbox" value = "agree">
+                        <span class="join-area">
+                            <label for="parea">Preffered Area</label>
+                            <input type="text" name="parea" id="parea"
+                            autocomplete="off" required>
                         </span>
+                        <span class="btn-area1">
+                            <button type="submit">Find Address</button>
+                        </span><br>
                         <span class="btn-area2">
                             <button type="submit">Create Account</button>
                         </span><br>
-                        
-                        </form>
-                        {% if error %}
-                        <div class="error_block" >
-                            <div style="color: red; display:flex; flex-direction:row; justify-content:center;">{{ error }}</div>
-                        </div>
-                        {% endif %}
+                        <span class="agree">
+                            베테랑 서비스 이용약관 및 개인정보 수집에 동의합니다. <input type="checkbox" value = "agree" required>
+                        </span>
                 </section>
 </body>
 
