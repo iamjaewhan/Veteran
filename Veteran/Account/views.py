@@ -142,6 +142,6 @@ def lookupMyReview(request):
     if rating == None:
          return render(request, 'Account/my_estimation.html', {"reviews" : reviews })
     else:
-        rating=rating/len(reviews)
+        rating="%.1f"%(rating/len(reviews))
         return render(request, 'Account/my_estimation.html', {"reviews" : reviews[:3] , "rating":rating})
 
