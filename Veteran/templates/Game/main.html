@@ -101,11 +101,14 @@
 
         .page {
             color : white;
+            width : 250px;
+            display : flex;
+            justify-content: space-between;
         }
 
         .right {
             display: grid;
-            margin-left: 50px
+            margin-left: 0px;
         }
 
         .listy {
@@ -115,7 +118,7 @@
             max-width: 610px;
             background-color: rgb(235,235,235); 
             border-radius: 15px;
-            margin-right: 30px
+            margin-right: 0px;
         }
 
         #line {
@@ -129,7 +132,6 @@
             width: 100%;
             height: 100%;
             border-radius: 15px;
-            margin-right: 30px;
             flex-direction:column; 
             justify-content:space-around; 
             background-color: rgb(235,235,235); 
@@ -140,6 +142,8 @@
             display: flex;
             flex-direction: column;
             flex-wrap: wrap;
+            margin-left:30px;
+            margin-right:30px;
             align-items: center;
             overflow-y: scroll;
             overflow: hidden;
@@ -161,7 +165,7 @@
 
         .page-link{
             margin-top: 10px;
-            width: 100%;
+            width: 80px;
             height: 20px;
             background: #F76F22;
             color: #fff;
@@ -169,6 +173,9 @@
             border: none;
             border-radius: 25px;
             text-align: center;
+        }
+        .pag-link > a{
+            width : 50px;
         }
 
         .participate {
@@ -219,7 +226,7 @@
                             {% for game in game_list %}
                             <div class="game">
                                 <div>
-                                    {{ game.host }} | {{ game.numOfParticipation }}/{{ game.numOfRecruitment }}
+                                     {{ game.host }} | {{ game.numOfParticipation }}/{{ game.numOfRecruitment }}
                                 </div>
                                 <div>
                                     {{ game.start_datetime }}  
@@ -228,14 +235,11 @@
                             </div>
                             {% endfor %}
                             <div class="page">
-                                <!--이전페이지-->
                                 {% if game_list.has_previous %}
                                     <a class="page-link" style="float: left;" id="page_link" href="?page={{ game_list.previous_page_number }}">이전</a>
                                 {% else %}
                                     <a class="page-link" style="float: left;" id="page_link" tabindex="-1" aria-disabled="true" href="#">이전</a>
                                 {% endif %}
-
-                                <!--다음페이지-->
                                 {% if game_list.has_next %}
                                     <a class="page-link" style="float: right;" id="page_link" href="?page={{ game_list.next_page_number }}">다음</a>
                                 {% else %}
