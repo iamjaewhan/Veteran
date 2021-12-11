@@ -8,12 +8,21 @@
     <title>Main</title>
         <style>
 
-        a:visited {color:white}
+        a { text-decoration:none !important }
+        a { text-decoration: none; color: white; }
+        a:visited { text-decoration: none; }
+        a:hover { text-decoration: none; }
+        a:focus { text-decoration: none; }
+        a:hover, a:active { text-decoration: none; }
 
         .imgcon2{
             float: left;
             height: 50px;
             padding: 10px 40px;
+        }
+        
+        p {
+            float: left;
         }
 
         navbar{
@@ -126,16 +135,13 @@
     {% load static %}
     <div class="header">
         <div class="imgcon2"><img src="{% static 'img/veteran_logo.png' %}" alt=""></div>
-        <ul class="navbar">
+        <ul class="navbar" style="list-style:none;">
             <p style="color:white;">{{ user.username }}</p>
             <li class="nav-item"><a href="{% url 'Account:mypage' %}">👤 내 정보</a></li>
-            <li class="nav-item"><a href="{% url 'Game:hostGame' %}">경기 등록</a></li>
+            <li class="nav-item"><a href="{% url 'Game:hostGame' %}">🏀 경기 등록</a></li>
         </ul>
     </div>
     <div class="wrapper">
-        <div class="names">
-            <div> 게임 리스트 </div>
-        </div>
         <div class="items" style='display:flex; flex-direction:row; flex-wrap:wrap; justify-content:space-around;'>
             <!--지도 표시 부분-->
             <div class="map" id='map' style="min-width:850px; height: 850px; background-color:white;"></div>
