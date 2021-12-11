@@ -39,11 +39,11 @@ class Game(models.Model):
     def toTuple(self):
         return (
             self.id,
-            self.host,
+            self.host.group_name,
             self.start_datetime,
             self.end_datetime,
             self.numOfRecruitment,
-            self.numOrParticipation
+            self.numOfParticipation
         )
         
         
@@ -54,5 +54,8 @@ class Game_Participants(models.Model):
     
     class Meta:
         unique_together = (('game', 'user'),)
+        
+    def getPlayer(self):
+        return self.user
         
     

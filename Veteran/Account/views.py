@@ -98,17 +98,23 @@ def deleteReq(request):
 
 
 def lookupRecord(request):
-    game_participants = {}
+    id_participants = {}
+    id_game = {}
     scheduled_games = []
-    participated_games = Game_Participants.objects.filter(user = request.user ).only("game")
+    participated_games = Game_Participants.objects.filter(user = request.user)
     
     for game in participated_games:
         if game.game.isProgressed():
-            game_participants[game.game] =Game_Participants.objects.filter(game = game.game).values('user')
+            id_participants[game.game.id] = list(Game_Participants.objects.filter(game = game.game).values('user'))
+            id_game[game.game.id] = game.game.toDict()
+            id_game[game.game.id]['host']=game.game.host.group_name
         else:
             scheduled_games.append(game.game.toDict())
+            
+    print(id_participants)
+    print(id_game)
     
-    return render(request, 'Account/games_review.html',{"game_participants" : game_participants, "scheduled_games" : scheduled_games[:10]})
+    return render(request, 'Account/games_review.html',{"id_participants" : id_participants, "id_game":id_game,"scheduled_games" : scheduled_games[:10]})
 
 
 

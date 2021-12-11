@@ -10,6 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100&display=swap" rel="stylesheet">
     
     <title>경기조회</title>
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 
     
     <style>
@@ -351,21 +352,14 @@
                     <div style="font-size: x-large;">참여한 경기</div>
                 </div>
 
-                <div class="games">
-                    {% for game in game_participants %}
-                    <div class="game">
-                        {{ each_game.host.group_name }}
-                        {{ each_game.start_datetime }}
-                    </div>
-                    {%endfor%}
+                <div class="games_list">
+        
                 </div>
             </div>
             <div class="rating">
                 <div class="games"style="background-color: rgb(101, 101, 107); padding:5px; border-radius:15px; height:90%; width:90%;">
-                    
-                    <button class="player">
-                        <div></div>
-                    </button>
+                    <div class="player_list">
+                    </div>
                 </div>
                 <div class="righty"></div>
             </div>
@@ -394,6 +388,50 @@
 </body>
 </div>
 <script>
+    const ids = [];
+    const id_parts = {{ id_participants|safe }};
+    const id_g = {{ id_game|safe }};
+    {% for g in id_game %}
+        ids.push({{g}});
+    {% endfor %}
+
+    for (var i =0; i<ids.length;i++){
+        var ndiv = document.createElement('div');
+        var np1 = document.createElement('p');
+        var np2 = document.createElement('p');
+        var nb = document.createElement('button');
+        np1.innerHTML = id_g[ids[i]]['host'];
+        np2.innerHTML = id_g[ids[i]]['start_datetime'];
+        nb.setAttribute('id',ids[i]);
+        nb.setAttribute('onclick','showPlayer(this.id)');
+        ndiv.setAttribute('class','game');
+        ndiv.appendChild(np1);
+        ndiv.appendChild(np2);
+        ndiv.appendChild(nb);
+        $(".games_list").append(ndiv);
+    }
+    
+    function showPlayer(id){
+        for (var j in id_parts[id]){
+            var pdiv = document.createElement("div");
+            var pp = document.createElement("p"); 
+            var pb = document.createElement("button");
+            pp.innerHTML=id_parts[id][j];
+            pb.setAttribute('id',j);
+            pb.setAttribute('onclick','setReviewee()');
+            
+            pdiv.appendChild(pp);
+            pdiv.appendChild(pb);
+
+            $(".player_list").append(pdiv);
+        };
+    };
+
+    function setReviewee(user_id){
+        
+    };
+
+
     
 
 
