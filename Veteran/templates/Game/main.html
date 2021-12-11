@@ -324,7 +324,7 @@
                 lon=position.coords.longitude;
                 
                 var locPosition=new kakao.maps.LatLng(lat,lon),
-                message='<div style="padding:3px;">here!</div>';
+                message='here';
 
 
                 map.setCenter(locPosition);
@@ -350,6 +350,12 @@
 
             var iwContent = message,
             iwRemovable = true;
+
+            var infoindow = new kakao.maps.InfoWindow({
+                content : iwContent,
+                removable : iwRemovable
+            });
+            /*infoindow.open(map, marker);*/
 
             map.setCenter(locPosition);
         }
