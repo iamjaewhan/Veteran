@@ -8,7 +8,7 @@ import json
 
 # from Veteran.Veteran.Account import models
 from Game.models import Game, Game_Participants
-from .models import User, Host, HostApplication,Review
+from .models import User, Host, HostApplication, Review
 
 
 # Create your views here.
@@ -66,19 +66,6 @@ def reqHostAthority(request):
     return render(request,'Account/Host Application.html')
 
 
-def lookupRecord(request):
-    game_participants = {}
-    scheduled_games = []
-    participated_games = Game_Participants.objects.filter(user = request.user ).only("game")
-    
-    for game in participated_games:
-        if game.game.isProgressed():
-            game_participants[game.game] =Game_Participants.objects.filter(game = game.game).values('user')
-        else:
-            scheduled_games.append(game.game.toDict())
-    
-    return render(request, 'Account/games_review.html',{"game_participants" : game_participants, "scheduled_games" : scheduled_games})
-
 
 def lookupReq(request):
     request_list=HostApplication.objects.all()
@@ -108,6 +95,43 @@ def deleteReq(request):
         req_host=HostApplication.objects.get(host=req_id)
         req_host.delete()
     return redirect('Account:lookupReq')
+
+
+def lookupRecord(request):
+    id_participants = {}
+    id_game = {}
+    scheduled_games = []
+    participated_games = Game_Participants.objects.filter(user = request.user)
+    
+    for game in participated_games:
+        if game.game.isProgressed():
+            tempGame = Game_Participants.objects.filter(game = game.game)
+            for g in tempGame:
+                if g.game.id in id_participants:
+                    id_participants[g.game.id].append((g.user.id, g.user.username))
+                else:
+                    id_participants[g.game.id] = [(g.user.id, g.user.username)]
+            id_game[game.game.id] = game.game.toDict()
+            id_game[game.game.id]['host']=game.game.host.group_name
+        else:
+            scheduled_games.append(game.game.toDict())
+    return render(request, 'Account/games_review.html',{"id_participants" : id_participants, "id_game":id_game,"scheduled_games" : scheduled_games[:10]})
+
+
+def leaveReview(request):
+    if request.method == 'POST':
+        review = Review()
+        review.reviewer = request.user
+        review.reviewee = User.objects.get(username = request.POST['reviewee_username'])
+        review.comment_type = request.POST['p_num']
+        review.rating = request.POST['rating']
+        review.save()
+        return redirect('Account:lookupRecord')
+        
+        
+        
+        
+    return redirect('Account:lookupRecord')
 
 
 def lookupMyReview(request):
