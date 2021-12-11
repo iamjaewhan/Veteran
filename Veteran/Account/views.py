@@ -105,17 +105,23 @@ def lookupRecord(request):
     
     for game in participated_games:
         if game.game.isProgressed():
-            id_participants[game.game.id] = list(Game_Participants.objects.filter(game = game.game).values('user'))
+            tempGame = Game_Participants.objects.filter(game = game.game)
+            for g in tempGame:
+                if g.game.id in id_participants:
+                    id_participants[g.game.id].append((g.user.id, g.user.username))
+                else:
+                    id_participants[g.game.id] = [(g.user.id, g.user.username)]
             id_game[game.game.id] = game.game.toDict()
             id_game[game.game.id]['host']=game.game.host.group_name
         else:
             scheduled_games.append(game.game.toDict())
-            
-    print(id_participants)
-    print(id_game)
-    
     return render(request, 'Account/games_review.html',{"id_participants" : id_participants, "id_game":id_game,"scheduled_games" : scheduled_games[:10]})
 
+
+def leaveReview(request):
+    if request.method=='POST':
+        print(request.POST['reviewee_username'],request.POST['p_num'],request.POST['rating'])
+    return redirect('Account:lookupRecord')
 
 
 def lookupMyReview(request):

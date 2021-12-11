@@ -56,6 +56,4 @@ class Game_Participants(models.Model):
         unique_together = (('game', 'user'),)
         
     def getPlayer(self):
-        return self.user
-        
-    
+        return [self.user.id, self.user.username]
