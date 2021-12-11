@@ -138,7 +138,10 @@ def lookupMyReview(request):
     reviews=Review.objects.filter(reviewee = request.user).order_by('-id')
     rating=None
     for review in reviews:
-        rating+=review.rating
+        if rating == None:
+            rating = review.rating
+        else:
+            rating += review.rating
     if rating == None:
          return render(request, 'Account/my_estimation.html', {"reviews" : reviews })
     else:
