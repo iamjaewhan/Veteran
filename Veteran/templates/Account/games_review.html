@@ -21,6 +21,10 @@
         a:focus { text-decoration: none; }
         a:hover, a:active { text-decoration: none; }
 
+        body::-webkit-scrollbar {
+            display: none;
+        }
+
         .imgcon2{
             float: left;
             height: 50px;
@@ -63,29 +67,31 @@
             }
     
             .left {
-                display: grid;
-                grid-template-rows: 1fr 1fr;
-                place-items: center;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
             }
     
             .right {
                 display: grid;
                 place-items: center;
+                max-height: 100vh;
             }
     
             .list {
                 display: grid;
                 grid-template-rows: 1fr 4fr;
                 width: 80%;
-                height: 90%;
+                height: 45%;
             }
     
             .listy {
                 display: grid;
-                grid-template-rows: 1fr 6fr;
                 width: 80%;
                 height: 80%;
                 max-width: 610px;
+                max-height: 100vh;
                 background-color: rgb(235,235,235); 
                 border-radius: 15px; 
                 padding: 10px;
@@ -94,10 +100,12 @@
             .games{
                 display: flex;
                 flex-direction: column;
-                flex-wrap: wrap;
                 align-items: center;
                 overflow-y: scroll;
-                overflow: hidden;
+                margin-bottom: 20px;
+            }
+            .games::-webkit-scrollbar {
+                display: none;
             }
     
             .game {
@@ -109,7 +117,7 @@
                 max-width: 450px;
                 padding-left: 10px;
                 padding-right: 10px;
-                height: 50px;
+                min-height: 50px;
                 margin-top: 8px;
                 background-color: rgb(75 77 92);
                 border-radius: 15px;
@@ -139,7 +147,7 @@
                 display: grid;
                 grid-template-columns: 4fr 6fr;
                 place-items: center;
-                height: 80%;
+                height: 45%;
                 width: 80%;
                 max-width: 610px;
                 background-color: rgb(77, 77, 85);
@@ -205,9 +213,10 @@
             }
     
             .left {
-                display: grid;
-                grid-template-rows: 1fr 1fr;
-                place-items: center;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
             }
     
             .right {
@@ -219,15 +228,16 @@
                 display: grid;
                 grid-template-rows: 1fr 4fr;
                 width: 80%;
-                height: 90%;
+                height: 45%;
+                margin-bottom: 20px;
             }
     
             .listy {
                 display: grid;
-                grid-template-rows: 1fr 6fr;
                 width: 80%;
                 height: 80%;
                 max-width: 610px;
+                max-height: 80vh;
                 background-color: rgb(235,235,235); 
                 border-radius: 15px; 
                 padding: 10px;
@@ -236,12 +246,14 @@
             .games{
                 display: flex;
                 flex-direction: column;
-                flex-wrap: wrap;
                 align-items: center;
                 overflow-y: scroll;
-                overflow: hidden;
             }
-    
+            
+            .games::-webkit-scrollbar {
+                display: none;
+            }
+
             .game {
                 display: flex;
                 flex-direction: row;
@@ -251,7 +263,7 @@
                 max-width: 450px;
                 padding-left: 10px;
                 padding-right: 10px;
-                height: 50px;
+                min-height: 50px;
                 margin-top: 8px;
                 background-color: rgb(75 77 92);
                 border-radius: 20px;
@@ -281,7 +293,7 @@
                 display: grid;
                 grid-template-columns: 4fr 6fr;
                 place-items: center;
-                height: 80%;
+                height: 45%;
                 width: 80%;
                 max-width: 610px;
                 background-color: rgb(77, 77, 85);
@@ -341,7 +353,7 @@
     {% load static %}
     <div class="header">
         <div class="imgcon2"><img src="{% static 'img/veteran_logo.png' %}" alt=""></div>
-        <ul class="navbar">
+        <ul class="navbar" style="list-style:none;">
             <li class="nav-item"><a href="#">👤 내 정보</a></li>
             <li class="nav-item"><a href="#">🏠 홈</a></li>
         </ul>
