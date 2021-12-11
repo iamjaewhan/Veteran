@@ -10,6 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100&display=swap" rel="stylesheet">
     
     <title>경기조회</title>
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 
     
     <style>
@@ -340,6 +341,38 @@
                 place-items: center;
             }
         }
+        .tar-rating {
+          display: flex;
+          flex-direction: row-reverse;
+          font-size: 2.25rem;
+          line-height: 2.5rem;
+          justify-content: space-around;
+          padding: 0 0.2em;
+          text-align: center;
+          width: 5em;
+        }
+         
+        .star-rating input {
+          display: none;
+        }
+         
+        .star-rating label {
+          -webkit-text-fill-color: transparent; /* Will override color (regardless of order) */
+          -webkit-text-stroke-width: 2.3px;
+          -webkit-text-stroke-color: #2b2a29;
+          cursor: pointer;
+        }
+         
+        .star-rating :checked ~ label {
+          -webkit-text-fill-color: gold;
+        }
+         
+        .star-rating label:hover,
+        .star-rating label:hover ~ label {
+          -webkit-text-fill-color: #fff58c;
+        }
+    
+
 
         a:link {color:rgb(255, 255, 255); text-decoration: none;}
 
@@ -366,23 +399,52 @@
                     <div style="font-size: x-large;">참여한 경기</div>
                 </div>
 
-                <div class="games">
-                    {% for game in game_participants %}
-                    <div class="game">
-                        {{ each_game.host.group_name }}
-                        {{ each_game.start_datetime }}
-                    </div>
-                    {%endfor%}
+                <div class="games_list">
+        
                 </div>
             </div>
             <div class="rating">
                 <div class="games"style="background-color: rgb(101, 101, 107); padding:5px; border-radius:15px; height:90%; width:90%;">
-                    
-                    <button class="player">
-                        <div></div>
-                    </button>
+                    <div class="player_list">
+                    </div>
                 </div>
-                <div class="righty"></div>
+                <div class="righty">
+                    <form class="complete_btn" action="{% url 'Account:leaveReview' %}" method="POST">
+                        {% csrf_token %}
+                        <div>
+                            <input id="reviewee" name="reviewee_username" style="background-color:transparent; boder : 0px;"></input>
+                        </div>
+                        <div class="star-rating space-x-4 mx-auto">
+
+                            <input type="radio" id="5-stars" name="rating" value="5" v-model="ratings"/>
+                            <label for="5-stars" class="star pr-4">★</label>
+                            <input type="radio" id="4-stars" name="rating" value="4" v-model="ratings"/>
+                            <label for="4-stars" class="star">★</label>
+                            <input type="radio" id="3-stars" name="rating" value="3" v-model="ratings"/>
+                            <label for="3-stars" class="star">★</label>
+                            <input type="radio" id="2-stars" name="rating" value="2" v-model="ratings"/>
+                            <label for="2-stars" class="star">★</label>
+                            <input type="radio" id="1-star" name="rating" value="1" v-model="ratings" />
+                            <label for="1-star" class="star">★</label>
+                        </div>
+                        <div>
+                        <p>선수의 매너를 평가해주세요!</p>
+                        <input type='radio' name='p_num' value='5' checked/> 
+                        <label>매너가 좋은 선수에요</label><br>
+                        <input type='radio' name='p_num' value='4' /> 
+                        <label>실력이 출중한 선수에요</label><br>
+                        <input type='radio' name='p_num' value='3' /> 
+                        <label>이타적인 플레이를 해요</label><br>
+                        <input type='radio' name='p_num' value='2' /> 
+                        <label>독단적인 플레이를 해요</label><br>
+                        <input type='radio' name='p_num' value='1' /> 
+                        <label>위험하게 플레이해요</label><br>
+                        </div>
+                        <br>
+                        <br>
+                        <input type="submit" id="리뷰 제출">
+                    </form>
+                </div>
             </div>
         </div>
         <div class="right">
@@ -409,6 +471,59 @@
 </body>
 </div>
 <script>
+    const ids = [];
+    const id_parts={{ id_participants|safe }};
+    const id_g = {{ id_game|safe }};
+
+    {% for g in id_game %}
+        ids.push({{g}});
+    {% endfor %}
+
+    for (var i =0; i<ids.length;i++){
+        var ndiv = document.createElement('div');
+        var np1 = document.createElement('p');
+        var np2 = document.createElement('p');
+        var nb = document.createElement('button');
+        np1.innerHTML = id_g[ids[i]]['host'];
+        np2.innerHTML = id_g[ids[i]]['start_datetime'];
+        nb.setAttribute('id',ids[i]);
+        nb.setAttribute('onclick','showPlayer(this.id)');
+        nb.innerHTML = "참가자 조회";
+        ndiv.setAttribute('class','game');
+        ndiv.appendChild(np1);
+        ndiv.appendChild(np2);
+        ndiv.appendChild(nb);
+        $(".games_list").append(ndiv);
+    }
+    
+    function showPlayer(id){
+        $(".player_list").empty();
+        for (var j in id_parts[id]){
+            var pdiv = document.createElement("div");
+            var pp = document.createElement("p"); 
+            var pb = document.createElement("button");
+            pp.innerHTML=id_parts[id][j];
+            pb.setAttribute('id',id_parts[id][j]);
+            pb.setAttribute('onclick','setReviewee(this.id)');
+            pb.innerHTML = "리뷰";
+            
+            pdiv.appendChild(pp);
+            pdiv.appendChild(pb);
+
+            $(".player_list").append(pdiv);
+        };
+    };
+
+    function setReviewee(user_id){
+        console.log(user_id);
+        var elem_reviewee = document.getElementById('reviewee');
+        elem_reviewee.value = user_id;
+        elem_reviewee.readOnly=true;
+        
+    
+    };
+
+
     
 
 

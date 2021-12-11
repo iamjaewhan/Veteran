@@ -14,4 +14,5 @@ urlpatterns=[
     path('deleteReq/',views.deleteReq,name='deleteReq'),
     path('lookupRecord/', views.lookupRecord, name='lookupRecord'),
     path('lookupMyReview/', views.lookupMyReview, name='lookupMyReview'),
+    path('leaveReview/', views.leaveReview, name='leaveReview'),
 ]
