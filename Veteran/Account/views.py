@@ -8,7 +8,7 @@ import json
 
 # from Veteran.Veteran.Account import models
 from Game.models import Game, Game_Participants
-from .models import User, Host, HostApplication,Review
+from .models import User, Host, HostApplication, Review
 
 
 # Create your views here.
@@ -119,8 +119,18 @@ def lookupRecord(request):
 
 
 def leaveReview(request):
-    if request.method=='POST':
-        print(request.POST['reviewee_username'],request.POST['p_num'],request.POST['rating'])
+    if request.method == 'POST':
+        review = Review()
+        review.reviewer = request.user
+        review.reviewee = User.objects.get(username = request.POST['reviewee_username'])
+        review.comment_type = request.POST['p_num']
+        review.rating = request.POST['rating']
+        review.save()
+        return redirect('Account:lookupRecord')
+        
+        
+        
+        
     return redirect('Account:lookupRecord')
 
 
