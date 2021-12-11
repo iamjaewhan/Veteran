@@ -8,12 +8,21 @@
     <title>Main</title>
         <style>
 
-        a:visited {color:white}
+        a { text-decoration:none !important }
+        a { text-decoration: none; color: white; }
+        a:visited { text-decoration: none; }
+        a:hover { text-decoration: none; }
+        a:focus { text-decoration: none; }
+        a:hover, a:active { text-decoration: none; }
 
         .imgcon2{
             float: left;
             height: 50px;
             padding: 10px 40px;
+        }
+        
+        p {
+            float: left;
         }
 
         navbar{
@@ -64,15 +73,13 @@
         }
 
         .map {
+
+            margin-left: 30px;
             min-width:850px; 
             height: 850px; 
             background-color:white;
+            border-radius: 25px;
 
-        }
-
-        .details {
-            display: grid;
-            grid-template-rows: 1fr 5fr;
         }
 
         .calendar {
@@ -92,6 +99,43 @@
             overflow: hidden;
         }
 
+        .page {
+            color : white;
+        }
+
+        .right {
+            display: grid;
+            margin-left: 50px
+        }
+
+        .listy {
+            display: grid;
+            width: 100%;
+            height: 100%;
+            max-width: 610px;
+            background-color: rgb(235,235,235); 
+            border-radius: 15px;
+            margin-right: 30px
+        }
+
+        #line {
+            display: grid;
+            place-items: center;
+            height: 50px;
+        }
+
+        .details {
+            display: grid;
+            width: 100%;
+            height: 100%;
+            border-radius: 15px;
+            margin-right: 30px;
+            flex-direction:column; 
+            justify-content:space-around; 
+            background-color: rgb(235,235,235); 
+            border-radius: 15px;
+        }
+
         .games {
             display: flex;
             flex-direction: column;
@@ -106,19 +150,36 @@
             flex-direction: row;
             align-items: center;
             justify-content: space-between;
-            width: 80%;
-            padding-left: 5px;
-            height: 50px;
+            width: 100%;
+            height: 70px;
             margin-top: 8px;
             background-color: rgb(75 77 92);
             border-radius: 15px;
             border-color: transparent;
             transition: 300ms;
-            color: white;
         }
 
-        .page {
-            color : white;
+        .page-link{
+            margin-top: 10px;
+            width: 100%;
+            height: 20px;
+            background: #F76F22;
+            color: #fff;
+            font-size: 15px;
+            border: none;
+            border-radius: 25px;
+            text-align: center;
+        }
+
+        .participate {
+            width: 10%;
+            height: 20px;
+            background: #0267FE;
+            color: #fff;
+            font-size: 15px;
+            border: none;
+            border-radius: 25px;
+            margin-left: 25px;
         }
 
     </style>
@@ -129,55 +190,61 @@
     {% load static %}
     <div class="header">
         <div class="imgcon2"><img src="{% static 'img/veteran_logo.png' %}" alt=""></div>
-        <ul class="navbar">
+        <ul class="navbar" style="list-style:none;">
             <p style="color:white;">{{ user.username }}</p>
             <li class="nav-item"><a href="{% url 'Account:mypage' %}">👤 내 정보</a></li>
-            <li class="nav-item"><a href="{% url 'Game:hostGame' %}">경기 등록</a></li>
+            <li class="nav-item"><a href="{% url 'Game:hostGame' %}">🏀 경기 등록</a></li>
         </ul>
     </div>
     <div class="wrapper">
-        <div class="names">
-            <div> 게임 리스트 </div>
-        </div>
         <div class="items" style='display:flex; flex-direction:row; flex-wrap:wrap; justify-content:space-around;'>
             <!--지도 표시 부분-->
             <div class="map" id='map'></div>
 
             <!--경기 리스트 부분-->
-            <div class="details" style="display:flex; flex-direction:column; justify-content:space-around;">
-                <div id='calendar'></div>
-                {% if message %}
-                    <div class="error_block" style="display:flex; flex-direction:row; justify-content:center;">
-                        <div style="color: red;">{{ message }}</div>
+            <div class="right">
+                <div class="listy">
+                    <div id="line">
+                        <div class="up" style="width: 80%; border-bottom: 1px solid; border-color:rgb(47, 48, 58); padding-bottom:8px">
+                            <div style="font-size: x-large; color: rgb(47, 48, 58); text-align:center;">게임 리스트</div>
+                        </div>
                     </div>
-                {% endif %}
-                {% for game in game_list %}
-                <div class="games" style="background-color: transparent; padding:5px;">
-                    <div>
-                        {{ game.host }} | {{ game.numOfParticipation }}/{{ game.numOfRecruitment }}
-                    </div>
-                    <div>
-                        {{ game.start_datetime }}  
-                        <a href="{% url 'Game:participate' game.id %}">참가신청<a>
-                    </div>
-                </div>
-                {% endfor %}
-                <div class="page">
-                    <!--이전페이지-->
-                    {% if game_list.has_previous %}
-                        <a class="page-link" id="page_link" href="?page={{ game_list.previous_page_number }}">이전</a>
-                    {% else %}
-                        <a class="page-link" id="page_link" tabindex="-1" aria-disabled="true" href="#">이전</a>
-                    {% endif %}
+                    <div class="details">
+                        {% if message %}
+                            <div class="error_block" style="display:flex; flex-direction:row; justify-content:center;">
+                                <div style="color: red;">{{ message }}</div>
+                            </div>
+                        {% endif %}
+                        <div class="games">
+                            {% for game in game_list %}
+                            <div class="game">
+                                <div>
+                                    {{ game.host }} | {{ game.numOfParticipation }}/{{ game.numOfRecruitment }}
+                                </div>
+                                <div>
+                                    {{ game.start_datetime }}  
+                                    <a class="participate" href="{% url 'Game:participate' game.id %}">참가신청<a>
+                                </div>
+                            </div>
+                            {% endfor %}
+                            <div class="page">
+                                <!--이전페이지-->
+                                {% if game_list.has_previous %}
+                                    <a class="page-link" style="float: left;" id="page_link" href="?page={{ game_list.previous_page_number }}">이전</a>
+                                {% else %}
+                                    <a class="page-link" style="float: left;" id="page_link" tabindex="-1" aria-disabled="true" href="#">이전</a>
+                                {% endif %}
 
-                    <!--다음페이지-->
-                    {% if game_list.has_next %}
-                        <a class="page-link" id="page_link" href="?page={{ game_list.next_page_number }}">다음</a>
-                    {% else %}
-                        <a class="page-link" id="page_link" tabindex="-1" aria-disabled="true" href="#">다음</a>
-                    {% endif %}
+                                <!--다음페이지-->
+                                {% if game_list.has_next %}
+                                    <a class="page-link" style="float: right;" id="page_link" href="?page={{ game_list.next_page_number }}">다음</a>
+                                {% else %}
+                                    <a class="page-link" style="float: right;" id="page_link" tabindex="-1" aria-disabled="true" href="#">다음</a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
         </div>
 
     </div>
