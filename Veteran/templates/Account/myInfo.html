@@ -83,7 +83,7 @@
                       <li><a href="{% url 'Account:lookupRecord' %}">🗓 경기일람 및 리뷰</a></li>
                       <li><a href="{% url 'Account:lookupMyReview' %}">📊 내 평가 보기</a></li>
                       {% if user.is_host %}
-                      <li><a href="#">📃 호스트 신청</a></li>
+                      <li><a href="{% url 'Game:hostGame' %}">📃 경기 등록</a></li>
                       {% else %}
                         <li><a href="{% url 'Account:reqHostAthority' %}">📃 호스트 신청</a></li>
                       {% endif %}

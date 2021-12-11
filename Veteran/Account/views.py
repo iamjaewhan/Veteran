@@ -66,19 +66,6 @@ def reqHostAthority(request):
     return render(request,'Account/Host Application.html')
 
 
-def lookupRecord(request):
-    game_participants = {}
-    scheduled_games = []
-    participated_games = Game_Participants.objects.filter(user = request.user ).only("game")
-    
-    for game in participated_games:
-        if game.game.isProgressed():
-            game_participants[game.game] =Game_Participants.objects.filter(game = game.game).values('user')
-        else:
-            scheduled_games.append(game.game.toDict())
-    
-    return render(request, 'Account/games_review.html',{"game_participants" : game_participants, "scheduled_games" : scheduled_games})
-
 
 def lookupReq(request):
     request_list=HostApplication.objects.all()
@@ -108,6 +95,21 @@ def deleteReq(request):
         req_host=HostApplication.objects.get(host=req_id)
         req_host.delete()
     return redirect('Account:lookupReq')
+
+
+def lookupRecord(request):
+    game_participants = {}
+    scheduled_games = []
+    participated_games = Game_Participants.objects.filter(user = request.user ).only("game")
+    
+    for game in participated_games:
+        if game.game.isProgressed():
+            game_participants[game.game] =Game_Participants.objects.filter(game = game.game).values('user')
+        else:
+            scheduled_games.append(game.game.toDict())
+    
+    return render(request, 'Account/games_review.html',{"game_participants" : game_participants, "scheduled_games" : scheduled_games[:10]})
+
 
 
 def lookupMyReview(request):
