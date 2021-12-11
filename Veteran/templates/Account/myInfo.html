@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="ko">
+    <head>
+        <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100&display=swap" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="/static/css/myInfo.css">
+        <style>
+        /* --- nav css --- */
+        .right navbar{
+            float: right;
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+            list-style-type: none;
+            position: fixed;
+            color: white;
+        }
+        nav-item{
+            padding: 15px;
+            cursor: pointer;
+        }
+    
+        .navbar li{
+            display: flex;
+            float:right;
+            padding: 0px 20px;
+        }
+  
+        div {
+            width: 100%;
+            height: 1800px;
+        }
+        div.left {
+            width: 40%;
+            float: left;
+            box-sizing: border-box;
+
+            background: #2F303A;
+        }
+        div.right {
+            width: 60%;
+            float: right;
+            box-sizing: border-box;
+
+            background: #EBEBEB;
+        }
+        b {
+          margin-top:70px;
+          margin-bottom:50px;
+        }
+        ul {
+            
+            list-style-position: inside;
+        }
+        li {
+            margin: 62px 0px;
+        }
+        </style>
+    </head>
+    <body>
+    {% load static %}
+    <p>{{ user.nickname }},{{ user.username }}</p>
+        <div class="wrap">
+            <div class = "header">
+                <div class="left">
+                <img 
+                src = "{% static 'img/veteran_logo.png' %}"
+                style= "margin-left: 50px; margin-top: 50px;"
+                />
+
+                <img 
+                src = "{% static 'img/myInfoFixed.jpg' %}"
+                style= "float: left; margin-top: 50px; width:100%;"
+                />
+
+                </div>
+                <div class="right">
+                    <ul class="navbar">
+                        <li class="nav-item"><a href="{% url 'Account:login' %}">🏠 홈</a></li>
+                    </ul>
+                <b style = "color: #686868; display: table; margin-top:70; margin-left: 64px; margin-right: auto;">내 정보</b>
+                <hr style="border: solid 3px #686868; margin-left: 50px; margin-right: 50px;">
+                  <ul class ="nav">
+                      <li><a href="{% url 'Account:lookupRecord' %}">🗓 경기일람 및 리뷰</a></li>
+                      <li><a href="{% url 'Account:lookupMyReview' %}">📊 내 평가 보기</a></li>
+                      {% if user.is_host %}
+                      <li><a href="{% url 'Game:hostGame' %}">📃 경기 등록</a></li>
+                      {% else %}
+                        <li><a href="{% url 'Account:reqHostAthority' %}">📃 호스트 신청</a></li>
+                      {% endif %}
+                  </ul>
+                  <hr style="border: solid 3px #686868; margin-left: 50px; margin-right: 50px;">
+                  <ul class ="nav2">
+                      <li><a href="{% url 'Account:logout' %}">🚪 로그아웃</a></li>
+                      <li><a href="#">🔐 회원해지</a></li>
+                      {% if user.is_superuser %}
+                        <li><a href="{% url 'Account:lookupReq' %}">호스트 신청 승인</a></li>
+                      {% endif %}
+                  </ul>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <a href="{% url "Account:mypage" %}">내 정보</a>
+    {% if user.is_superuser %}
+    <p>test</p>
+    {% endif %}
+
+    {% for game in game_list %}
+    <p>{{game.host}} | {{game.start_datetime}}</p>
+    {% endfor %}
+</body>
+</html>

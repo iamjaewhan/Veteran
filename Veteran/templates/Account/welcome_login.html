@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome Login</title>
+
+    <style>
+
+        @media(min-width:800px){
+
+            body {
+                display: grid;
+                grid-template-rows: 0.1fr 9.9fr;
+                height: 100vh;
+                margin: 0;
+                background-color: rgb(47, 48, 58);
+            }
+
+            .wrapper {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                margin: 0px;
+                height: 100%;
+                animation: fadein 2s;
+            }    
+            .welcome {
+                display: flex;
+                align-items: center;
+                flex-direction: column;
+                justify-content: space-around;
+                color: white;
+                font-family: 'Helvetica';
+                font-size: 100px
+            }
+            
+            .wmess {
+                margin-top: 0;
+            }
+    
+            .form-signin {
+                width: 100%;
+                max-width: 600px;
+                margin-bottom: 0;
+            }
+    
+            .form-floating {
+                display: flex;
+                align-items: center;
+                justify-content: space-around;
+                margin-bottom: 15px;
+                color: white;
+    
+            }
+    
+            .box {
+                width: 400px;
+                height: 30px;
+                border-radius: 25px;
+                border-color: transparent;
+                background-color:rgb(204, 208, 211);
+                padding: 8px;
+                font-size: larger;
+            }
+    
+            img {
+                border-radius: 30px;
+                margin-top: 10px;
+            }
+            
+            .imgcon {
+                height: 100%;
+                padding-left: 10px;
+            }
+            .imgcon2{
+                height: 50px;
+                padding-left: 10px;
+            }
+
+            .submit {
+                display: flex;
+                align-items: center;
+                justify-content: space-around;
+                margin-bottom: 15px;
+            }
+
+            .submit input {
+                width: 420px;
+                padding: 8px;
+                height: 40px;
+                border-radius: 20px;
+                border: 0;
+                outline: none;
+                background: linear-gradient(to left, rgb(255, 77, 46), rgb(255, 155, 47));
+                color: white;
+                font-size: 1.2em;
+                letter-spacing: 2px;
+            }
+
+            a:link {color:rgb(43, 156, 255); text-decoration: none;}
+
+            a:visited {color:rgb(43, 156, 255); text-decoration: none;}
+
+            a:hover {color:rgb(255, 255, 255); text-decoration: underline;}
+
+        }
+
+        @media(max-width:799px){
+
+            body {
+                display: grid;
+                grid-template-rows: 0.1fr 9.9fr;
+                height: 100vh;
+                margin: 0;
+                background-color: rgb(47, 48, 58);
+            }
+
+            .wrapper {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                margin: 0px;
+                height: 100%;
+                animation: fadein 2s;
+            }   
+
+    
+            .welcome {
+                display: flex;
+                align-items: center;
+                flex-direction: column;
+                justify-content: center;
+                color: white;
+                font-family: 'Helvetica';
+                width: 100%;
+                margin-top: 40px;
+                font-size: 70px;
+                height: auto;
+            }
+            
+            .wmess {
+                margin-top: 50px;
+            }
+    
+            .form-signin {
+                width: 100%;
+                padding: 15px;
+                margin-bottom: 200px;
+            }
+    
+            .form-floating {
+                display: flex;
+                align-items: center;
+                justify-content: space-around;
+                margin-bottom: 15px;
+                color: white;
+    
+            }
+    
+            .box {
+                width: 400px;
+                height: 30px;
+                border-radius: 25px;
+                border-color: transparent;
+                background-color:rgb(204, 208, 211);
+                padding: 8px;
+                font-size: larger;
+            }
+            
+            .imgcon{
+                height: 200px;
+                margin-bottom: 20px;
+            }
+
+            .imgcon2{
+                height: 50px;
+                padding-left: 20px;
+            }
+
+            img {
+                border-radius: 30px;
+                margin-top: 20px;
+                height: 100%;
+            }
+
+            .submit {
+                display: flex;
+                align-items: center;
+                justify-content: space-around;
+                margin-bottom: 15px;
+            }
+
+            .submit input {
+                width: 420px;
+                padding: 8px;
+                height: 40px;
+                border-radius: 20px;
+                border: 0;
+                outline: none;
+                background: linear-gradient(to left, rgb(255, 77, 46), rgb(255, 155, 47));
+                color: white;
+                font-size: 1.2em;
+                letter-spacing: 2px;
+            }
+
+            a:link {color:rgb(43, 156, 255); text-decoration: none;}
+
+            a:visited {color:rgb(43, 156, 255); text-decoration: none;}
+
+            a:hover {color:rgb(255, 255, 255); text-decoration: underline;}
+
+            
+        }
+
+        @keyframes fadein {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @-moz-keyframes fadein { /* Firefox */
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @-webkit-keyframes fadein { /* Safari and Chrome */
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @-o-keyframes fadein { /* Opera */
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+<div class="imgcon2"><img src="static/img/veteran_logo.png" alt=""></div>
+<div class="wrapper">
+    <div class="welcome">
+        <div class="wmess">
+            VETERAN
+        </div>
+        <div class="imgcon">
+            <img src="static/img/intro.jpg">
+        </div>
+
+    </div>
+    <main class="form-signin">   
+        
+        <form action="{% url 'Account:login' %}" method="POST">
+            {% csrf_token %}
+            <div class="form-floating">
+                <input type="text" class="box" name="username" id="floatingInput" placeholder="Email">
+            </div>
+            <div class="form-floating">
+                <input type="password" class="box" name="password" id="floatingPassword" placeholder="Password">
+            </div>
+            <div class="submit">
+                <input type="submit" value="submit">
+            </div>
+            <div class="form-floating">
+                <div> 아직 회원이 아니신가요? <a href="{% url 'Account:signup' %}"> 회원가입</a></div>
+            </div>
+            {% if error %}
+            <div class="error_block" style="display:flex; flex-direction:row; justify-content:center;">
+                <div style="color: red;">{{ error }}</div>
+            </div>
+            {% endif %}
+        </form>
+    </main>
+</div>
+</body>
+
+</html>

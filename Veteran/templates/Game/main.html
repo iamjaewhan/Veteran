@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=91ea5fd278223521e857ad81684db507&libraries=services"></script>
+    <title>Main</title>
+        <style>
+
+        a:visited {color:white}
+
+        .imgcon2{
+            float: left;
+            height: 50px;
+            padding: 10px 40px;
+        }
+
+        navbar{
+            float: right;
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+            list-style-type: none;
+            position: fixed;
+            color: white;
+        }
+
+        nav-item{
+            padding: 15px;
+            cursor: pointer;
+        }
+
+        li{
+            float:right;
+            padding: 20px 40px;
+        }
+
+        body {
+            font-family: 'Noto Sans KR' !important;
+            margin: 0;
+            background-color: rgb(47, 48, 58);
+            display: grid;
+            grid-template-rows: 1fr 20fr;
+            color: white;
+            height: 100vh;
+        }
+
+        .wrapper {
+            display: grid;
+            grid-template-rows: 1fr 20fr;
+        }
+
+        .names {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr;
+            place-items: center;
+            font-weight: 500;
+        }
+
+        .items {
+            display: grid;
+            grid-template-columns: 1.5fr 2fr;
+        }
+
+        .map {
+
+        }
+
+        .details {
+            display: grid;
+            grid-template-rows: 1fr 5fr;
+        }
+
+        .calendar {
+            display: flex;
+        }
+        .locationGames {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .location {
+            display: flex;
+            flex-direction: column;
+            flex-wrap: wrap;
+            align-items: center;
+            overflow-y: scroll;
+            overflow: hidden;
+        }
+
+        .games {
+            display: flex;
+            flex-direction: column;
+            flex-wrap: wrap;
+            align-items: center;
+            overflow-y: scroll;
+            overflow: hidden;
+        }
+
+        .game {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            width: 80%;
+            padding-left: 5px;
+            height: 50px;
+            margin-top: 8px;
+            background-color: rgb(75 77 92);
+            border-radius: 15px;
+            border-color: transparent;
+            transition: 300ms;
+            color: white;
+        }
+
+        .page {
+            color : white;
+        }
+
+    </style>
+
+
+</head>
+<body>
+    {% load static %}
+    <div class="header">
+        <div class="imgcon2"><img src="{% static 'img/veteran_logo.png' %}" alt=""></div>
+        <ul class="navbar">
+            <p style="color:white;">{{ user.username }}</p>
+            <li class="nav-item"><a href="{% url 'Account:mypage' %}">👤 내 정보</a></li>
+            <li class="nav-item"><a href="{% url 'Game:hostGame' %}">경기 등록</a></li>
+        </ul>
+    </div>
+    <div class="wrapper">
+        <div class="names">
+            <div> 게임 리스트 </div>
+        </div>
+        <div class="items" style='display:flex; flex-direction:row; flex-wrap:wrap; justify-content:space-around;'>
+            <!--지도 표시 부분-->
+            <div class="map" id='map' style="min-width:850px; height: 850px; background-color:white;"></div>
+
+            <!--경기 리스트 부분-->
+            <div class="details" style="display:flex; flex-direction:column; justify-content:space-around;">
+                <div id='calendar'></div>
+                {% if message %}
+                    <div class="error_block" style="display:flex; flex-direction:row; justify-content:center;">
+                        <div style="color: red;">{{ message }}</div>
+                    </div>
+                {% endif %}
+                {% for game in game_list %}
+                <div class="games" style="background-color: transparent; padding:5px;">
+                    <div>
+                        {{ game.host }} | {{ game.numOfParticipation }}/{{ game.numOfRecruitment }}
+                    </div>
+                    <div>
+                        {{ game.start_datetime }}  
+                        <a href="{% url 'Game:participate' game.id %}">참가신청<a>
+                    </div>
+                </div>
+                {% endfor %}
+                <div class="page">
+                    <!--이전페이지-->
+                    {% if game_list.has_previous %}
+                        <a class="page-link" id="page_link" href="?page={{ game_list.previous_page_number }}">이전</a>
+                    {% else %}
+                        <a class="page-link" id="page_link" tabindex="-1" aria-disabled="true" href="#">이전</a>
+                    {% endif %}
+
+                    <!--다음페이지-->
+                    {% if game_list.has_next %}
+                        <a class="page-link" id="page_link" href="?page={{ game_list.next_page_number }}">다음</a>
+                    {% else %}
+                        <a class="page-link" id="page_link" tabindex="-1" aria-disabled="true" href="#">다음</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <script>
+        //지도 생성
+        var container = document.getElementById('map');
+        var option = {
+            center : new kakao.maps.LatLng(37.59727,127.05884),
+            level:3
+        };
+
+        var games = [];
+
+        {% for game in game_list %}
+            games.push({
+                id : "{{ game.id }}",
+                host : "{{ game.host }}",
+                start_datetime : "{{ game.start_datetime }}",
+                end_datetime : "{{ game.end_datetime }}",
+                numOfRecruitment : "{{ game.numOfRecruitment }}",
+                numOfParticipation : "{{ game.numOfParticipation }}",
+                court_location : "{{ game.court_location }}"
+            });
+        {% endfor %}
+        
+
+        const map = new kakao.maps.Map(container,option);
+        const court_markers=[];
+
+        // 주소-좌표 변환 객체 생성
+        var geocoder = new kakao.maps.services.Geocoder();
+
+        //경기 장소 마커로 추가
+        /*
+        for (var i=0;i<game_list.length;i++){
+            geocoder.addressSearch(game_list['court_location'] ,function(result,status){
+                if (status===kakao.maps.services.Status.OK){
+                    var coords=new kakao.maps.LatLng(result[0].y,result[0].x);
+    
+                    var marker=new kakao.maps.Marker({
+                        map:map,
+                        position:coords
+                    });
+    
+                    markers.push(marker);
+                }
+            });
+        };
+        */
+
+        //현재 사용자 위치 좌표 반환 메소드
+        function getCurrentLocation(){
+            if (navigator.geolocation){
+                navigator.geolocation.getCurrentPosition(function(position){
+                    var lat=position.coords.latitude,
+                    lon=position.coords.longitude;
+                    var locPosition=new kakao.maps.LatLng(lat,lon)
+                });
+            }else {
+                var locPosition=new kakao.maps.LatLng(33.450701,126.590667);
+            }
+            return locPosition;
+        }
+
+        //사용자 위치 지도에 표시    
+        if (navigator.geolocation){
+            navigator.geolocation.getCurrentPosition(function(position){
+                var lat=position.coords.latitude,
+                lon=position.coords.longitude;
+                
+                var locPosition=new kakao.maps.LatLng(lat,lon),
+                message='<div style="padding:3px;">here!</div>';
+
+
+                map.setCenter(locPosition);
+                
+
+
+                displayMarker(locPosition,message);
+            });
+            } 
+            else {
+                var locPosition=new kakao.maps.LatLng(33.450701,126.590667),
+                message="error!"
+                displayMarker(locPosition,message);
+            }
+
+
+        //마커 표시
+        function displayMarker(locPosition,message){
+            var marker=new kakao.maps.Marker({
+                map:map,
+                position:locPosition
+            });
+
+            var iwContent = message,
+            iwRemovable = true;
+
+            map.setCenter(locPosition);
+        }
+
+
+
+       
+        //전달받은 주소 문자열을 좌표값으로 반환 후 marker생성하여 court_marker에 추가
+        function getLatLng(address){
+            geocoder.addressSearch(address,function(result,status){
+                if (status == kakao.maps.services.Status.OK){
+                    var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+
+                    var marker = new kakao.maps.Marker({
+                        map : map,
+                        position : coords
+                    });
+                    
+                    court_markers.push(marker);
+                }
+            });
+        }
+
+        for (var i = 0; i < games.length ; i++){
+            getLatLng(games[i]['court_location'])
+        }
+
+
+        //경기 장소 마커 표시
+        for (var i = 0 ; i < court_markers.length ; i++){
+            court_markers[i].setMap(map);
+        };
+
+    </script>
+
+
+    
+</body>
+</html>

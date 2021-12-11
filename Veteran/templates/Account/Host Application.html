@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <!-- <link href="{% static 'css/Host Application.css' %}" rel="stylesheet"> -->
+    <title>Host Application</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100&display=swap" rel="stylesheet">
+
+    <style>
+        div {
+            width: 100%;
+            height: 900px;
+        }
+        div.left {
+            width: 50%;
+            float: left;
+            box-sizing: border-box;
+            background: #2F303A;
+        }
+        div.right {
+            width: 50%;
+            float: right;
+            box-sizing: border-box;
+            background: #EBEBEB;
+            
+        }
+        /* --- nav css --- */
+        .right navbar{
+            float: right;
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+            list-style-type: none;
+            position: fixed;
+            color: white;
+        }
+        nav-item{
+            padding: 15px;
+            cursor: pointer;
+        }
+
+        .navbar li{
+            display: flex;
+            float:right;
+            padding: 20px 40px;
+        }
+
+        *{
+            font-family: 'Noto Sans KR' !important;
+            list-style: none;
+            text-decoration: none;
+            border-collapse: collapse;
+            margin:0;
+            padding:0;
+        }
+
+
+        .left h1{
+            font-size: 28px; color: #E2E2E2;
+            text-align: left;
+            margin-left: 45%;
+            margin-top: 25%;
+        }
+        .left h2{
+            font-size: 36px; color: #F76F22;
+            text-align: left;
+            margin-left: 45%;
+        }
+        .left ul{
+            font-size: 16px; color: #E2E2E2;
+            text-align: left;
+            margin-left: 45%;
+            margin-top: 10px;
+        }
+        .right{position: center;}
+        .right h1{
+            font-size: 32px; color: #2F303A;
+            text-align: left;
+            margin-left: 50px;
+            margin-top: 25%;
+        }
+        .right h2{
+            font-size: 40px; color: #F76F22;
+            text-align: left;
+            margin-left: 50px;
+        }
+
+        .host-form{position:relative; z-index: 2;}
+
+        .host-form{
+            width: 100%; position:relative;
+            margin-top: 10px;
+        }
+
+        .hostname-area input{
+            display: inline-block;
+            width: 75%;
+            padding: 1rem;
+            background-color: transparent;
+            border: none;
+            border-bottom: 1px solid #999;
+            font-size: 16px; color: #F76F22;
+            outline: none;
+            margin-left: 50px;
+            margin-top: 16px;
+        }
+
+        .host-form label{
+            display: inline-block;
+            position: absolute; left: 10px;
+            font-size: 18px; color: #999;
+            margin-bottom: 50px;
+            margin-left: 50px;
+            margin-top: 10px;
+        }
+
+        .address-area input{
+            display: inline-block;
+            width: auto;
+            padding: 1rem;
+            background-color: transparent;
+            border: none;
+            border-bottom: 1px solid #999;
+            font-size: 16px; color: #F76F22;
+            outline: none;
+            margin-left: 50px;
+        }
+
+
+        .main-field select{
+            display: inline-block;
+            width: 75%;
+            padding: 1rem;
+            background-color: transparent;
+            border: none;
+            border-bottom: 1px solid #999;
+            font-size: 16px; color: #F76F22;
+            outline: none;
+            margin-left: 50px;
+            margin-top: 20px;
+        }
+
+        .host-intro input{
+            display: inline-block;
+            width: 75%;
+            padding: 1rem;
+            background-color: transparent;
+            border: none;
+            border-bottom: 1px solid #999;
+            font-size: 16px; color: #F76F22;
+            outline: none;
+            margin-bottom: 30px;
+            margin-left: 50px;
+            margin-top: 15px;
+        }
+        input[id="find_address"]{
+            display: inline-block;
+            width:auto;
+            background:#F76F22;
+            color: #fff;
+            font-size: 18px;
+            border: none;
+            border-radius: 25px;
+        }
+
+        .btn-area1{margin-top: 30px;}
+        .btn-area1 button{
+            display: inline-block;
+            width:50%; height: 50px;
+            background:#F76F22;
+            color: #fff;
+            font-size: 20px;
+            border: none;
+            border-radius: 25px;
+            margin-left: 25%;
+        }
+
+        .agree{
+            display: inline-block;
+            margin-top: 10px;
+            margin-left: 25%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <div class = "header">
+            <div class="left">
+                <img 
+                src = "{% static 'img/veteran_logo.png' %}"
+                style= "float:left; margin-left: 50px;margin-top: 50px;"
+                />
+                    <img 
+                src = "{% static 'img/back_img.jpg' %}"
+                style= "float: left; margin-top: 25%; width:230px; margin-right: 10px; height: 380px;"
+                />
+                    <h1>동아리, 동호회, 팀에<br>소속되어 계신가요?</h1>
+                    <h2>호스트가 되어<br>게임을 열어보세요!</h2>
+                    <ul type="circle">
+                        <li>- 원하는 시간, 구장에 경기를 추가하세요!</li><br>
+                        <li>- 인원수가 부족해도 좋습니다!</li><br>
+                        <li>- 수준이 맞는 경기를 즐길 수 있습니다!</li><br>
+                        <li>- 경기 멤버를 한눈에 체크할 수 있습니다!</li><br>
+                        <li>- 예약한 이후에도 관리가 가능합니다!</li><br>
+                    </ul>
+            </div>
+            <div class="right">
+                <ul class="navbar">
+                    <li class="nav-item"><a href="#">👤 내 정보</a></li>
+                    <li class="nav-item"><a href="#">🏠 홈</a></li>
+                </ul>
+                <h1>베테랑</h1>
+                <h2>호스트 신청</h2>
+                <section class="host-form">
+                    <form action="{% url 'Account:reqHostAthority' %}" id="form1" onsubmit="return CheckForm();" method="POST">
+                        {% csrf_token %}
+                        <span class="hostname-area">
+                            <label for="team_name">팀(동아리, 동호회) 명</label>
+                            <input type="text" name="team_name" id="team_name" autocomplete="off" required>
+                        </span><br>
+                        <span class="address-area">
+                            <label for="address">위치</label>
+                            <input type="text" id="sample6_postcode" placeholder="우편번호">
+                            <input type="button" id="find_address" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
+                            <input type="text" id="sample6_address" placeholder="주소"><br>
+                            <input type="text" id="sample6_detailAddress" placeholder="상세주소">
+                            <input type="text" id="sample6_extraAddress" placeholder="참고항목"><br>
+                            <input type="text" id="fullAddress" name="fullAddress">
+                        </span>
+                        {% csrf_token %}
+                        <br>
+                        <span class="host-intro">
+                            <label for="intro">한줄 소개</label>
+                            <input type="text" name="intro" id="parea" autocomplete="off" required>
+                        </span>
+                        
+                        <span class="btn-area1">
+                            <button type="submit">호스트 자격 신청</button>
+                        </span><br>
+                        <span class="agree">
+                            베테랑 서비스 이용약관 및 개인정보 수집에 동의합니다. <input type="checkbox" value = "agree" required>
+                        </span>
+                    </form>
+                </section>
+            </div>
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script>
+        function sample6_execDaumPostcode() {
+            new daum.Postcode({
+                oncomplete: function(data) {
+                    // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+    
+                    // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+                    // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                    var addr = ''; // 주소 변수
+                    var extraAddr = ''; // 참고항목 변수
+                    var fullAddress='';
+    
+                    //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+                    if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                        addr = data.roadAddress;
+                    } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                        addr = data.jibunAddress;
+                    }
+    
+                    // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+                    if(data.userSelectedType === 'R'){
+                        // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+                        // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+                        if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                            extraAddr += data.bname;
+                        }
+                        // 건물명이 있고, 공동주택일 경우 추가한다.
+                        if(data.buildingName !== '' && data.apartment === 'Y'){
+                            extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                        }
+                        // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+                        if(extraAddr !== ''){
+                            extraAddr = ' (' + extraAddr + ')';
+                        }
+                        // 조합된 참고항목을 해당 필드에 넣는다.
+                        document.getElementById("sample6_extraAddress").value = extraAddr;
+                    
+                    } else {
+                        document.getElementById("sample6_extraAddress").value = '';
+                    }
+    
+                    // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                    document.getElementById('sample6_postcode').value = data.zonecode;
+                    document.getElementById("sample6_address").value = addr;
+                    document.getElementById("fullAddress").value = (addr+extraAddr);
+                    // 커서를 상세주소 필드로 이동한다.
+                    document.getElementById("sample6_detailAddress").focus();
+                }
+            }).open();
+        }
+    </script>
+</body>

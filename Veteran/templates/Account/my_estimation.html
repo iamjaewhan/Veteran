@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100&display=swap" rel="stylesheet">
+
+    <title>My Estimation</title>
+
+    <style>
+        body{
+            font-family: 'Noto Sans KR', sans-serif;
+            list-style: none;
+            text-decoration: none;
+            border-collapse: collapse;
+            margin:0;
+            padding:0;
+            background-color: #2F303A;
+        }
+        .wrap {
+            width: 100%;
+            height: 100vh;
+            float: left;
+            box-sizing: border-box;
+            background: #2F303A;
+        }
+
+        .header h1{
+            margin-top: 50px;
+            text-align:center;
+            color: white;
+        }
+
+        .estimations{
+            text-align: center;
+            margin-left: 25%;
+        }
+        .estimation1 {
+            width:70%;
+            height: 200px;
+            box-sizing: border-box;
+            background: rgba(235, 235, 235, 0.1);
+            margin-top: 80px;
+            position: relative;
+            border-radius: 15px;
+            color: white;
+        }
+
+        .estimation2{
+            width:70%;
+            height: 200px;
+            box-sizing: border-box;
+            background: rgba(235, 235, 235, 0.1);
+            margin-top: 80px;
+            position: relative;
+            border-radius: 15px;
+            color: white;
+        }
+
+        .back{
+            text-align: center;
+            margin-top: 50px;
+        }
+        .back a{
+            text-align: center;
+            color: white;
+            font-size: 150%;
+        }
+        a {text-decoration:none}
+
+        .rating{
+            color: #F76F22;
+            font-size: 400%;
+        }
+    </style>
+</head>
+
+<body>
+    {% load static %}
+    <div class="wrap">
+        <div class="header">
+            <img 
+                src = "{% static 'img/veteran_logo.png' %}"
+                style= "float:left; margin-left: 50px;margin-top: 50px;"
+            />
+            <br>
+            <h1> {{ user.nickname }}님에 대한 평가는 다음과 같습니다!</h1>
+        </div>
+        <div class="estimations">
+            <div class="estimation1" style="display : flex; justify-content : space-around;">
+                {% if rating %}
+                    <div>
+                    <h2>점수 : {{ rating }}</h2>
+                    </div>
+                    <div class="review_list">
+                        <h2>최근 평가</h2>
+                        <div class="review_detail">
+                            {% for review in reviews %}
+                            <div>
+                                {{ review.game.host.group_name }}<br>
+                                {{ review.game.host.start_datetime }}<br>
+                                {{ review.get_comment_type_display }}<br>
+                                {{ review.rating }}
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% else %}
+                    <h2>회원님에 대한 평가가 없습니다</h2>
+                {% endif %}
+            </div>
+        </div>
+        <div class="back">
+            <a href="{% url 'Account:mypage' %}">뒤로가기</a>
+        </div>
+        <br>
+    </div>
+</body>

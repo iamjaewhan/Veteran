@@ -1,0 +1,21 @@
+*{
+    font-family: 'Noto Sans KR', sans-serif;
+    list-style: none;
+    text-decoration: none;
+    border-collapse: collapse;
+    margin:0px;
+    padding:0px;
+    color:rgb(0, 0, 0);
+}
+
+ul.nav{
+    display: table;
+    margin-left: 64px;
+    margin-right: auto;
+}
+
+ul.nav2{
+    display: table;
+    margin-left: 64px;
+    margin-right: auto;
+}
