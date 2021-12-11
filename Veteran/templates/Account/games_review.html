@@ -404,6 +404,7 @@
         np2.innerHTML = id_g[ids[i]]['start_datetime'];
         nb.setAttribute('id',ids[i]);
         nb.setAttribute('onclick','showPlayer(this.id)');
+        nb.innerHTML = "참가자 조회";
         ndiv.setAttribute('class','game');
         ndiv.appendChild(np1);
         ndiv.appendChild(np2);
@@ -419,6 +420,7 @@
             pp.innerHTML=id_parts[id][j];
             pb.setAttribute('id',j);
             pb.setAttribute('onclick','setReviewee()');
+            ph.innerHTML = "리뷰";
             
             pdiv.appendChild(pp);
             pdiv.appendChild(pb);
