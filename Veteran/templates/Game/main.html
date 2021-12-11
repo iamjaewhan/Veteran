@@ -108,6 +108,7 @@
 
         .right {
             display: grid;
+            width:400px;
             margin-left: 0px;
         }
 
@@ -142,6 +143,7 @@
             display: flex;
             flex-direction: column;
             flex-wrap: wrap;
+            width : 350px;
             margin-left:30px;
             margin-right:30px;
             align-items: center;
@@ -151,7 +153,7 @@
 
         .game {
             display: flex;
-            flex-direction: row;
+            flex-direction: column;
             align-items: center;
             justify-content: space-between;
             width: 100%;
@@ -226,7 +228,7 @@
                             {% for game in game_list %}
                             <div class="game">
                                 <div>
-                                     {{ game.host }} | {{ game.numOfParticipation }}/{{ game.numOfRecruitment }}
+                                     {{ game.host }}       {{ game.numOfParticipation }}/{{ game.numOfRecruitment }}
                                 </div>
                                 <div>
                                     {{ game.start_datetime }}  
