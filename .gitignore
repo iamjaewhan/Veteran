@@ -136,3 +136,4 @@ dmypy.json
 
 #databases & secret key
 Veteran/Veteran/veteran_settings.py
+Veteran/secrets.json

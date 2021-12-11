@@ -15,12 +15,16 @@
     
     <style>
 
-        a { text-decoration:none !important }
+        a { text-decoration: none !important }
         a { text-decoration: none; color: white; }
         a:visited { text-decoration: none; }
         a:hover { text-decoration: none; }
         a:focus { text-decoration: none; }
         a:hover, a:active { text-decoration: none; }
+
+        body::-webkit-scrollbar {
+            display: none;
+        }
 
         .imgcon2{
             float: left;
@@ -54,51 +58,64 @@
                 margin: 0;
                 background-color: rgb(47, 48, 58);
                 display: grid;
-                grid-template-rows: auto;
+                grid-template-rows: 1fr 9fr;
+                height: 100vh;
             }
     
             .wrapper {
                 display: grid;
-                grid-template-rows: 1fr 1fr;
-                height: 100vh;
+                grid-template-rows: 1fr 0.5fr;
             }
     
             .left {
-                display: grid;
-                grid-template-rows: 1fr 1fr;
-                place-items: center;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
             }
     
             .right {
                 display: grid;
                 place-items: center;
+                max-height: 100vh;
             }
     
             .list {
                 display: grid;
                 grid-template-rows: 1fr 4fr;
                 width: 80%;
-                height: 90%;
+                max-height: 45%;
             }
     
             .listy {
                 display: grid;
-                grid-template-rows: 1fr 6fr;
                 width: 80%;
                 height: 80%;
                 max-width: 610px;
+                max-height: 100vh;
                 background-color: rgb(235,235,235); 
                 border-radius: 15px; 
                 padding: 10px;
             }
     
+            .games_list{
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                overflow-y: scroll;
+                margin-bottom: 20px;
+            }
+            .games_list::-webkit-scrollbar {
+                display: none;
+            }
+            .games::-webkit-scrollbar {
+                display: none;
+            } 
             .games{
                 display: flex;
                 flex-direction: column;
-                flex-wrap: wrap;
                 align-items: center;
                 overflow-y: scroll;
-                overflow: hidden;
             }
     
             .game {
@@ -108,8 +125,9 @@
                 justify-content: space-between;
                 width: 80%;
                 max-width: 450px;
-                padding-left: 5px;
-                height: 50px;
+                padding-left: 10px;
+                padding-right: 10px;
+                min-height: 50px;
                 margin-top: 8px;
                 background-color: rgb(75 77 92);
                 border-radius: 15px;
@@ -139,7 +157,7 @@
                 display: grid;
                 grid-template-columns: 4fr 6fr;
                 place-items: center;
-                height: 80%;
+                max-height: 45%;
                 width: 80%;
                 max-width: 610px;
                 background-color: rgb(77, 77, 85);
@@ -189,58 +207,113 @@
         }
 
         @media(min-width:1100px){
+            #reviewee {
+                color: white;
+                font-size: x-large;
+                margin-bottom: 15px;
+            }
+
+            .btn1 {
+                margin-right: 10px;
+                height: 25px;
+                width: 83px;
+                border-radius: 15px;
+                border:none;
+                background: linear-gradient(to left, rgb(255, 77, 46), rgb(255, 155, 47));
+                color: white;
+            }
+            .btn2 {
+                margin-right: 10px;
+                height: 25px;
+                width: 42px;
+                border-radius: 15px;
+                border:none;
+                background: linear-gradient(to left, rgb(255, 77, 46), rgb(255, 155, 47));
+                color: white;
+            }
             body {
                 font-family: 'Noto Sans KR' !important;
                 margin: 0;
                 background-color: rgb(47, 48, 58);
                 display: grid;
-                grid-template-rows: auto;
+                grid-template-rows: 1fr 9fr;
+                height: 100vh;
+                color: white;
             }
     
             .wrapper {
                 display: grid;
                 grid-template-columns: 1fr 1fr;
-                height: 100vh;
+                height: 100%;
             }
     
             .left {
-                display: grid;
-                grid-template-rows: 1fr 1fr;
-                place-items: center;
+                display: flex;
+                flex-direction: column;
+                align-content: flex-start;
+                align-items: center;
             }
     
             .right {
-                display: grid;
-                place-items: center;
+                display: flex;
+                flex-direction: column;
+                align-content: space-around;
+                align-items: center;
             }
     
             .list {
                 display: grid;
                 grid-template-rows: 1fr 4fr;
                 width: 80%;
-                height: 90%;
+                min-height: 35%;
+                max-height: 35%;
+                margin-bottom: 20px;
             }
     
             .listy {
                 display: grid;
-                grid-template-rows: 1fr 6fr;
                 width: 80%;
                 height: 80%;
                 max-width: 610px;
+                height: 700px;
                 background-color: rgb(235,235,235); 
                 border-radius: 15px; 
                 padding: 10px;
             }
     
+            .games_list{
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                overflow-y: scroll;
+                height: 250px;
+            }
+            
+            .games_list::-webkit-scrollbar {
+                display: none;
+            } 
             .games{
                 display: flex;
                 flex-direction: column;
-                flex-wrap: wrap;
                 align-items: center;
                 overflow-y: scroll;
-                overflow: hidden;
             }
-    
+            
+            .games::-webkit-scrollbar {
+                display: none;
+            }
+            .player_list{
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                overflow-y: scroll;
+                height: 310px;
+            }
+            
+            .player_list::-webkit-scrollbar {
+                display: none;
+            }
+
             .game {
                 display: flex;
                 flex-direction: row;
@@ -248,11 +321,12 @@
                 justify-content: space-between;
                 width: 80%;
                 max-width: 450px;
-                padding-left: 5px;
-                height: 50px;
+                padding-left: 10px;
+                padding-right: 10px;
+                min-height: 50px;
                 margin-top: 8px;
                 background-color: rgb(75 77 92);
-                border-radius: 15px;
+                border-radius: 20px;
                 border-color: transparent;
                 transition: 300ms;
                 color: white;
@@ -279,7 +353,7 @@
                 display: grid;
                 grid-template-columns: 4fr 6fr;
                 place-items: center;
-                height: 80%;
+                height: 500px;
                 width: 80%;
                 max-width: 610px;
                 background-color: rgb(77, 77, 85);
@@ -327,34 +401,33 @@
             }
         }
         .tar-rating {
-          display: flex;
-          flex-direction: row-reverse;
-          font-size: 2.25rem;
-          line-height: 2.5rem;
-          justify-content: space-around;
-          padding: 0 0.2em;
-          text-align: center;
-          width: 5em;
+            display: flex;
+            flex-direction: row-reverse;
+            font-size: 2.25rem;
+            line-height: 2.5rem;
+            justify-content: space-around;
+            padding: 0 0.2em;
+            text-align: center;
+            width: 5em;
         }
-         
+        
         .star-rating input {
-          display: none;
+            display: none;
         }
-         
+        
         .star-rating label {
-          -webkit-text-fill-color: transparent; /* Will override color (regardless of order) */
-          -webkit-text-stroke-width: 2.3px;
-          -webkit-text-stroke-color: #2b2a29;
-          cursor: pointer;
+            -webkit-text-fill-color: transparent; /* Will override color (regardless of order) */
+            -webkit-text-stroke-width: 2.3px;
+            -webkit-text-stroke-color: #2b2a29;
+            cursor: pointer;
         }
-         
+        
         .star-rating :checked ~ label {
-          -webkit-text-fill-color: gold;
+            -webkit-text-fill-color: gold;
         }
-         
         .star-rating label:hover,
         .star-rating label:hover ~ label {
-          -webkit-text-fill-color: #fff58c;
+            -webkit-text-fill-color: #fff58c;
         }
     
 
@@ -371,7 +444,7 @@
     {% load static %}
     <div class="header">
         <div class="imgcon2"><img src="{% static 'img/veteran_logo.png' %}" alt=""></div>
-        <ul class="navbar">
+        <ul class="navbar" style="list-style:none;">
             <li class="nav-item"><a href="#">👤 내 정보</a></li>
             <li class="nav-item"><a href="#">🏠 홈</a></li>
         </ul>
@@ -383,21 +456,19 @@
                     <div>평가하고 싶은 경기를 선택해주세요</div>
                     <div style="font-size: x-large;">참여한 경기</div>
                 </div>
-
                 <div class="games_list">
         
                 </div>
             </div>
             <div class="rating">
-                <div class="games"style="background-color: rgb(101, 101, 107); padding:5px; border-radius:15px; height:90%; width:90%;">
-                    <div class="player_list">
-                    </div>
+                <div class="player_list"style="background-color: rgb(101, 101, 107); padding:5px; border-radius:15px; height:90%; width:90%;">
+
                 </div>
                 <div class="righty">
                     <form class="complete_btn" action="{% url 'Account:leaveReview' %}" method="POST">
                         {% csrf_token %}
                         <div>
-                            <input id="reviewee" name="reviewee_username" style="background-color:transparent; boder : 0px;"></input>
+                            <input id="reviewee" name="reviewee_username" style="background-color:transparent; border : 0px;"></input>
                         </div>
                         <div class="star-rating space-x-4 mx-auto">
 
@@ -427,7 +498,7 @@
                         </div>
                         <br>
                         <br>
-                        <input type="submit" id="리뷰 제출">
+                        <input class="btn2" type="submit" id="리뷰 제출">
                     </form>
                 </div>
             </div>
@@ -473,6 +544,7 @@
         np2.innerHTML = id_g[ids[i]]['start_datetime'];
         nb.setAttribute('id',ids[i]);
         nb.setAttribute('onclick','showPlayer(this.id)');
+        nb.setAttribute('class', 'btn1')
         nb.innerHTML = "참가자 조회";
         ndiv.setAttribute('class','game');
         ndiv.appendChild(np1);
@@ -490,6 +562,7 @@
             pp.innerHTML=id_parts[id][j];
             pb.setAttribute('id',id_parts[id][j]);
             pb.setAttribute('onclick','setReviewee(this.id)');
+            pb.setAttribute('class', 'btn2')
             pb.innerHTML = "리뷰";
             
             pdiv.appendChild(pp);
