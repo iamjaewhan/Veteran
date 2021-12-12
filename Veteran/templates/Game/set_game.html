@@ -34,6 +34,7 @@
             }
 
             .box>div {
+                margin-top:30px;
                 display : flex;
                 justify-content : space-around;
             }
@@ -42,14 +43,40 @@
                 padding : 20px;
             }
 
+            .imgcon2{
+                float: left;
+                height: 50px;
+                padding: 10px 40px;
+            }
+            navbar{
+                float: right;
+                display: flex;
+                flex-direction: row;
+                width: 200px;
+                list-style-type: none;
+                color: white;
+            }
+            nav-item{
+                padding: 15px;
+                cursor: pointer;
+            }
+            li{
+                float:right;
+                padding: 20px 40px;
+            }
         </style>
     </head>
     <body style="display:flex; flex-direction:column">
-        <div>
-            navbar자리
+        {% load static %}
+        <div class="header">
+            <div class="imgcon2"><img src="{% static 'img/veteran_logo.png' %}" alt=""></div>
+            <ul class="navbar" style="list-style:none;">
+                <li class="nav-item"><a href="{% url 'Account:mypage' %}" style="color:white;">👤 내 정보</a></li>
+                <li class="nav-item"><a href="{% url 'Account:login' %}" style="color:white;">🏠 홈</a></li>
+            </ul>
         </div>
-        <div style="dispaly:flex; ">
-            <div style="background-color : beige; width:800px; height : 800px;">
+        <div style="display:flex; justify-content :space-around;">
+            <div style="background-color : beige; width:800px; height : 500px; margin-top:50px;">
                 <form name="game_maker"action="{% url 'Game:registerGame' %}" method="POST">
                     {% csrf_token %}
                     <div class ="box" style="display:flex; flex-direction:column;">

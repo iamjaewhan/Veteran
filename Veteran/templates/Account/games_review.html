@@ -445,8 +445,8 @@
     <div class="header">
         <div class="imgcon2"><img src="{% static 'img/veteran_logo.png' %}" alt=""></div>
         <ul class="navbar" style="list-style:none;">
-            <li class="nav-item"><a href="#">👤 내 정보</a></li>
-            <li class="nav-item"><a href="#">🏠 홈</a></li>
+            <li class="nav-item"><a href="{% url 'Account:mypage' %}">👤 내 정보</a></li>
+            <li class="nav-item"><a href="{% url 'Account:login' %}">🏠 홈</a></li>
         </ul>
     </div>
     <div class="wrapper">

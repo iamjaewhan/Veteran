@@ -58,7 +58,6 @@
     </head>
     <body>
     {% load static %}
-    <p>{{ user.nickname }},{{ user.username }}</p>
         <div class="wrap">
             <div class = "header">
                 <div class="left">
@@ -66,7 +65,6 @@
                 src = "{% static 'img/veteran_logo.png' %}"
                 style= "margin-left: 50px; margin-top: 50px;"
                 />
-
                 <img 
                 src = "{% static 'img/myInfoFixed.jpg' %}"
                 style= "float: left; margin-top: 50px; width:100%;"
@@ -91,7 +89,7 @@
                   <hr style="border: solid 3px #686868; margin-left: 50px; margin-right: 50px;">
                   <ul class ="nav2">
                       <li><a href="{% url 'Account:logout' %}">🚪 로그아웃</a></li>
-                      <li><a href="#">🔐 회원해지</a></li>
+                      <!--<li><a href="#">🔐 회원해지</a></li>-->
                       {% if user.is_superuser %}
                         <li><a href="{% url 'Account:lookupReq' %}">호스트 신청 승인</a></li>
                       {% endif %}

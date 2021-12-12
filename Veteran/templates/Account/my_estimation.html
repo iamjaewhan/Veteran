@@ -37,16 +37,21 @@
         }
 
         .estimations{
-            text-align: center;
-            margin-left: 25%;
+            display :flex;
+            flex-direction:column;
+            
         }
+
+        .estimations > div {
+            display:flex;
+            justify-content:space-around;
+        }
+
         .estimation1 {
-            width:70%;
-            height: 200px;
-            box-sizing: border-box;
+            min-width : 50%;
+            max-width : 70%;
+
             background: rgba(235, 235, 235, 0.1);
-            margin-top: 80px;
-            position: relative;
             border-radius: 15px;
             color: white;
         }
@@ -61,6 +66,7 @@
             border-radius: 15px;
             color: white;
         }
+
 
         .back{
             text-align: center;
@@ -77,47 +83,80 @@
             color: #F76F22;
             font-size: 400%;
         }
+
+        .imgcon2{
+            float: left;
+            height: 50px;
+            padding: 10px 40px;
+        }
+        navbar{
+            float: right;
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+            list-style-type: none;
+            position: fixed;
+            color: white;
+        }
+        
+        nav-item{
+            padding: 15px;
+            cursor: pointer;
+        }
+        li{
+            float:right;
+            padding: 20px 40px;
+        }
+
+
     </style>
 </head>
 
 <body>
     {% load static %}
-    <div class="wrap">
+    <div class="wrap" style="display:flex; flex-direction:column;">
         <div class="header">
-            <img 
-                src = "{% static 'img/veteran_logo.png' %}"
-                style= "float:left; margin-left: 50px;margin-top: 50px;"
-            />
-            <br>
-            <h1> {{ user.nickname }}님에 대한 평가는 다음과 같습니다!</h1>
+            <div class="imgcon2"><img src="{% static 'img/veteran_logo.png' %}" alt=""></div>
+            <ul class="navbar" style="list-style:none;">
+                <li class="nav-item"><a href="{% url 'Account:mypage' %}" style="color:white;">👤 내 정보</a></li>
+                <li class="nav-item"><a href="{% url 'Account:login' %}" style="color:white;">🏠 홈</a></li>
+            </ul>
         </div>
         <div class="estimations">
-            <div class="estimation1" style="display : flex; justify-content : space-around;">
-                {% if rating %}
-                    <div>
-                    <h2>점수 : {{ rating }}</h2>
-                    </div>
-                    <div class="review_list">
-                        <h2>최근 평가</h2>
-                        <div class="review_detail">
-                            {% for review in reviews %}
-                            <div>
-                                {{ review.game.host.group_name }}<br>
-                                {{ review.game.host.start_datetime }}<br>
-                                {{ review.get_comment_type_display }}<br>
-                                {{ review.rating }}
-                            </div>
-                            {% endfor %}
+            <div stlye="display:flex; flex-direction:row; justify-content:space-around;">
+                <div style="color:white; margin-top : 50px; margin-bottom:50px;"> {{ user.nickname }}님에 대한 평가는 다음과 같습니다!</div>
+            </div>
+            <div>
+                <div class="estimation1">
+                    {% if rating %}
+                        <div style="display : flex; justify-content:space-around;">
+                        <h2>점수 : {{ rating }}</h2>
                         </div>
+                        <div class="review_list">
+    
+                            <h2 style="text-align:center;">최근 평가</h2>
+                            <div class="review_detail">
+                                {% for review in reviews %}
+                                <div style="display:flex; justify-content:space-around; margin-bottom:15px;">
+                                    <div>{{ review.reviewer.username }} </div>
+                                    <div>{{ review.game.host.start_datetime }}</div>
+                                    <div>{{ review.get_comment_type_display }}</div>
+                                    <div>{{ review.rating }}</div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% else %}
+                    <div>
+                        <h2>회원님에 대한 평가가 없습니다</h2>
                     </div>
-                {% else %}
-                    <h2>회원님에 대한 평가가 없습니다</h2>
-                {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+            <div class="back">
+                    <a href="{% url 'Account:mypage' %}">뒤로가기</a>
             </div>
         </div>
-        <div class="back">
-            <a href="{% url 'Account:mypage' %}">뒤로가기</a>
-        </div>
-        <br>
+
     </div>
 </body>

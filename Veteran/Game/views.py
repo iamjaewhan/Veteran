@@ -5,7 +5,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 
 import json
 
-from Account.models import Host
+from Account.models import Host, User
 from .models import Game, Game_Participants
 
 
@@ -39,7 +39,7 @@ def participate(request,id):
 
 
 def hostGame(request):
-    host=get_object_or_404(Host, host=request.user)
+    host=Host.objects.get(host=request.user)
     return render(request,"Game/set_game.html",{'host':host})
 
 

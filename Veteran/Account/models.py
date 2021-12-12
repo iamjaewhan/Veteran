@@ -37,6 +37,7 @@ class Review(models.Model):
     
     class Meta:
         unique_together=(('reviewer','reviewee'),)
+        
     
 
 class Host(models.Model):
