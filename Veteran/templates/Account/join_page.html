@@ -126,15 +126,16 @@
 </head>
 
 <body>
+    {% load static %}
     <div class="wrap">
         <div class = "header">
             <div class="left">
                 <img 
-                src = "veteran logo.png"
+                src = "{% static 'img/veteran_logo.png' %}"
                 style= "float:left; margin-left: 50px;margin-top: 50px;"
                 />
                     <img 
-                src = "back_img.jpg"
+                src = "{% static 'img/back_img.jpg' %}"
                 style= "float: left; margin-top: 25%; width:230px; margin-right: 10px; height: 380px;"
                 />
                     <h1>아직 회원이 아니신가요?</h1>
