@@ -202,7 +202,9 @@
         <ul class="navbar" style="list-style:none;">
             <p style="color:white;">{{ user.username }}</p>
             <li class="nav-item"><a href="{% url 'Account:mypage' %}">👤 내 정보</a></li>
+            {% if user.is_host %}
             <li class="nav-item"><a href="{% url 'Game:hostGame' %}">🏀 경기 등록</a></li>
+            {% endif %}
         </ul>
     </div>
     <div class="wrapper">
