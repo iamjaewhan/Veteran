@@ -37,8 +37,16 @@
         }
 
         .estimations{
+            display :flex;
+            flex-direction:column;
             
         }
+
+        .estimations > div {
+            display:flex;
+            justify-content:space-around;
+        }
+
         .estimation1 {
             min-width : 50%;
             max-width : 70%;
@@ -116,33 +124,39 @@
         </div>
         <div class="estimations">
             <div stlye="display:flex; flex-direction:row; justify-content:space-around;">
-                <div style="color:white;"> {{ user.nickname }}님에 대한 평가는 다음과 같습니다!</div>
+                <div style="color:white; margin-top : 50px; margin-bottom:50px;"> {{ user.nickname }}님에 대한 평가는 다음과 같습니다!</div>
             </div>
-            <div class="estimation1" style="display : flex; justify-content : space-around;">
-                {% if rating %}
-                    <div style="display : flex; flex-direction:column; justify-content:space-around;">
-                    <h2>점수 : {{ rating }}</h2>
-                    </div>
-                    <div class="review_list">
-                        <h2>최근 평가</h2>
-                        <div class="review_detail">
-                            {% for review in reviews %}
-                            <div style="display:flex; justify-content:space-around; margin-bottom:15px;">
-                                <div>{{ review.reviewer.username }} </div>
-                                <div>{{ review.game.host.start_datetime }}</div>
-                                <div>{{ review.get_comment_type_display }}</div>
-                                <div>{{ review.rating }}</div>
-                            </div>
-                            {% endfor %}
+            <div>
+                <div class="estimation1">
+                    {% if rating %}
+                        <div style="display : flex; justify-content:space-around;">
+                        <h2>점수 : {{ rating }}</h2>
                         </div>
+                        <div class="review_list">
+    
+                            <h2 style="text-align:center;">최근 평가</h2>
+                            <div class="review_detail">
+                                {% for review in reviews %}
+                                <div style="display:flex; justify-content:space-around; margin-bottom:15px;">
+                                    <div>{{ review.reviewer.username }} </div>
+                                    <div>{{ review.game.host.start_datetime }}</div>
+                                    <div>{{ review.get_comment_type_display }}</div>
+                                    <div>{{ review.rating }}</div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% else %}
+                    <div>
+                        <h2>회원님에 대한 평가가 없습니다</h2>
                     </div>
-                {% else %}
-                    <h2>회원님에 대한 평가가 없습니다</h2>
-                {% endif %}
+                    {% endif %}
+                </div>
             </div>
             <div class="back">
                     <a href="{% url 'Account:mypage' %}">뒤로가기</a>
             </div>
         </div>
+
     </div>
 </body>
