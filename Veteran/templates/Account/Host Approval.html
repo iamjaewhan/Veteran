@@ -201,8 +201,25 @@
                 height: 100vh;
             }    
         }
+        li{
+            float:right;
+            padding: 20px 40px;
+        }
+        nav-item{
+            padding: 15px;
+            cursor: pointer;
+        }
 
-
+        navbar{
+            float: right;
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+            list-style-type: none;
+            position: fixed;
+            color: white;
+        }
+        a {text-decoration:none}
         
     </style>
 
@@ -216,7 +233,7 @@
         </div>
         <div class="gray">
             
-            <ul class="navbar">
+            <ul class="navbar" style="list-style:none;">
                 <li class="nav-item"><a href="#">👤 내 정보</a></li>
                 <li class="nav-item"><a href="#">🏠 홈</a></li>
             </ul>
