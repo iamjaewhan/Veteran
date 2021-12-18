@@ -78,15 +78,15 @@ WSGI_APPLICATION = 'Veteran.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
-DATABASES=VETERAN_DATABASES
-"""
+#DATABASES=VETERAN_DATABASES
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-"""
+
 
 
 # Password validation
