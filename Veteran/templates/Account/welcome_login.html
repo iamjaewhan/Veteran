@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block head %}
+<title>Welcome!</title>
+{% endblock %}
+
+{% block style %}
+{% endblock %}
+
+{% block content %}
+<form action="{% url 'Account:login' %}" method="POST">
+    {% csrf_token %}
+    <div class="mb-3">
+      <label for="exampleInputEmail1" class="form-label">ID</label>
+      <input type="email" class="form-control" name="user_id" id="exampleInputEmail1" aria-describedby="emailHelp">
+    </div>
+    <div class="mb-3">
+      <label for="exampleInputPassword1" class="form-label">Password</label>
+      <input type="password" class="form-control" name="password" id="exampleInputPassword1">
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+    <div class="form-floating">
+        <div> 아직 회원이 아니신가요? <a href="{% url 'Account:signup' %}"> 회원가입</a></div>
+    </div>
+</form>
+{% endblock %}
