@@ -1,199 +1,40 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <title>Join Page</title>
-    <!-- <link href="Join Page.css" rel="stylesheet"> -->
-    <script scr="jquery-3.4.1.js"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100&display=swap" rel="stylesheet">
-    <style>
-        div {
-            width: 100%;
-            height: 900px;
-        }
-        div.left {
-            width: 50%;
-            float: left;
-            box-sizing: border-box;
-            background: #2F303A;
-        }
-        div.right {
-            width: 50%;
-            float: right;
-            box-sizing: border-box;
-            background: #EBEBEB;
-            
-        }
+{% extends "base.html" %}
+{% block head %}
+<title>Sign up</title>
+{% endblock %}
 
+{% block style %}
+{% endblock %}
 
-        *{
-            font-family: 'Noto Sans KR', sans-serif;
-            list-style: none;
-            text-decoration: none;
-            border-collapse: collapse;
-            margin:0;
-            padding:0;
-        }
-
-
-        .left h1{
-            font-size: 32px; color: #E2E2E2;
-            text-align: left;
-            margin-left: 45%;
-            margin-top: 25%;
-        }
-        .left h2{
-            font-size: 40px; color: #F76F22;
-            text-align: left;
-            margin-left: 45%;
-        }
-        .left ul{
-            font-size: 18px; color: #E2E2E2;
-            text-align: left;
-            margin-left: 45%;
-            margin-top: 10px;
-        }
-        .right{position: center;}
-        .right h1{
-            font-size: 32px; color: #2F303A;
-            text-align: left;
-            margin-left: 30px;
-            margin-top: 25%;
-        }
-        .right h2{
-            font-size: 40px; color: #F76F22;
-            text-align: left;
-            margin-left: 30px;
-            margin-bottom: 30px;
-        }
-
-        .join-form{position:relative; z-index: 2;}
-
-        .join-area{
-            width: 400px; position:relative;
-            margin-top: 20px;
-            margin-left: 30px;
-        }
-
-        .join-area input{
-            width: 40%;
-            padding: 20px 10px 10px;
-            background-color: transparent;
-            border: none;
-            border-bottom: 1px solid #999;
-            font-size: 18px; color: #F76F22;
-            outline: none;
-            margin-bottom: 30px;
-            margin-left: 10px;
-        }
-
-        .join-area label{
-            position: absolute; left: 10px;
-            font-size: 18px; color: #999;
-            margin-bottom: 5px;
-        }
-
-        .btn-area1{margin-top: 30px;}
-        .btn-area1 button{
-            margin-left: 30px;
-            width:20%; height: 30px;
-            background:#E2E2E2;
-            color: #F76F22;
-            font-size: 18px;
-            border: none;
-            border-radius: 25px;
-        }
-
-        .btn-area2{margin-top: 30px;}
-        .btn-area2 button{
-            width:50%; height: 50px;
-            background:#F76F22;
-            color: #fff;
-            font-size: 20px;
-            border: none;
-            border-radius: 25px;
-            margin-left: 25%;
-            margin-bottom: 30px;
-        }
-
-        .agree{
-            margin-top: 30px;
-            margin-left: 25%;
-        }
-        </style>
-</head>
-
-<body>
-    {% load static %}
-    <div class="wrap">
-        <div class = "header">
-            <div class="left">
-                <img 
-<<<<<<< HEAD
-                src = "static/img/veteran_logo.png"
-                style= "float:left; margin-left: 50px;margin-top: 50px;"
-                />
-                    <img 
-                src = "static/img/back_img.jpg"
-=======
-                src = "{% static 'img/veteran_logo.png' %}"
-                style= "float:left; margin-left: 50px;margin-top: 50px;"
-                />
-                    <img 
-                src = "{% static 'img/back_img.jpg' %}"
->>>>>>> edddaf36c9ce1fe695a7aec9a22f1c72e500e89a
-                style= "float: left; margin-top: 25%; width:230px; margin-right: 10px; height: 380px;"
-                />
-                    <h1>아직 회원이 아니신가요?</h1>
-                    <h2>지금 베테랑이 되세요!</h2>
-                    <ul type="circle">
-                        <li>- 농구, 더 이상 혼자하지 마세요!</li><br>
-                        <li>- 농구장 시설 일람!</li><br>
-                        <li>- 호스트, 구장 평가 시스템!</li><br>
-                        <li>- 게임과 같이 자신의 능력치를 보세요!</li><br>
-                        <li>- 경기 매칭과 동시에 경기장 예약!</li><br>
-                        <li>- 이제는 게임이 취소될 일이 없습니다!</li>
-                    </ul>
-            </div>
-            <div class="right">
-                <h1>베테랑</h1>
-                <h2>회원가입</h2>
-                <section class="join-form">
-                    <form action="">
-                        <span class="join-area">
-                            <label for="email">Email</label>
-                            <input type="text" name="email" id="email"
-                            autocomplete="off" required>
-                        </span><br>
-                        <span class="join-area">
-                            <label for="pw">Password</label>
-                            <input type="password" name="pw" id="pw"
-                            autocomplete="off" required>
-                        </span>
-                        <span class="join-area">
-                            <label for="cpw">Confirm Password</label>
-                            <input type="password" name="cpw" id="cpw"
-                            autocomplete="off" required>
-                        </span><br>
-                        <span class="join-area">
-                            <label for="nickname">Nickname</label>
-                            <input type="text" name="nickname" id="nickname"
-                            autocomplete="off" required>
-                        </span>
-                        <span class="join-area">
-                            <label for="Phone">Phone(recommended)</label>
-                            <input type="text" name="Phone" id="Phone"
-                            autocomplete="off" required>
-                        </span>
-                        <br>
-                        <span class="btn-area2">
-                            <button type="submit">Create Account</button>
-                        </span><br>
-                        <span class="agree">
-                            베테랑 서비스 이용약관 및 개인정보 수집에 동의합니다. <input type="checkbox" value = "agree" required>
-                        </span>
-                </section>
-</body>
-
+{% block content %}
+<form action="">
+    <span class="join-area">
+        <label for="email">Email</label>
+        <input type="text" name="email" id="email" autocomplete="off" required>
+    </span><br>
+    <span class="join-area">
+        <label for="pw">Password</label>
+        <input type="password" name="pw" id="pw" autocomplete="off" required>
+    </span>
+    <span class="join-area">
+        <label for="cpw">Confirm Password</label>
+        <input type="password" name="cpw" id="cpw" autocomplete="off" required>
+    </span><br>
+    <span class="join-area">
+        <label for="nickname">Nickname</label>
+        <input type="text" name="nickname" id="nickname" autocomplete="off" required>
+    </span>
+    <span class="join-area">
+        <label for="Phone">Phone</label>
+        <input type="text" name="Phone" id="Phone" autocomplete="off" required>
+    </span>
+    <br>
+    <span class="agree">
+        베테랑 서비스 이용약관 및 개인정보 수집에 동의합니다. <input type="checkbox" value = "agree" required>
+    </span>
+    <br>
+    <span class="btn-area2">
+        <button type="submit">Create Account</button>
+    </span>
+</form>
+{% endblock %}
