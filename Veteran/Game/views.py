@@ -25,7 +25,7 @@ def gamelist(request):
     page=request.GET.get('page','1')        
     paginator=Paginator(game_list, 10)
     page_obj=paginator.get_page(page)
-    return render(request,'Game/main.html',{'game_list':page_obj})
+    return render(request,'Game/gamelist.html',{'game_list':page_obj})
 
 
 def participate(request,id):
