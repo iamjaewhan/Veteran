@@ -63,7 +63,7 @@ def reqHostAthority(request):
         host.intro = request.POST["intro"]
         host.save()
         return redirect('Account:mypage')
-    return render(request,'Account/Host Application.html')
+    return render(request,'Account/host_application.html')
 
 
 
