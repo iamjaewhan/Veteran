@@ -7,7 +7,7 @@ from django.views.decorators.csrf import csrf_exempt
 import json
 
 # from Veteran.Veteran.Account import models
-from Game.models import Game, Game_Participants
+from games.models import Game, Game_Participants
 from .models import User, Host, HostApplication, Review
 
 

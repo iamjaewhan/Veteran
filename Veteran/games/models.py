@@ -1,6 +1,6 @@
 from django.db import models
 from django.utils import timezone
-from Account.models import User,Host
+from accounts.models import User,Host
 
 #from Auth.models import User,Host
 

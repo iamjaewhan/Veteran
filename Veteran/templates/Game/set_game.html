@@ -1,20 +1,15 @@
-<!DOCTYPE html>
-<html lang="ko">
-    <head>
-        <meta charset="utf-8">
-        <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100&display=swap" rel="stylesheet">
-        <link rel="stylesheet" type="text/css" href="/static/css/myInfo.css">
-        <title>game_maker</title>    
-    </head>
+{% extends 'base.html' %}
+{% block head %}
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/static/css/myInfo.css">
+{% endblock %}
+
+{% block style %}
+{% endblock %}
+
+{% block contnet %}
     <body style="display:flex; flex-direction:column">
         {% load static %}
-        <div class="header">
-            <div class="imgcon2"><img src="{% static 'img/veteran_logo.png' %}" alt=""></div>
-            <ul class="navbar" style="list-style:none;">
-                <li class="nav-item"><a href="{% url 'Account:mypage' %}" style="color:white;">👤 내 정보</a></li>
-                <li class="nav-item"><a href="{% url 'Account:login' %}" style="color:white;">🏠 홈</a></li>
-            </ul>
-        </div>
         <div style="display:flex; justify-content :space-around;">
             <div style="background-color : beige; width:800px; height : 500px; margin-top:50px;">
                 <form name="game_maker"action="{% url 'Game:registerGame' %}" method="POST">
@@ -57,4 +52,5 @@
             };
         </script>
     </body>
-</html>
+
+{% endblock %}
