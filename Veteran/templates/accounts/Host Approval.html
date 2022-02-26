@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100&display=swap" rel="stylesheet">
+    
+    <title>Host Approval</title>
+
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <style>
+        .imgcon2{
+            display: flex;
+            height: 50px;
+            padding: 10px 10px;
+        }
+
+
+        navbar{
+            float: right;
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+            list-style-type: none;
+            position: fixed;
+            color: white;
+        }
+
+        nav-item{
+            padding: 15px;
+            cursor: pointer;
+        }
+
+        li{
+            float:right;
+            padding: 20px 40px;
+        }
+
+        .list {
+            display: grid;
+            grid-template-rows: 1fr 9fr;
+            padding: 5px;
+            background-color: rgb(47 48 58);
+            color: white;
+        }
+
+        .applicants {
+            display: flex;
+            flex-direction: column;
+            flex-wrap: wrap;
+            align-items: center;
+            overflow-y: scroll;
+            overflow: hidden;
+        }
+
+        .applicant {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            width: 95%;
+            max-width: 450px;
+            padding-left: 5px;
+            height: 50px;
+            margin-top: 10px;
+            background-color: rgb(75 77 92);
+            border-radius: 25px;
+        }
+
+        .btn {
+            margin-right: 10px;
+            height: 25px;
+            width: 70px;
+            border-radius: 15px;
+            border:none;
+            background: linear-gradient(to left, rgb(255, 77, 46), rgb(255, 155, 47));
+            color: white;
+        }
+
+        .lbtn {
+            margin-right: 10px;
+            font-size: larger;
+            height: 40px;
+            width: 200px;
+            border-radius: 20px;
+            border-color: transparent;
+            background-color:rgb(43, 156, 255);
+            color: white;
+        }
+
+        .rbtn {
+            margin-right: 10px;
+            font-size: larger;
+            height: 40px;
+            width: 200px;
+            border-radius: 20px;
+            border-color: transparent;
+            background-color: rgb(248 86 51);
+            color: white;
+        }
+
+        .info {
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            background-color: rgb(235 235 235);
+        }
+
+        .content {
+            display: grid;
+            grid-template-rows: 1fr 2fr 1fr 2fr 1fr 2fr 1fr 2fr 1fr;
+            background-color: rgb(226, 226, 226);
+            border-radius: 25px;
+            padding: 30px;
+            width: 80%;
+            height: 70%;
+        }
+
+        .btns {
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+        }
+
+        .section {
+            font-size: large;
+            font-weight: 600;
+            color: rgb(247, 111, 34);
+        }
+
+        #wrapper {display: table;}
+        #cell {display: table-cell; vertical-align: middle; text-align: center; font-size: x-large;}
+        
+        @media(min-width:961px){
+
+            a { text-decoration:none !important }
+
+            a:link {color:rgb(47, 48, 58); }
+
+            a:visited {color:rgb(47, 48, 58); }
+    
+            a:hover {color:rgb(43, 156, 255); }
+
+            body {
+                font-family: 'Noto Sans KR' !important;
+                margin: 0;
+                background-color: rgb(47, 48, 58);
+                display: grid;
+                grid-template-rows: 1fr 20fr;
+                height: 100vh;
+            }
+
+            .header{
+                display: grid;
+                grid-template-columns: 3fr 7fr;
+            }
+
+            .gray {
+                background-color: rgb(235, 235, 235);
+            }
+
+            .wrapper {
+                display: grid;
+                grid-template-columns: 3fr 7fr;
+
+            }
+        }
+
+        @media(max-width:960px){
+
+            a { text-decoration:none !important }
+
+            a:link {color:rgb(255, 255, 255); }
+
+            a:visited {color:rgb(255, 255, 255); }
+    
+            a:hover {color:rgb(43, 156, 255); }
+
+            body {
+                font-family: 'Noto Sans KR' !important;
+                margin: 0;
+                background-color: rgb(47, 48, 58);
+                display: grid;
+                grid-template-rows: auto;
+            }
+            .header{
+                display: grid;
+                grid-template-columns: 3fr 7fr;
+            }
+            
+            .gray {
+                background-color: rgb(47, 48, 58);
+            }
+            .wrapper {
+                display: grid;
+                grid-template-rows: 2fr 8fr;
+                height: 100vh;
+            }    
+        }
+        li{
+            float:right;
+            padding: 20px 40px;
+        }
+        nav-item{
+            padding: 15px;
+            cursor: pointer;
+        }
+
+        navbar{
+            float: right;
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+            list-style-type: none;
+            position: fixed;
+            color: white;
+        }
+        a {text-decoration:none}
+        
+    </style>
+
+
+</head>
+<body>
+    {% load static %}
+    <div class="header">
+        <div>
+            <div class="imgcon2"><img src="{% static 'img/veteran_logo.png' %}" alt=""></div>
+        </div>
+        <div class="gray">
+            
+            <ul class="navbar" style="list-style:none;">
+                <li class="nav-item"><a href="#">👤 내 정보</a></li>
+                <li class="nav-item"><a href="#">🏠 홈</a></li>
+            </ul>
+        </div>
+
+    </div>
+    <div class="wrapper">
+        <div class="list">
+            <div id="wrapper">
+                <div id="cell">
+                    신청 목록
+                </div>
+            </div>
+            <div class="applicants"> 
+            
+            </div>
+
+        </div>
+        <div class="info" >
+            <form method="POST" action="{% url 'Account:approveReq' %}">
+            {% csrf_token %}
+            <div class="content">
+                <div class="section">신청 유저</div>
+                <input id="req_host" name='host' style="background-color : transparent; border:0px;"></input>
+                <div class="section">팀(동아리, 동호회) 명</div>
+                <input id="req_group_name" name='group_name' style="background-color : transparent; border:0px;"></input>
+                <div class="section">위치</div>
+                <input id="req_court_location" name='court_location' style="background-color : transparent; border:0px;"></input>
+                <div class="section">한줄 소개</div>
+                <input id="req_intro" name='intro' style="background-color : transparent; border:0px;"></input>
+                <div class="btns">
+                    <button type="submit" class="lbtn">호스트 자격 승인</button>
+                    <button class="rbtn" onclick="return rejectReq(this.form);">호스트 자격 거부</button>
+                </div>
+            </form>
+            </div>
+
+        </div>
+
+        </div>
+    </div>
+    <script>
+        const request_list=[];
+        {% for req in request_list %}
+                request_list.push({
+                    host: "{{ req.host }}",
+                    group_name : "{{ req.group_name }}",
+                    court_location : "{{ req.court_location }}",
+                    intro : "{{ req.intro }}"
+                });
+        {% endfor %}
+
+        for (var i=0; i<request_list.length; i++){
+            var newdiv=document.createElement('div');
+            newdiv.id=i+1;
+            var c1div=document.createElement('div');
+            c1div.innerHTML=request_list[i]["host"]+" | "+request_list[i]["group_name"];
+            var c2div=document.createElement('div');
+            var cbutton=document.createElement('button');
+            cbutton.setAttribute('class','btn');
+            cbutton.setAttribute('id',i);
+            cbutton.setAttribute('onclick','showDetailInfo(this.id);');
+            cbutton.innerHTML="상세 조회";
+            c2div.appendChild(cbutton);
+            newdiv.appendChild(c1div);
+            newdiv.appendChild(c2div);
+
+            newdiv.setAttribute('class', 'applicant');
+            
+            $(".applicants").append(newdiv)
+        };
+
+
+
+        function showDetailInfo(clicked_id){
+            detail_req=request_list[clicked_id];
+            var detail_host=document.getElementById("req_host");
+            var detail_group_name=document.getElementById('req_group_name');
+            var detail_court_location=document.getElementById('req_court_location');
+            var detail_intro=document.getElementById('req_intro');
+
+            //detail_host.setAttribute('value',request_list["host"]);
+            detail_host.value=detail_req['host'];
+            
+
+            //detail_group_name.setAttribute('value',request_list['group_name']);
+            detail_group_name.value=detail_req['group_name'];
+            
+
+            //detail_court_location.setAttribute('value',request_list['court_location']);
+            detail_court_location.value=detail_req['court_location'];
+            
+
+            //detail_intro.setAttribute('value',request_list['intro']);
+            detail_intro.value=detail_req['intro'];
+
+            detail_host.readOnly=true;
+            detail_group_name.readOnly=true;
+            detail_court_location.readOnly=true;
+            detail_intro.readOnly=true;
+            
+        };
+        
+
+        function rejectReq(form){
+            form.action='{% url 'Account:deleteReq' %}';
+            form.submit();
+            return true;
+        };
+
+
+    </script>
+</body>
+</html>

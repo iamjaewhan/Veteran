@@ -7,12 +7,12 @@ from accounts.models import User,Host
 # Create your models here.
 
 class Game(models.Model):
-    host=models.ForeignKey('Account.Host',null=False, on_delete=models.PROTECT)
-    start_datetime=models.DateTimeField(default=timezone.localtime(), null=False)
-    end_datetime=models.DateTimeField(default=timezone.localtime(), null=False)
-    numOfRecruitment=models.IntegerField(default=18,null=False)
-    numOfParticipation=models.IntegerField(default=0,null=False)
-    completed=models.BooleanField(default=False)
+    host = models.ForeignKey('accounts.Host',null=False, on_delete=models.PROTECT)
+    start_datetime = models.DateTimeField(default=timezone.localtime(), null=False)
+    end_datetime = models.DateTimeField(default=timezone.localtime(), null=False)
+    numOfRecruitment = models.IntegerField(default=18,null=False)
+    numOfParticipation = models.IntegerField(default=0,null=False)
+    completed = models.BooleanField(default=False)
     
     
     def isProgressed(self):
@@ -50,7 +50,7 @@ class Game(models.Model):
     
 class Game_Participants(models.Model):
     game=models.ForeignKey(Game, on_delete=models.PROTECT)
-    user=models.ForeignKey('Account.User', on_delete=models.CASCADE)
+    user=models.ForeignKey('accounts.User', on_delete=models.CASCADE)
     
     class Meta:
         unique_together = (('game', 'user'),)

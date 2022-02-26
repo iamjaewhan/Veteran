@@ -6,7 +6,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 import requests
 import json
 
-from Account.models import Host, User
+from accounts.models import Host, User
 from .models import Game, Game_Participants
 
 
@@ -25,7 +25,7 @@ def gamelist(request):
     page=request.GET.get('page','1')        
     paginator=Paginator(game_list, 10)
     page_obj=paginator.get_page(page)
-    return render(request,'Game/gamelist.html',{'game_list':page_obj})
+    return render(request,'games/gamelist.html',{'game_list':page_obj})
 
 
 def participate(request,id):
@@ -36,12 +36,12 @@ def participate(request,id):
     game.numOfParticipation+=1
     game.save()
     new_join.save()
-    return redirect('Game:gamelist')
+    return redirect('games:gamelist')
 
 
 def hostGame(request):
     host=Host.objects.get(host=request.user)
-    return render(request,"Game/set_game.html",{'host':host})
+    return render(request,"games/set_game.html",{'host':host})
 
 
 def registerGame(request):
@@ -54,11 +54,11 @@ def registerGame(request):
             game.end_datetime = request.POST['end_datetime']
             game.numOfRecruitment = request.POST['numOfRecruitment']
             game.save()
-            return redirect('Game:gamelist')
+            return redirect('games:gamelist')
         else:
-            return redirect('Game:gamelist')
+            return redirect('games:gamelist')
     else:
-        return redirect('Game:gamelist')
+        return redirect('games:gamelist')
 
 def payment(request):
     if request.method == "POST":
@@ -83,4 +83,4 @@ def payment(request):
         response = json.loads(res.text)
         return redirect(next_url)
     
-    return render(request, 'Game/pay.html')
+    return render(request, 'games/pay.html')

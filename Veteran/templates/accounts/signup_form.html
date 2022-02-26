@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block head %}
+<title>Sign up</title>
+{% endblock %}
+
+{% block style %}
+{% endblock %}
+
+{% block content %}
+<div>
+    <form action="{% url 'accounts:signup' %}" method="post">
+      {% csrf_token %}
+      {{ form }}
+      {% if error %}
+      <p>{{ error }}</p>
+      {% endif %}
+      <button type="submit" class="btn btn-primary">회원가입</button>
+    </form>
+</div>
+{% endblock %}

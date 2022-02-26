@@ -1,28 +1,79 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.core import serializers
 
 
 # Create your models here.
+class UserManager(BaseUserManager):
+    def create_user(self, email, nickname, phone, password=None):
+        if not email:
+            raise ValueError(_("사용자는 이메일 주소를 필수로 입력해야 합니다."))
+        
+        user = self.model(
+            email = self.normalize_email(email),
+            nickname = nickname,
+        )
+        user.set_password(password)
+        user.save(using = self._db)
+        return user
+    
+    def create_superuser(self, email, nickname, phone, password=None):
+        user = self.create_user(
+            email = email,
+            nickname = nickname,
+            phone = phone,
+            password = password,
+        )
+        user.is_superuser = True
+        user.save(using = self._db)
+        return user
+    
 
 
-class User(AbstractUser):
-    username=models.EmailField(unique=True,null=False,default=False,max_length=100)
+
+class User(AbstractBaseUser, PermissionsMixin):
+    email = models.EmailField(
+        unique = True,
+        null = False,
+        default = False,
+        max_length = 100,
+        )
+    
     nickname = models.CharField(
-        verbose_name='닉네임', 
-        max_length=15, 
-        unique=True, 
+        verbose_name = '닉네임', 
+        max_length = 15, 
+        unique = True, 
+        null = False,
+        error_messages = {'unique': '이미 사용중인 닉네임입니다.'},
+        )
+    
+    phone = models.CharField(
+        verbose_name = '전화 번호',
+        max_length = 13,
+        null = False,
+        unique = True,
+        )
+    
+    is_host = models.BooleanField(
         null=False,
-        error_messages={'unique': '이미 사용중인 닉네임입니다.'},
-    )
-    phone = models.CharField(verbose_name='전화 번호', max_length=13,null=False, unique=True,default = '')
-    is_host=models.BooleanField(null=False, default=False)
-    is_superuser=models.BooleanField(null=False,default=0)
-    review_relations=models.ManyToManyField(
+        default=False
+        )
+    
+    is_superuser = models.BooleanField(
+        null = False,
+        default = 0,
+        )
+    
+    review_relations = models.ManyToManyField(
         'self',
         symmetrical=False,
         through='Review',
-        related_name="r")
+        related_name="r",
+        )
+    
+    USERNAME_FIELD = 'email'
+    
+    objects = UserManager()
     
     def __str__(self):
         return self.username
@@ -61,7 +112,7 @@ class Host(models.Model):
     
 class HostApplication(models.Model):
     host=models.ForeignKey(User,unique=True, on_delete=models.CASCADE)
-    group_name=models.CharField(verbose_name='모임 이름',max_length=20, null=False,default='veterans')
+    group_name=models.CharField(verbose_name='모임 이름',max_length=20, null=False, default='veterans')
     court_location=models.CharField(verbose_name='장소',max_length=100, null=False)
     intro=models.CharField(verbose_name='한줄 소개', max_length=200, null=False)
     

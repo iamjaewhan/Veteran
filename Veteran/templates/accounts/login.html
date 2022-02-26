@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block head %}
+{% endblock %}
+
+{% block style %}
+    <style>
+        .login-form {
+            max-width : 700px;
+        }
+    </style>
+    
+{% endblock %}
+
+{% block content %}
+
+<div class="login-form" id="login-form">
+    <form action="{% url 'accounts:login' %}" method="POST">
+        {% csrf_token %}
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label">ID</label>
+          <input type="email" class="form-control" name="user_id" id="exampleInputEmail1" aria-describedby="emailHelp">
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputPassword1" class="form-label">Password</label>
+          <input type="password" class="form-control" name="password" id="exampleInputPassword1">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <div class="form-floating">
+            <div> 아직 회원이 아니신가요? <a href="{% url 'accounts:signup' %}"> 회원가입</a></div>
+        </div>
+    </form>
+</div>
+{% endblock %}
