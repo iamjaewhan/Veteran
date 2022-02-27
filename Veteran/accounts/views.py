@@ -40,6 +40,7 @@ def signup(request):
         if request.method == "POST":
             form = UserCreationForm(request.POST)
             if form.is_valid():
+                form.save()
                 return HttpResponseRedirect('/games/gamelist')
             return render(request,'accounts/signup_form.html',{'form' : form,'error':'회원 가입 정보를 확인해주세요'})
         else:
