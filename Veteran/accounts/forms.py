@@ -1,14 +1,55 @@
 from django import forms
+from django.contrib.auth.hashers import check_password
 
 from .models import User, UserManager
+
+class UserLoginForm(forms.Form):
+    email = forms.EmailField(
+        label = ('Email'),
+        required = True,
+        widget = forms.EmailInput(
+            attrs = {
+                'class': 'form-control',
+                'placeholder': ('Email address'),
+                'required': 'True',
+            }
+        )
+    )
+    
+    password = forms.CharField(
+        label = ('Password'),
+        widget = forms.PasswordInput(
+            attrs = {
+                'class': 'form-control',
+                'placeholder': ('Password'),
+                'required': 'True',
+            }
+        )
+    )
+    
+    def clean(self):
+        cleaned_data = super().clean()
+        email = cleaned_data.get('email')
+        password = cleaned_data.get('password')
+        
+        if email and password:
+            try:
+                user = User.objects.get(email=email)
+                if not check_password(password, user.password):
+                    self.add_error('password', "올바르지 않은 정보입니다.")
+                else:
+                    self.user_id = user.id
+            except Exception:
+                self.add_error('email', "올바르지 않은 정보입니다.ㄴ")
+                
 
 class UserCreationForm(forms.ModelForm):
     # 사용자 생성 폼
     email = forms.EmailField(
-        label=('Email'),
-        required=True,
-        widget=forms.EmailInput(
-            attrs={
+        label = ('Email'),
+        required = True,
+        widget = forms.EmailInput(
+            attrs = {
                 'class': 'form-control',
                 'placeholder': ('Email address'),
                 'required': 'True',
@@ -16,10 +57,10 @@ class UserCreationForm(forms.ModelForm):
         )
     )
     nickname = forms.CharField(
-        label= ('Nickname'),
-        required=True,
-        widget=forms.TextInput(
-            attrs={
+        label = ('Nickname'),
+        required = True,
+        widget = forms.TextInput(
+            attrs = {
                 'class': 'form-control',
                 'placeholder': ('Nickname'),
                 'required': 'True',
@@ -27,9 +68,9 @@ class UserCreationForm(forms.ModelForm):
         )
     )
     password1 = forms.CharField(
-        label=('Password'),
-        widget=forms.PasswordInput(
-            attrs={
+        label = ('Password'),
+        widget = forms.PasswordInput(
+            attrs = {
                 'class': 'form-control',
                 'placeholder': ('Password'),
                 'required': 'True',
@@ -37,9 +78,9 @@ class UserCreationForm(forms.ModelForm):
         )
     )
     password2 = forms.CharField(
-        label=('Password confirmation'),
-        widget=forms.PasswordInput(
-            attrs={
+        label = ('Password confirmation'),
+        widget = forms.PasswordInput(
+            attrs = {
                 'class': 'form-control',
                 'placeholder': ('Password confirmation'),
                 'required': 'True',

@@ -9,7 +9,7 @@ import json
 # from Veteran.Veteran.Account import models
 from games.models import Game, Game_Participants
 from .models import User, Host, HostApplication, Review
-from .forms import UserCreationForm
+from .forms import UserCreationForm, UserLoginForm
 
 
 # Create your views here.
@@ -17,21 +17,15 @@ def login(request):
     if request.user.is_authenticated:
         return redirect('games:gamelist')
     else:
-        if request.method=="POST":
-            username=request.POST['username']
-            password=request.POST['password']           
-            user=auth.authenticate(
-                request,
-                username=username,
-                password=password
-            )
-            if user is not None:
-                auth.login(request,user)
-                return redirect('games:gamelist')
-            else:
-                return render(request, 'accounts/welcome_login.html',{'error':"일치하는 사용자가 없습니다"})
+        if request.method == "POST":
+            form = UserLoginForm(request.POST)
+            if form.is_valid():
+                request.session['user'] = form.user_id
+                return HttpResponseRedirect('/games/gamelist')
+            return render(request, 'accounts/login_form.html', {'form' : form, "error" : "로그인 정보가 정확하지 않습니다."})
         else:
-            return render(request,'accounts/login.html')
+            form = UserLoginForm()
+        return render(request, 'accounts/login_form.html', {'form' : form,})
 
 def signup(request):
     if request.user.is_authenticated:
