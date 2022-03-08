@@ -4,6 +4,7 @@ from django.contrib import auth
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 
+
 import json
 
 # from Veteran.Veteran.Account import models
@@ -13,18 +14,20 @@ from .forms import UserCreationForm, UserLoginForm
 
 
 # Create your views here.
+
+        
 def login(request):
     if request.user.is_authenticated:
         return redirect('games:gamelist')
     else:
         if request.method == "POST":
-            form = UserLoginForm(request.POST)
+            form = AuthenticationForm(request, request.POST)
             if form.is_valid():
-                request.session['user'] = form.user_id
+                auth.login(request, form.get_user())
                 return HttpResponseRedirect('/games/gamelist')
             return render(request, 'accounts/login_form.html', {'form' : form, "error" : "로그인 정보가 정확하지 않습니다."})
         else:
-            form = UserLoginForm()
+            form = AuthenticationForm()
         return render(request, 'accounts/login_form.html', {'form' : form,})
 
 def signup(request):
@@ -42,7 +45,6 @@ def signup(request):
         return render(request, 'accounts/signup_form.html',{'form' : form})
             
 
-    
 def logout(request):
     auth.logout(request)
     return redirect('accounts:login')

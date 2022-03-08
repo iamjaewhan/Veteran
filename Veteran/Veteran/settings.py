@@ -13,6 +13,7 @@ from pathlib import Path
 import os,json
 from django.core.exceptions import ImproperlyConfigured
 from .veteran_settings import VETERAN_SECRET, VETERAN_DATABASES
+from django.urls import reverse_lazy
 
 AUTH_USER_MODEL = 'accounts.User'
 
@@ -138,3 +139,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 #Django Session Timeout Code
 SESSION_COOKIE_AGE = 1200
 SESSION_SAVE_EVERY_REQUEST = True
+
+
+LOGIN_REDIRECT_URL = reverse_lazy('games:gamelist')
+LOGOUT_REDIRECT_URL = reverse_lazy('accounts:login')
