@@ -8,8 +8,8 @@ from accounts.models import User,Host
 
 class Game(models.Model):
     host = models.ForeignKey('accounts.Host',null=False, on_delete=models.PROTECT)
-    start_datetime = models.DateTimeField(default=timezone.localtime(), null=False)
-    end_datetime = models.DateTimeField(default=timezone.localtime(), null=False)
+    start_datetime = models.DateTimeField()
+    end_datetime = models.DateTimeField()
     numOfRecruitment = models.IntegerField(default=18,null=False)
     numOfParticipation = models.IntegerField(default=0,null=False)
     completed = models.BooleanField(default=False)

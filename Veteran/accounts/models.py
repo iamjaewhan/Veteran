@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.core import serializers
+from django.core.validators import RegexValidator
 
 
 # Create your models here.
@@ -47,8 +48,11 @@ class User(AbstractBaseUser, PermissionsMixin):
         error_messages = {'unique': '이미 사용중인 닉네임입니다.'},
         )
     
+    phoneNumberRegex = RegexValidator(regex = r"^01([0|1|6|7|8|9])-?([1-9][0-9]{2,3})-?([0-9]{4})$")
+    
     phone = models.CharField(
         verbose_name = '전화 번호',
+        validators = [phoneNumberRegex],
         max_length = 13,
         null = False,
         unique = True,
@@ -76,7 +80,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     objects = UserManager()
     
     def __str__(self):
-        return self.username
+        return self.nickname
     
 class Review(models.Model):
     reviewer=models.ForeignKey(User,on_delete=models.CASCADE,related_name='reviewing')
@@ -92,7 +96,7 @@ class Review(models.Model):
     
 
 class Host(models.Model):
-    host=models.ForeignKey(User,unique=True, on_delete=models.CASCADE)
+    host=models.ForeignKey(User, on_delete=models.CASCADE)
     group_name=models.CharField(verbose_name='모임 이름',max_length=20, null=False,default='veterans')
     court_location=models.CharField(verbose_name='장소',max_length=100, null=False)
     intro=models.CharField(verbose_name='한줄 소개', max_length=200, null=False)

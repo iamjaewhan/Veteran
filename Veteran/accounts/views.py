@@ -10,7 +10,7 @@ import json
 # from Veteran.Veteran.Account import models
 from games.models import Game, Game_Participants
 from .models import User, Host, HostApplication, Review
-from .forms import UserCreationForm, UserLoginForm
+from .forms import UserCreationForm, HostAthorityForm
 
 
 # Create your views here.
@@ -38,7 +38,7 @@ def signup(request):
             form = UserCreationForm(request.POST)
             if form.is_valid():
                 form.save()
-                return HttpResponseRedirect('/games/gamelist')
+                return HttpResponseRedirect('/accounts/login')
             return render(request,'accounts/signup_form.html',{'form' : form,'error':'회원 가입 정보를 확인해주세요'})
         else:
             form = UserCreationForm()
@@ -65,7 +65,8 @@ def reqHostAthority(request):
         host.intro = request.POST["intro"]
         host.save()
         return redirect('accounts:mypage')
-    return render(request,'accounts/host_application.html')
+    form = HostAthorityForm()
+    return render(request,'accounts/host_application.html', {'form' : form})
 
 
 
