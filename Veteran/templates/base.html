@@ -10,8 +10,13 @@
         {% block head %}
         {% endblock %}
         
+        <style>
+          main{
+            width : 1000px;
+          }
         {% block style %}
         {% endblock %}
+        </style>
     </head>
     <body>
         <div>
@@ -66,8 +71,10 @@
               </nav>
         </div>
 
+        <div class="main">
         {% block content %}
         {% endblock %}
+        </div>
 
     </body>
 </html>

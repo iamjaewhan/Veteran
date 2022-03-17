@@ -83,7 +83,7 @@ class UserCreationForm(forms.ModelForm):
             user.save()
         return user
     
-class HostAthorityForm(forms.Form):
+class HostForm(forms.Form):
     group_name = forms.CharField(
          label = (),
          widget = forms.TextInput(
@@ -94,16 +94,7 @@ class HostAthorityForm(forms.Form):
              }
          )
      )
-    court_location = forms.CharField(
-         label = (),
-         widget = forms.TextInput(
-             attrs = {
-                 'class' : 'form-control',
-                 'placeholder' : ('경기장소 주소'),
-                 'required' : 'True',
-             }
-         )
-     )
+    
     intro = forms.CharField(
          label = (),
          widget = forms.TextInput(
@@ -114,3 +105,25 @@ class HostAthorityForm(forms.Form):
              }
          )
      )
+    
+    court_location = forms.CharField(
+         label = (),
+         widget = forms.TextInput(
+             attrs = {
+                 'class' : 'form-control',
+                 'placeholder' : ('경기 장소 주소'),
+                 'required' : 'True',
+             }
+         )
+     )
+    
+    court_detail_location = forms.CharField(
+        label = (),
+        widget = forms.TextInput(
+            attrs = {
+                'class' : 'form-control',
+                'placeholder' : ('경기장 상세 주소'),
+                'required' : 'False',
+            }
+        )
+    )

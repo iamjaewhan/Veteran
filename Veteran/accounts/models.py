@@ -9,6 +9,10 @@ class UserManager(BaseUserManager):
     def create_user(self, email, nickname, phone, password=None):
         if not email:
             raise ValueError(_("사용자는 이메일 주소를 필수로 입력해야 합니다."))
+        if not nickname:
+            raise ValueError(_('사용자는 사용자명을 필수로 입력해야 합니다.'))
+        if not phone:
+            raise ValueError(_('사용자는 전화번호를 필수로 입력해야 합니다.'))
         
         user = self.model(
             email = self.normalize_email(email),
@@ -29,8 +33,6 @@ class UserManager(BaseUserManager):
         user.save(using = self._db)
         return user
     
-
-
 
 class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(
@@ -76,6 +78,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         )
     
     USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['phone','nickname']
     
     objects = UserManager()
     
@@ -96,43 +99,18 @@ class Review(models.Model):
     
 
 class Host(models.Model):
-    host=models.ForeignKey(User, on_delete=models.CASCADE)
+    host=models.ForeignKey(User, unique=False , on_delete=models.CASCADE)
     group_name=models.CharField(verbose_name='모임 이름',max_length=20, null=False,default='veterans')
     court_location=models.CharField(verbose_name='장소',max_length=100, null=False)
     intro=models.CharField(verbose_name='한줄 소개', max_length=200, null=False)
     
-    def toDict(host):
-        if host==None:
-            return None
-        
-        dictionary = {}
-        dictionary["host"] = host.host
-        dictionary["group_name"] = host.group_name
-        dictionary["court_location"] = host.court_location
-        dictionary["intro"] = host.intro
-        
-        return dictionary
     
     
 class HostApplication(models.Model):
-    host=models.ForeignKey(User,unique=True, on_delete=models.CASCADE)
-    group_name=models.CharField(verbose_name='모임 이름',max_length=20, null=False, default='veterans')
-    court_location=models.CharField(verbose_name='장소',max_length=100, null=False)
-    intro=models.CharField(verbose_name='한줄 소개', max_length=200, null=False)
-    
-    
-    def toDict(application):
-        if application==None:
-            return None
-        
-        dictionary = {}
-        dictionary["host"] = application.host
-        dictionary["group_name"] = application.group_name
-        dictionary["court_location"] = application.court_location
-        dictionary["intro"] = application.intro
-        
-        return dictionary
-    
+    host = models.ForeignKey(User,unique=False, on_delete=models.CASCADE)
+    group_name = models.CharField(verbose_name='모임 이름',max_length=20, null=False, default='veterans')
+    court_location = models.CharField(verbose_name='장소',max_length=100, null=False)
+    intro = models.CharField(verbose_name='한줄 소개', max_length=200, null=False)
     
         
     

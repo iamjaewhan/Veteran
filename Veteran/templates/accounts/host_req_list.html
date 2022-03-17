@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block head %}
+{% endblock %}
+
+{% block style %}
+{% endblock %}
+
+{% block content %}
+<div>
+    {% for req in request_list  %}
+        <p>{{ req.host }},{{ req.group_name }},{{ req.court_location }}</p>
+    {% endfor %}
+</div>
+{% endblock %}

@@ -4,18 +4,19 @@ from django.contrib import auth
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 
+from rest_framework import generics
+from rest_framework.decorators import api_view
+from rest_framework.renderers import JSONRenderer
 
-import json
-
-# from Veteran.Veteran.Account import models
 from games.models import Game, Game_Participants
 from .models import User, Host, HostApplication, Review
-from .forms import UserCreationForm, HostAthorityForm
+from .forms import UserCreationForm, HostForm
+from .serializers import UserSerializer, HostAppSerializer
 
 
 # Create your views here.
 
-        
+
 def login(request):
     if request.user.is_authenticated:
         return redirect('games:gamelist')
@@ -30,6 +31,7 @@ def login(request):
             form = AuthenticationForm()
         return render(request, 'accounts/login_form.html', {'form' : form,})
 
+
 def signup(request):
     if request.user.is_authenticated:
         return redirect('games:gamelist')
@@ -43,6 +45,8 @@ def signup(request):
         else:
             form = UserCreationForm()
         return render(request, 'accounts/signup_form.html',{'form' : form})
+         
+ 
             
 
 def logout(request):
@@ -58,21 +62,24 @@ def mypage(request):
 @csrf_exempt
 def reqHostAthority(request):
     if request.method=="POST":
-        host = HostApplication()
-        host.host = request.user
-        host.group_name = request.POST["team_name"]
-        host.court_location = request.POST["fullAddress"]
-        host.intro = request.POST["intro"]
-        host.save()
-        return redirect('accounts:mypage')
-    form = HostAthorityForm()
+        form = HostForm(request.POST)
+        if form.is_valid():
+            host = HostApplication()
+            host.host = request.user
+            host.group_name = request.POST["group_name"]
+            host.court_location = request.POST["court_location"]+" "+request.POST["court_detail_location"]
+            host.intro = request.POST["intro"]
+            host.save()
+        return redirect('games:gamelist')
+    form = HostForm()
     return render(request,'accounts/host_application.html', {'form' : form})
 
 
 
 def lookupReq(request):
-    request_list=HostApplication.objects.all()
-    return render(request, 'accounts/Host approval.html',{"request_list":request_list})
+    host_requests = HostApplication.objects.all()
+    request_list = list(host_requests.values())
+    return render(request, 'accounts/host_req_list.html',{"request_list":request_list})
 
 
 
