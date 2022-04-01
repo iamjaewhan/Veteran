@@ -31,7 +31,7 @@ SECRET_KEY = VETERAN_SECRET['SECRET_KEY']
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    "ec2-3-36-113-189.ap-northeast-2.compute.amazonaws.com",
+    #"ec2-3-36-113-189.ap-northeast-2.compute.amazonaws.com",
 ]
 
 

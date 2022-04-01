@@ -30,6 +30,7 @@ class UserManager(BaseUserManager):
             password = password,
         )
         user.is_superuser = True
+        user.is_staff = True
         user.save(using = self._db)
         return user
     
@@ -57,7 +58,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         validators = [phoneNumberRegex],
         max_length = 13,
         null = False,
-        unique = True,
+        unique = False,
         )
     
     is_host = models.BooleanField(
@@ -67,7 +68,12 @@ class User(AbstractBaseUser, PermissionsMixin):
     
     is_superuser = models.BooleanField(
         null = False,
-        default = 0,
+        default = False,
+        )
+    
+    is_staff = models.BooleanField(
+        null = False,
+        default = False,
         )
     
     review_relations = models.ManyToManyField(
@@ -111,7 +117,7 @@ class HostApplication(models.Model):
     group_name = models.CharField(verbose_name='모임 이름',max_length=20, null=False, default='veterans')
     court_location = models.CharField(verbose_name='장소',max_length=100, null=False)
     intro = models.CharField(verbose_name='한줄 소개', max_length=200, null=False)
-    
-        
-    
+
+    def __str__(self):
+        return self.host.email + " " + self.group_name
     

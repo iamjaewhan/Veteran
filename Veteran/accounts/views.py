@@ -3,6 +3,7 @@ from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
+from django.core.paginator import Paginator
 
 from rest_framework import generics
 from rest_framework.decorators import api_view
@@ -78,26 +79,18 @@ def reqHostAthority(request):
 
 def lookupReq(request):
     host_requests = HostApplication.objects.all()
-    request_list = list(host_requests.values())
-    return render(request, 'accounts/host_req_list.html',{"request_list":request_list})
+    paginator = Paginator(host_requests, 10)
+    page_obj = paginator.get_page(request.GET.get('page',1))
+    return render(request, 'accounts/host_req_list.html',{"page_obj" : page_obj})
 
 
 
 def approveReq(request):
     if request.method=='POST':
-        req_id=User.objects.get(username=request.POST['host'])
-        req_host=HostApplication.objects.get(host=req_id)
-        if req_host:
-            new_host=Host()
-            new_host.host=req_id
-            new_host.group_name=req_host.group_name
-            new_host.court_location=req_host.court_location
-            new_host.intro=req_host.intro
-            new_host.save()
-            req_host.delete()
-            return redirect('accounts:lookupReq')
+        print(request.POST)
         return redirect('accounts:lookupReq')
     return redirect('accounts:lookupReq')
+
 
 def deleteReq(request):
     if request.method=='POST':
