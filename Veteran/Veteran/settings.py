@@ -30,7 +30,9 @@ SECRET_KEY = VETERAN_SECRET['SECRET_KEY']
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "ec2-3-36-113-189.ap-northeast-2.compute.amazonaws.com",
+]
 
 
 # Application definition
