@@ -7,9 +7,18 @@
 
 {% block content %}
 <div>
+    {% if error %}
+    <p>{{ error }}</p>
+    {% endif %}
     {% for req in page_obj %}
-        <p>{{ req.id }}</p> 
-
+        <form id="req_form">
+            {% csrf_token %}
+            <input name="req_id" value="{{ req.id }}" >
+            <p>{{ req.group_name }}</p>
+            <p>{{ req.intro }}</p>
+            <button type="submit" onclick='req_btn_click("POST")'>승인</button>
+            <button type="submit" onclick='req_btn_click("PUT")'>거절</button>
+        </form>
     {% endfor %}
     <div class="pagination">
         {% if page_obj.has_previous %}
@@ -26,4 +35,17 @@
 
     </div>
 </div>
+<script>
+    function req_btn_click(str){
+        req_form = document.getElementById('req_form');
+        if (str == "POST"){
+            req_form.setAttribute('action', "{% url 'accounts:acceptReq' %}");
+            req_form.setAttribute('method', "POST");
+        }
+        else if(str == "PUT"){
+            req_form.setAttribute('action', "{% url 'accounts:rejectReq' %}");
+            req_form.setAttribute('method' , "POST");
+        }
+    }
+</script>
 {% endblock %}

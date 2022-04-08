@@ -1,9 +1,10 @@
 from django.shortcuts import render, redirect, HttpResponseRedirect
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
-from django.contrib import auth
+from django.contrib import auth, messages
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from django.core.paginator import Paginator
+from django.db import transaction
 
 from rest_framework import generics
 from rest_framework.decorators import api_view
@@ -77,26 +78,50 @@ def reqHostAthority(request):
 
 
 
-def lookupReq(request):
+def lookupReq(request, message = None):
     host_requests = HostApplication.objects.all()
     paginator = Paginator(host_requests, 10)
-    page_obj = paginator.get_page(request.GET.get('page',1))
-    return render(request, 'accounts/host_req_list.html',{"page_obj" : page_obj})
+    context = {}
+    context["page_obj"] = paginator.get_page(request.GET.get('page',1))
+    if message:
+        for msg in message.keys():
+            messages.warning(request, message[msg])
+    return render(request, 'accounts/host_req_list.html', context)
 
 
 
-def approveReq(request):
-    if request.method=='POST':
-        print(request.POST)
-        return redirect('accounts:lookupReq')
+def acceptReq(request):
+    if request.method == "POST":
+        try:
+            req = HostApplication.objects.get(id = request.POST['req_id'])
+        except:
+            return redirect('accounts:lookupReq')
+        if req:
+            try:
+                with transaction.atomic():
+                    hostuser = User.objects.get(id=req.host.id)
+                    hostuser.is_host = True
+                    host = Host()
+                    host.host = hostuser
+                    host.group_name = req.group_name
+                    host.court_location = req.court_location
+                    host.intro = req.intro
+                    hostuser.save()
+                    host.save()
+                    req.delete()
+            except IntegrityError:
+                return redirect('accounts:lookupReq')
     return redirect('accounts:lookupReq')
 
 
-def deleteReq(request):
-    if request.method=='POST':
-        req_id=User.objects.get(username=request.POST['host'])
-        req_host=HostApplication.objects.get(host=req_id)
-        req_host.delete()
+def rejectReq(request):
+    try:
+        with transaction.atomic():
+            req = HostApplication.objects.get(id = request.POST['req_id'])
+            req.delete()
+    except:
+        return redirect('accounts:lookupReq')
+    
     return redirect('accounts:lookupReq')
 
 

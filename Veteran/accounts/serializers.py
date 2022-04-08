@@ -10,3 +10,4 @@ class HostAppSerializer(serializers.ModelSerializer):
     class Meta:
         model = HostApplication
         fields = '__all__'
+        

@@ -119,5 +119,5 @@ class HostApplication(models.Model):
     intro = models.CharField(verbose_name='한줄 소개', max_length=200, null=False)
 
     def __str__(self):
-        return self.host.email + " " + self.group_name
+        return self.host.email + " " + self.group_name + " " + self.intro
     
