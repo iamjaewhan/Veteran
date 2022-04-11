@@ -74,7 +74,7 @@ class UserCreationForm(forms.ModelForm):
             raise forms.ValidationError("Passwords don't match")
         return password2
 
-    def save(self, commit=True):
+    def save(self, commit = True):
         # Save the provided password in hashed format
         user = super(UserCreationForm, self).save(commit=False)
         user.email = UserManager.normalize_email(self.cleaned_data['email'])
@@ -82,6 +82,8 @@ class UserCreationForm(forms.ModelForm):
         if commit:
             user.save()
         return user
+    
+    
     
 class HostForm(forms.Form):
     group_name = forms.CharField(

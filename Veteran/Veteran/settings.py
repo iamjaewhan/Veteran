@@ -150,3 +150,7 @@ SESSION_SAVE_EVERY_REQUEST = True
 
 LOGIN_REDIRECT_URL = reverse_lazy('games:gamelist')
 LOGOUT_REDIRECT_URL = reverse_lazy('accounts:login')
+
+
+##message_tags
+

@@ -6,14 +6,11 @@ from django.views.decorators.csrf import csrf_exempt
 from django.core.paginator import Paginator
 from django.db import transaction
 
-from rest_framework import generics
-from rest_framework.decorators import api_view
-from rest_framework.renderers import JSONRenderer
 
 from games.models import Game, Game_Participants
 from .models import User, Host, HostApplication, Review
 from .forms import UserCreationForm, HostForm
-from .serializers import UserSerializer, HostAppSerializer
+
 
 
 # Create your views here.
@@ -47,21 +44,17 @@ def signup(request):
         else:
             form = UserCreationForm()
         return render(request, 'accounts/signup_form.html',{'form' : form})
-         
- 
-            
+                    
 
 def logout(request):
     auth.logout(request)
     return redirect('accounts:login')
     
-
     
 def mypage(request):
     return render(request, 'accounts/myinfo.html')
 
 
-@csrf_exempt
 def reqHostAthority(request):
     if request.method=="POST":
         form = HostForm(request.POST)
@@ -77,7 +70,6 @@ def reqHostAthority(request):
     return render(request,'accounts/host_application.html', {'form' : form})
 
 
-
 def lookupReq(request, message = None):
     host_requests = HostApplication.objects.all()
     paginator = Paginator(host_requests, 10)
@@ -89,12 +81,12 @@ def lookupReq(request, message = None):
     return render(request, 'accounts/host_req_list.html', context)
 
 
-
 def acceptReq(request):
     if request.method == "POST":
         try:
             req = HostApplication.objects.get(id = request.POST['req_id'])
         except:
+            messages.warning(request, "해당 호스트 신청을 찾을 수 없습니다.")
             return redirect('accounts:lookupReq')
         if req:
             try:
@@ -110,18 +102,26 @@ def acceptReq(request):
                     host.save()
                     req.delete()
             except IntegrityError:
+                messages.warning(request, "해당 호스트 승인이 불가능합니다.")
+                print()
                 return redirect('accounts:lookupReq')
+            messages.success(request, "승인이 완료되었습니다.")
+            return redirect('accounts:lookupReq')
     return redirect('accounts:lookupReq')
 
 
+
 def rejectReq(request):
-    try:
-        with transaction.atomic():
-            req = HostApplication.objects.get(id = request.POST['req_id'])
-            req.delete()
-    except:
+    if request.method == "POST":
+        try:
+            with transaction.atomic():
+                req = HostApplication.objects.get(id = request.POST['req_id'])
+                req.delete()
+        except:
+            messages.warning(request, "해당 호스트 거절이 불가능합니다.")
+            return redirect('accounts:lookupReq')
+        messages.success(request, "거절이 완료되었습니다.")
         return redirect('accounts:lookupReq')
-    
     return redirect('accounts:lookupReq')
 
 

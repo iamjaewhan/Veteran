@@ -6,18 +6,25 @@
 {% endblock %}
 
 {% block content %}
+
+{% for message in  messages %}
+<div class="alert {{ message.tags }} alert-auto-dismissible alert-dismissible notification-container text-center" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    {{ message }}
+</div>
+{% endfor %}
+
 <div>
-    {% if error %}
-    <p>{{ error }}</p>
-    {% endif %}
     {% for req in page_obj %}
-        <form id="req_form">
+        <form id="req_form" method = "POST">
             {% csrf_token %}
             <input name="req_id" value="{{ req.id }}" >
             <p>{{ req.group_name }}</p>
             <p>{{ req.intro }}</p>
-            <button type="submit" onclick='req_btn_click("POST")'>승인</button>
-            <button type="submit" onclick='req_btn_click("PUT")'>거절</button>
+            <button type="submit"   onclick='req_acc_click()'>승인</button>
+            <button type="submit"  onclick='req_rej_click()'>거절</button>
         </form>
     {% endfor %}
     <div class="pagination">
@@ -36,16 +43,21 @@
     </div>
 </div>
 <script>
-    function req_btn_click(str){
+    
+    function req_acc_click(){
         req_form = document.getElementById('req_form');
-        if (str == "POST"){
-            req_form.setAttribute('action', "{% url 'accounts:acceptReq' %}");
-            req_form.setAttribute('method', "POST");
-        }
-        else if(str == "PUT"){
-            req_form.setAttribute('action', "{% url 'accounts:rejectReq' %}");
-            req_form.setAttribute('method' , "POST");
-        }
-    }
+        req_form.setAttribute('action', "{% url 'accounts:acceptReq' %}");
+    };
+
+    function req_rej_click(){
+        req_form = document.getElementById('req_form');
+        req_form.setAttribute('action', "{% url 'accounts:rejectReq' %}");
+    };
+
+    window.setTimeout(function() {
+        $(".alert-auto-dismissible").fadeTo(500, 0).slideUp(500, function() {
+            $(this).remove();
+        });
+    }, 2000);
 </script>
 {% endblock %}
