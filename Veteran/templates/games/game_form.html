@@ -24,7 +24,7 @@
         </div>
         <div>
             <h5>시작시간</h5>
-            <input type="datetime-local" id="start_datetime" name="start_datetime">
+            <input type="datetime-local" id="start_datetime" name="start_datetime" oninput="setEndtime();">
         </div>
         <div>
             <h5>종료시간</h5>
@@ -41,5 +41,10 @@
     end_dt.value = crnt_date;
     start_dt.setAttribute('min', crnt_date);
     end_dt.setAttribute('min', crnt_date);
+
+    function setEndtime(){
+        end_dt.value = document.getElementById('start_datetime').value;
+        end_dt.setAttribute('min', document.getElementById('start_datetime').value);
+    }
 </script>
 {% endblock %}
