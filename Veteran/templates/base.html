@@ -41,7 +41,7 @@
                       {% endif %}
                       {% if user.is_host %}
                       <li class="nav-item">
-                        <a class="nav-link" href="#">Host Game</a>
+                        <a class="nav-link" href="{% url 'games:newgame' %}">Host Game</a>
                       </li>
                       {% endif %}
                       {% if user.is_active %}

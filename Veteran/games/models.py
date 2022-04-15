@@ -7,7 +7,7 @@ from accounts.models import User,Host
 # Create your models here.
 
 class Game(models.Model):
-    host = models.ForeignKey('accounts.Host',null=False, on_delete=models.PROTECT)
+    host = models.ForeignKey(Host, null=False, on_delete=models.PROTECT)
     start_datetime = models.DateTimeField()
     end_datetime = models.DateTimeField()
     numOfRecruitment = models.IntegerField(default=18,null=False)
@@ -26,31 +26,11 @@ class Game(models.Model):
             self.completed=True
         return True
         
-    def toDict(self):
-        dictionary = {}
-        dictionary['id'] = self.id
-        dictionary["host"] = self.host
-        dictionary["start_datetime"] = self.start_datetime.strftime("%Y-%m-%d %H:%M")
-        dictionary["end_datetime"] = self.end_datetime.strftime("%Y-%m-%d %H:%M")
-        dictionary["numOfRecruitment"] = self.numOfRecruitment
-        dictionary["numOfParticipation"] = self.numOfParticipation
-        return dictionary
-    
-    def toTuple(self):
-        return (
-            self.id,
-            self.host.group_name,
-            self.start_datetime,
-            self.end_datetime,
-            self.numOfRecruitment,
-            self.numOfParticipation
-        )
-        
-        
+
     
 class Game_Participants(models.Model):
-    game=models.ForeignKey(Game, on_delete=models.PROTECT)
-    user=models.ForeignKey('accounts.User', on_delete=models.CASCADE)
+    game = models.ForeignKey(Game, on_delete=models.PROTECT)
+    user = models.ForeignKey('accounts.User', on_delete=models.CASCADE)
     
     class Meta:
         unique_together = (('game', 'user'),)

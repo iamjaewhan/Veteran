@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block head %}
+{% endblock %}
+
+{% block style %}
+{% endblock %}
+
+{% block content %}
+{% load static %}
+<div>
+    <form action="{% url 'games:newgame' %}" method="POST">
+        {% csrf_token %}
+        <div>
+            <h5>호스트</h5>
+            <h5>{{ host.group_name }}</h5>
+        </div>
+        <div>
+            <h5>농구장 주소</h5>
+            <h5>{{ host.court_location }}</h5>
+        </div>
+        <div>
+            <h5>인원수</h5>
+            <input type="number" min="1" max="18" placeholder="모집 인원" name="numOfRecruitment">
+        </div>
+        <div>
+            <h5>시작시간</h5>
+            <input type="datetime-local" id="start_datetime" name="start_datetime">
+        </div>
+        <div>
+            <h5>종료시간</h5>
+            <input type="datetime-local" id="end_datetime" name="end_datetime" >
+        </div>
+        <button type="submit">경기 등록</button>
+    </form> 
+</div>
+<script>
+    let start_dt = document.getElementById('start_datetime');
+    let end_dt = document.getElementById('end_datetime');
+    let crnt_date = new Date(new Date().getTime() - new Date().getTimezoneOffset()*60000 ).toISOString().slice(0,-8);
+    start_dt.value = crnt_date;
+    end_dt.value = crnt_date;
+    start_dt.setAttribute('min', crnt_date);
+    end_dt.setAttribute('min', crnt_date);
+</script>
+{% endblock %}

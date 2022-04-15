@@ -58,16 +58,21 @@ def mypage(request):
 def reqHostAthority(request):
     if request.method=="POST":
         form = HostForm(request.POST)
-        if form.is_valid():
-            host = HostApplication()
-            host.host = request.user
-            host.group_name = request.POST["group_name"]
-            host.court_location = request.POST["court_location"]+" "+request.POST["court_detail_location"]
-            host.intro = request.POST["intro"]
-            host.save()
-        return redirect('games:gamelist')
+        try:    
+            with transaction.atomic():
+                if form.is_valid():
+                    hostform = HostApplication()
+                    hostform.host = request.user
+                    hostform.group_name = form['group_name']
+                    hostform.court_loation = form['court_location'] + " " + form['court_detail_location']
+                    hostform.intro = form['intro']
+                    hostform.save()
+        except IntegrityError:
+            print('error')
+            return render(request, 'accounts/host_application.html', {'form' : form})
+        return redirect('game/gamelist')
     form = HostForm()
-    return render(request,'accounts/host_application.html', {'form' : form})
+    return render(request, 'accounts/host_application.html', {'form' : form})
 
 
 def lookupReq(request, message = None):
@@ -103,7 +108,6 @@ def acceptReq(request):
                     req.delete()
             except IntegrityError:
                 messages.warning(request, "해당 호스트 승인이 불가능합니다.")
-                print()
                 return redirect('accounts:lookupReq')
             messages.success(request, "승인이 완료되었습니다.")
             return redirect('accounts:lookupReq')

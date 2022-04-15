@@ -92,17 +92,15 @@ class User(AbstractBaseUser, PermissionsMixin):
         return self.nickname
     
 class Review(models.Model):
-    reviewer=models.ForeignKey(User,on_delete=models.CASCADE,related_name='reviewing')
-    reviewee=models.ForeignKey(User,on_delete=models.CASCADE,related_name='reviewed')
-    CommentType=[(1,'위험한 플레이를 해요'),(2,'독단적인 플레이를해요'),(3,'이타적인 플레이를 해요'),(4,'실력이 출중한 선수에요'),(5,'매너가 좋은 선수에요')]
-    comment_type=models.IntegerField(choices=CommentType, null=False)
-    RATING_CHOICES=zip(range(1,6),range(1,6))
-    rating=models.IntegerField(choices=RATING_CHOICES)
+    reviewer = models.ForeignKey(User,on_delete=models.CASCADE,related_name='reviewing')
+    reviewee = models.ForeignKey(User,on_delete=models.CASCADE,related_name='reviewed')
+    comment = models.CharField(verbose_name = '평가', max_length = 100, null = True)
+    RATING_CHOICES = zip(range(1,6),range(1,6))
+    rating = models.IntegerField(choices=RATING_CHOICES)
     
     class Meta:
         unique_together=(('reviewer','reviewee'),)
         
-    
 
 class Host(models.Model):
     host = models.ForeignKey(User, unique=False , on_delete=models.CASCADE)
