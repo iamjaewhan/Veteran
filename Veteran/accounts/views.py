@@ -58,20 +58,25 @@ def mypage(request):
 def reqHostAthority(request):
     if request.method=="POST":
         form = HostForm(request.POST)
-        try:    
+        print(form['court_location'])
+        print(type(form['court_location']))
+        try:
             with transaction.atomic():
                 if form.is_valid():
                     hostform = HostApplication()
                     hostform.host = request.user
                     hostform.group_name = form['group_name']
-                    hostform.court_loation = form['court_location'] + " " + form['court_detail_location']
+                    print(form['court_location'])
+                    print(type(form['court_location']))
+                    hostform.court_loation = str(form['court_location']) + " " + str(form['court_detail_location'])
                     hostform.intro = form['intro']
                     hostform.save()
-                return redirect('accounts:reqHostAthority')
+                else:
+                    return redirect('accounts:reqHostAthority')
         except IntegrityError:
             print('error')
             return render(request, 'accounts/host_application.html', {'form' : form})
-        return redirect('game/gamelist')
+        return redirect('games:gamelist')
     form = HostForm()
     return render(request, 'accounts/host_application.html', {'form' : form})
 
