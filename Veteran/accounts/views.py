@@ -100,13 +100,16 @@ def acceptReq(request):
                     hostuser = User.objects.get(id=req.host.id)
                     hostuser.is_host = True
                     host = Host()
-                    
+                    relation = UserHost()
                     host.host = hostuser
                     host.group_name = req.group_name
                     host.court_location = req.court_location
                     host.intro = req.intro
                     hostuser.save()
                     host.save()
+                    relation.user = hostuser
+                    relation.group = host
+                    relation.save()
                     req.delete()
             except IntegrityError:
                 messages.warning(request, "해당 호스트 승인이 불가능합니다.")
