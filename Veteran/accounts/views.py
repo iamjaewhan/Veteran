@@ -7,8 +7,8 @@ from django.core.paginator import Paginator
 from django.db import transaction
 
 
-from games.models import Game, Game_Participants
-from .models import User, Host, HostApplication, Review
+from games.models import Game, Game_Participant
+from .models import User, Host, HostApplication, Review, UserHost
 from .forms import UserCreationForm, HostForm
 
 
@@ -67,6 +67,7 @@ def reqHostAthority(request):
                     hostform.court_loation = form['court_location'] + " " + form['court_detail_location']
                     hostform.intro = form['intro']
                     hostform.save()
+                return redirect('accounts:reqHostAthority')
         except IntegrityError:
             print('error')
             return render(request, 'accounts/host_application.html', {'form' : form})
@@ -99,6 +100,7 @@ def acceptReq(request):
                     hostuser = User.objects.get(id=req.host.id)
                     hostuser.is_host = True
                     host = Host()
+                    
                     host.host = hostuser
                     host.group_name = req.group_name
                     host.court_location = req.court_location
@@ -133,11 +135,11 @@ def lookupRecord(request):
     id_participants = {}
     id_game = {}
     scheduled_games = []
-    participated_games = Game_Participants.objects.filter(user = request.user)
+    participated_games = Game_Participant.objects.filter(user = request.user)
     
     for game in participated_games:
         if game.game.isProgressed():
-            tempGame = Game_Participants.objects.filter(game = game.game)
+            tempGame = Game_Participant.objects.filter(game = game.game)
             for g in tempGame:
                 if g.game.id in id_participants:
                     id_participants[g.game.id].append((g.user.id, g.user.username))

@@ -86,6 +86,8 @@ class UserCreationForm(forms.ModelForm):
     
     
 class HostForm(forms.Form):
+    
+    
     group_name = forms.CharField(
          label = (),
          widget = forms.TextInput(
