@@ -58,27 +58,27 @@ def mypage(request):
 def reqHostAthority(request):
     if request.method=="POST":
         form = HostForm(request.POST)
-        print(form['court_location'])
-        print(type(form['court_location']))
         try:
             with transaction.atomic():
                 if form.is_valid():
                     hostform = HostApplication()
                     hostform.host = request.user
-                    hostform.group_name = form['group_name']
-                    print(form['court_location'])
-                    print(type(form['court_location']))
-                    hostform.court_loation = str(form['court_location']) + " " + str(form['court_detail_location'])
-                    hostform.intro = form['intro']
+                    hostform.group_name = request.POST['group_name']
+                    hostform.court_location = request.POST['court_location'] + " " + request.POST['court_detail_location']
+                    hostform.intro = request.POST['intro']
                     hostform.save()
                 else:
+                    messages.warning(request, "올바르지 않는 입력값입니다.")
                     return redirect('accounts:reqHostAthority')
-        except IntegrityError:
-            print('error')
+        except Exception as e:
+            messages.warning(request, "올바르지 않는 입력값입니다.")
             return render(request, 'accounts/host_application.html', {'form' : form})
         return redirect('games:gamelist')
-    form = HostForm()
-    return render(request, 'accounts/host_application.html', {'form' : form})
+    else:
+        form = HostForm()
+        return render(request, 'accounts/host_application.html', {'form' : form})
+
+
 
 
 def lookupReq(request, message = None):
@@ -116,8 +116,9 @@ def acceptReq(request):
                     relation.group = host
                     relation.save()
                     req.delete()
-            except IntegrityError:
+            except Exception as e:
                 messages.warning(request, "해당 호스트 승인이 불가능합니다.")
+                print("예외 발생 ", e)
                 return redirect('accounts:lookupReq')
             messages.success(request, "승인이 완료되었습니다.")
             return redirect('accounts:lookupReq')

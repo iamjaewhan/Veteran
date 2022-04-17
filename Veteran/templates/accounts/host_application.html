@@ -16,7 +16,7 @@
             <h1>베테랑</h1>
             <h2>호스트 신청</h2>
             <section class="host-form">
-                <form action="{% url 'accounts:reqHostAthority' %}" id="form1" onsubmit="return CheckForm();" method="POST">
+                <form action="{% url 'accounts:reqHostAthority' %}" id="form1" method="POST">
                     {% csrf_token %}
                     {{ form.as_p }}
                     <span class="address-area">
