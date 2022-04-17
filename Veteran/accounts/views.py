@@ -8,7 +8,7 @@ from django.db import transaction
 
 
 from games.models import Game, Game_Participant
-from .models import User, Host, HostApplication, Review, UserHost
+from .models import User, Host, HostApplication, Review
 from .forms import UserCreationForm, HostForm
 
 
@@ -102,19 +102,15 @@ def acceptReq(request):
         if req:
             try:
                 with transaction.atomic():
-                    hostuser = User.objects.get(id=req.host.id)
+                    hostuser = User.objects.get(id = req.host.id)
                     hostuser.is_host = True
-                    host = Host()
-                    relation = UserHost()
-                    host.host = hostuser
-                    host.group_name = req.group_name
-                    host.court_location = req.court_location
-                    host.intro = req.intro
+                    newhost = Host()
+                    newhost.host = hostuser
+                    newhost.group_name = req.group_name
+                    newhost.court_location = req.court_location
+                    newhost.intro = req.intro
+                    newhost.save()
                     hostuser.save()
-                    host.save()
-                    relation.user = hostuser
-                    relation.group = host
-                    relation.save()
                     req.delete()
             except Exception as e:
                 messages.warning(request, "해당 호스트 승인이 불가능합니다.")

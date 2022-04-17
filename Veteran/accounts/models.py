@@ -103,7 +103,7 @@ class Review(models.Model):
         
 
 class Host(models.Model):
-    host = models.ManyToManyField(User, through = "UserHost")
+    host = models.ForeignKey(User, unique = False , on_delete=models.CASCADE)
     group_name = models.CharField(verbose_name='모임 이름',max_length=20, null=False,default='veterans')
     court_location = models.CharField(verbose_name='장소',max_length=100, null=False)
     intro = models.CharField(verbose_name='한줄 소개', max_length=200, null=False)
@@ -114,10 +114,7 @@ class Host(models.Model):
     def natural_key(self):
         return (str(self.group_name), self.court_location, self.intro)
     
-class UserHost(models.Model):
-    user = models.ForeignKey(User, on_delete = models.CASCADE)
-    group = models.ForeignKey(Host, on_delete = models.CASCADE)
-    
+
 class HostApplication(models.Model):
     host = models.ForeignKey(User,unique=False, on_delete=models.CASCADE)
     group_name = models.CharField(verbose_name='모임 이름',max_length=20, null=False, default='veterans')
