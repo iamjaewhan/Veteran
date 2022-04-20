@@ -114,7 +114,6 @@ def acceptReq(request):
                     req.delete()
             except Exception as e:
                 messages.warning(request, "해당 호스트 승인이 불가능합니다.")
-                print("예외 발생 ", e)
                 return redirect('accounts:lookupReq')
             messages.success(request, "승인이 완료되었습니다.")
             return redirect('accounts:lookupReq')
@@ -128,7 +127,7 @@ def rejectReq(request):
             with transaction.atomic():
                 req = HostApplication.objects.get(id = request.POST['req_id'])
                 req.delete()
-        except:
+        except Exception as e:
             messages.warning(request, "해당 호스트 거절이 불가능합니다.")
             return redirect('accounts:lookupReq')
         messages.success(request, "거절이 완료되었습니다.")

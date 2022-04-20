@@ -17,32 +17,35 @@ from .serializers import GameSerializer
 # Create your views here.
 def gamelist(request):
     queryset = Game.objects.all().order_by('start_datetime')
-    games = serializers.serialize('json', queryset, use_natural_foreign_keys = True)
+    serializer = GameSerializer(queryset, many=True)
+    games = json.dumps(json.loads(json.dumps(serializer.data)))
     return render(request,'games/gamelist.html', {'page_obj' : games})
 
 
-def participate(request,id):
-    return None
-
-
-
-
 def newgame(request):
-    host = get_object_or_404(Host, pk=request.user.id)
-    if host:
+    hosts = Host.objects.filter(host = request.user)
+    if hosts:
         if request.method == 'POST':
+            host = Host.objects.get(id = request.POST['host'])
             try:
                 with transaction.atomic():
                     game = Game()
                     game.host = host
-                    game.start_datetime = datetime.strptime(request.POST['start_datetime'])
-                    game.end_datetime = datetime.strptime(request.POST['end_datetime'])
+                    game.start_datetime = request.POST['start_datetime']
+                    game.end_datetime = request.POST['end_datetime']
                     game.numOfRecruitment = request.POST['numOfRecruitment']
                     game.save()
-            except:
+            except Exception as e:
+                print(e)
+                messages.warning(request, "해당 경기를 생성할 수 없습니다.")
                 return redirect('games:newgame')
             return redirect('games:gamelist')
-        else:
-            return render(request, 'games/game_form.html', {'host' : host})
+        elif request.method == "GET":
+            hosts = serializers.serialize('json', hosts)
+            return render(request, 'games/game_form.html', {'hosts' : hosts})
     else:
         return redirect('games:gamelist')
+    
+
+def participate(request,id):
+    return None

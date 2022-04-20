@@ -1,6 +1,5 @@
 from django.urls import path
 from . import views
-from rest_framework import urls
 
 app_name='accounts'
 
