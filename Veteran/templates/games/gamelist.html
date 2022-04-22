@@ -18,12 +18,21 @@
         </div>
 
         <!--경기 리스트 부분-->
-        <div class="right" id='list' style = "display : flex; flex-direction : column; min-width:500px; min-height:300px; margin:30px; padding : 30px; background-color:beige; ">
+        <div class="right" id='list' style = "display : flex; flex-direction : column; min-width:500px; min-height:300px; margin:30px; padding : 30px; background-color:beige; justify-content: space-between;">
             <div>
                 <h1>경기 리스트</h1>
             </div>
-            <div id='gamelist'>
+            <div id='gamelist' style="display:flex; flex-direction: column; justify-content: space-between;">
 
+            </div>
+            <div id='form'>
+                <form id='joinform' method="POST" action="{% url 'games:participate' %}" >
+                    {% csrf_token %}
+                    <input id="gameid_input" name="gameid" readonly action="{% url 'games:participate' %}">
+                    <p id="gameinfo"></p>
+                    <button type="submit">참가신청</button>
+                </form>
+                <button onclick="toggleList('list')" >목록보기</button>
             </div>
             <div>
                 {% if games.has_previous %}
@@ -45,20 +54,51 @@
     //경기 리스트 생성
     var objs = eval(JSON.parse(JSON.stringify('{{ page_obj }}'.replace(/&quot;/g, '"'))));
     var gamelist = document.getElementById('gamelist');
+    var form = document.getElementById('form');
     
-    console.log(objs);
+    
+    window.onload = showGameList();
 
-    for (let i=0; i<objs.length; ++i) {
-        var elemdiv = document.createElement('div');
-        var elemp = document.createElement('p');
-        elemp.innerHTML = objs[i]['host']['group_name'] + " " + objs[i]['host']['court_location'];
-        var elembut = document.createElement('button');
-        elembut.innerHTML = "참가";
-        elemdiv.appendChild(elemp);
-        elemdiv.appendChild(elembut);
-        gamelist.appendChild(elemdiv);
-    };
-    
+    function showGameList(){
+        toggleList('list');
+        for (let i=0; i<objs.length; ++i) {
+            var elemdiv = document.createElement('div');
+            var elemp = document.createElement('p');
+            elemp.innerHTML = objs[i]['host']['group_name'] + " " + objs[i]['host']['court_location'] + "<br>" + objs[i]['start_datetime'] + " - " + objs[i]['end_datetime'];
+            var elembut = document.createElement('button');
+            elembut.value = objs[i]['id'];
+            elembut.onclick = function(){showJoinForm(objs[i]['id'])};
+            elembut.innerHTML = "참가";
+            elemdiv.appendChild(elemp);
+            elemdiv.appendChild(elembut);
+            gamelist.appendChild(elemdiv);
+        };
+    }
+
+    function toggleList(order){
+        if (order == 'list') {
+            form.style.display = "none";
+            gamelist.style.display = "";
+        }else{
+            gamelist.style.display = "none";
+            form.style.display = "";
+        };
+    }
+
+    function removeAllChild(elem){
+        while (elem.hasChildNodes()){
+            elem.removeChild(elem.firstChild);
+        }
+    }
+
+    function showJoinForm (gameid) {
+        toggleList('joinform'); 
+        var gameid_input = document.getElementById('gameid_input');     
+        var gameinfo = document.getElementById('gameinfo');
+        gameid_input.value = gameid;
+        gameinfo.innerHTML = objs[gameid]['host']['group_name'] + " " + objs[gameid]['host']['court_location'] + "<br>" + objs[i]['start_datetime'] + " - " + objs[gameid]['end_datetime'];
+    }
+
 
     //지도 생성
     var container = document.getElementById('map');

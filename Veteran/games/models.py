@@ -22,7 +22,7 @@ class HostGame(models.Model):
         
 
     
-class Game_Participant(models.Model):
+class GameParticipant(models.Model):
     game = models.ForeignKey(Game, on_delete=models.PROTECT)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     

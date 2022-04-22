@@ -7,7 +7,7 @@ from django.core.paginator import Paginator
 from django.db import transaction
 
 
-from games.models import Game, Game_Participant
+from games.models import Game, GameParticipant
 from .models import User, Host, HostApplication, Review
 from .forms import UserCreationForm, HostForm
 

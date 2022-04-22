@@ -10,7 +10,7 @@ import json
 from datetime import datetime
 
 from accounts.models import Host, User
-from .models import Game, Game_Participant
+from .models import Game, GameParticipant
 from .serializers import GameSerializer
 
 
@@ -47,5 +47,20 @@ def newgame(request):
         return redirect('games:gamelist')
     
 
-def participate(request,id):
-    return None
+def participate(request):
+    if request.method == "POST":
+        game = Game.objects.get(id = request.POST['gameid'])
+        if game:
+            try:
+                with transaction.atomic():
+                    newParticipation = GameParticipant(game = game, user = request.user)
+                    newParticipation.save()
+            except Exception as e:
+                messages.warning(request, "이미 참여한 경기입니다.")
+                return redirect('games:gamelist')
+        else:
+            messages.warning(request, "해당 경기를 찾을 수 없습니다.")
+        return redirect('games:gamelist')
+    return redirect('games:gamelist')
+            
+            
