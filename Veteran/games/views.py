@@ -4,6 +4,7 @@ from django.urls import reverse
 from django.db import transaction
 from django.contrib import messages
 from django.core import serializers
+from django.utils import timezone
 
 import requests
 import json
@@ -16,7 +17,7 @@ from .serializers import GameSerializer
 
 # Create your views here.
 def gamelist(request):
-    queryset = Game.objects.all().order_by('start_datetime')
+    queryset = Game.objects.filter( start_datetime__gt = timezone.now()).order_by('start_datetime')
     serializer = GameSerializer(queryset, many=True)
     games = json.dumps(json.loads(json.dumps(serializer.data)))
     return render(request,'games/gamelist.html', {'page_obj' : games})
